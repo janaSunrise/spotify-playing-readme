@@ -2,4 +2,77 @@
 
 A really easy way to display your spotify listening status on spotify.
 
+## Setting up the development environment
+
+#### Install the dependencies
+
+The project uses pipenv for dependencies. Here's how to install the dependencies.
+
+```sh
+pipenv sync -d
+```
+
+#### Setting up spotify
+
+- Go to the developer panel at spotify. [Link](https://developer.spotify.com)
+- Make an APP, Specify the name, and description.
+- Add `http://localhost:5000/callback` to the URLs
+- Take a note of the Client ID, and Client Secret for setting up `.env`
+
+#### Setting up Firebase
+
+- Go to the firebase panel.
+- Make a new project, and setup as a Web SDK and enable it.
+- Go to Settings, and the web apps section, and copy the config, and keep a note.
+- Then go to the `Services account` tab, then the `Database secrets`, select the Database we're 
+  using and copy the API.
+- Copy the domain from Realtime Database section in left, after initializing it.
+
+#### Setting up .env
+
+Configure the environmental variables by renaming the `.env.example` file to `.env` with the respective 
+values for it.
+
+Here's the info about the variables
+
+- `BASE_URL`: This is the basic URL for local dev, set it to `localhost:5000`
+- `SPOTIFY_CLIENT_ID`: This is the spotify client ID. 
+- `SPOTIFY_SECRET_ID`: This is the Spotify Secret.
+- `FB_API_KEY`: This is the API key for firebase, from Database secrets.
+- `FB_DOMAIN`: This is the domain from `Realtime Database` section.
+- `FB_PROJECT_ID`: This is the Project ID from normal firebase config.
+- `FB_STORAGE_BUCKET`: The storage bucket from the normal firebase config.
+- `FB_MESSAGING_ID`: The messaging ID from normal firebase config.
+- `FB_DATABASE_URL`: The database URL from firebase config.
+
+**Once done, Run the server using `pipenv run start`! It should boot up at `localhost:5000`! Enjoy!**
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit 
+a PR to this repo and it will be deployed once it's accepted.
+
+⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand about your 
+commit or the PR Created. Read [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before 
+making the commit message.
+
+## 💬 Get in touch
+
+If you have various suggestions, questions or want to discuss things wit our community, Join our discord server!
+
+[![Discord](https://discordapp.com/api/guilds/695008516590534758/widget.png?style=shield)](https://discord.gg/cSC5ZZwYGQ)
+
+## Show your support
+
+We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
+also be sure to contribute, if you're interested!
+
+## License
+
+- [GPL V3](https://github.com/janaSunrise/spotify-playing-readme/blob/main/LICENSE)
+
 **Inspired by [Novatorem](https://github.com/novatorem)**
+
+<div align="center">
+  Made by Sunrit Jana with ❤️
+</div>
