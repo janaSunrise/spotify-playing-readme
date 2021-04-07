@@ -215,7 +215,7 @@
                 "sha256:dce7b68a79c9996688daba0ae02499c3b2a35f0d5e08d81156ae66b91c05625a",
                 "sha256:f3a24d6756be74dadaff8c460076ab9b24085d92a1a4fa6934c7623bae1dbdfc"
             ],
-            "version": "==3.4.3"
+            "version": "==3.6.6"
         },
         "pyparsing": {
             "hashes": [
