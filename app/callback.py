@@ -1,5 +1,6 @@
 from flask import Blueprint, Response, request, render_template
 
+from . import database
 from .config import BASE_URL
 from .utils import generate_token, get_user_info
 
@@ -13,8 +14,12 @@ def cb():
     if not code:
         return Response("No code!")
 
-    access_token = generate_token(code)["access_token"]
+    token = generate_token(code)
+    access_token = token["access_token"]
     user_id = get_user_info(access_token)["id"]
+
+    users = database.collection("users").document(user_id)
+    users.set(token)
 
     return render_template(
         "cb.html.j2",

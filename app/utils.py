@@ -1,7 +1,10 @@
 import base64
+from time import time
 
 import requests
+from flask import Response
 
+from . import database
 from .config import (
     SPOTIFY__REFRESH_TOKEN, SPOTIFY__GENERATE_TOKEN,
     SPOTIFY__NOW_PLAYING, SPOTIFY__RECENTLY_PLAYED,
@@ -64,3 +67,32 @@ def get_user_info(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__USER_INFO, headers=headers)
     return response.json()
+
+
+def get_access_token(uid):
+    users = database.collection("users").document(uid)
+    user = users.get()
+
+    if not user.exists:
+        return Response("User doesn't exist. Please login first.")
+
+    token_info = user.to_dict()
+
+    current_time = int(time())
+    access_token = token_info["access_token"]
+    expired_time = token_info.get("expired_time")
+
+    if expired_time is None or current_time >= expired_time:
+        refresh_token = token_info["refresh_token"]
+
+        new_token = get_refresh_token(refresh_token)
+        expired_time = int(time()) + new_token["expires_in"]
+        update_data = {"access_token": new_token["access_token"], "expired_time": expired_time}
+
+        users = database.collection("users").document(uid)
+        users.update(update_data)
+
+        access_token = new_token["access_token"]
+
+    return access_token
+

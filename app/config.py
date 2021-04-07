@@ -3,6 +3,8 @@ import os
 BASE_URL = os.getenv("BASE_URL")
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_SECRET_ID = os.getenv("SPOTIFY_SECRET_ID")
+FIREBASE_CONF = os.getenv("FIREBASE_CONFIG")
+FIREBASE_PRIVATE_KEY = os.getenv("FIREBASE_PRIVATE_KEY")
 
 # Spotify URL config
 SPOTIFY__GENERATE_TOKEN = "https://accounts.spotify.com/api/token"
