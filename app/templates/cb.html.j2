@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spotify playing README</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #readme {
+            height: 120px;
+            width: 400px;
+            padding: 5px;
+        }
+    </style>
+
+  </head>
+  <body>
+    <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+      <div class="container is-max-desktop">
+          <div class="navbar-brand">
+            <p class="navbar-item">
+                <strong>Spotify playing README</strong>
+            </p>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+              <span aria-hidden="true"></span>
+            </a>
+          </div>
+
+           <div class="navbar-end">
+               <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
+                   GITHUB
+               </a>
+           </div>
+        </div>
+    </nav>
+
+    <div class="container is-max-desktop">
+        <br />
+
+        <h1 class="title has-text-centered">
+            README code section
+        </div>
+
+        <br />
+
+        <div class="columns is-mobile is-centered">
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+              <label>Card theme</label>
+              <div class="select is-primary">
+                  <select>
+                    <option>plain</option>
+                    <option>wavy</option>
+                  </select>
+                </div>
+            </p>
+          </div>
+        </div>
+
+        <div class="columns is-mobile is-centered">
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+              <textarea class="textarea is-primary" id="readme" readonly></textarea>
+            </p>
+          </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+
+    <script>
+        let user_id = "{{ id }}";
+        let code = $("#readme");
+
+        let parameters = {
+            id: user_id,
+            card_theme: "plain"
+        };
+
+        const change_url = () => {
+            let base_url = "{{ base_url }}/view?";
+            let url = base_url + $.param(parameters, true);
+
+            code.text(`![Spotify playing](${url})`);
+        }
+
+        change_url();
+        $('select').change(function() {parameters.theme = this.value; change_url();});
+    </script>
+
+  </body>
+</html>
