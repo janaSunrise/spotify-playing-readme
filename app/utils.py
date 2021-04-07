@@ -70,13 +70,12 @@ def get_user_info(access_token):
 
 
 def get_access_token(uid):
-    users = database.collection("users").document(uid)
-    user = users.get()
+    user = database.child("users").child(uid).get()
 
-    if not user.exists:
+    if not user:
         return Response("User doesn't exist. Please login first.")
 
-    token_info = user.to_dict()
+    token_info = user.val()
 
     current_time = int(time())
     access_token = token_info["access_token"]
@@ -89,8 +88,7 @@ def get_access_token(uid):
         expired_time = int(time()) + new_token["expires_in"]
         update_data = {"access_token": new_token["access_token"], "expired_time": expired_time}
 
-        users = database.collection("users").document(uid)
-        users.update(update_data)
+        database.child("users").child(uid).update(update_data)
 
         access_token = new_token["access_token"]
 

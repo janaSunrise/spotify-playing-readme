@@ -1,27 +1,22 @@
 import base64
 import json
 
-import firebase_admin
+import pyrebase
 from flask import Flask
 
-from .config import FIREBASE_CONF
+from .config import FB_API_KEY, FB_DOMAIN, FB_PROJECT_ID, FB_MESSAGING_ID, FB_STORAGE_BUCKET, FB_DATABASE_URL
 
-firebase_conf = json.loads(base64.b64decode(FIREBASE_CONF).decode("ascii"))
-cred = firebase_admin.credentials.Certificate({
-    "type": "service_account",
-    "project_id": firebase_conf.get('project_id'),
-    "private_key_id": firebase_conf.get('private_key_id'),
-    "private_key": firebase_conf.get('private_key'),
-    "client_email": firebase_conf.get('client_email'),
-    "client_id": firebase_conf.get('client_id'),
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://accounts.google.com/o/oauth2/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": firebase_conf.get('client_x509_cert_url')
-})
-firebase_admin.initialize_app(cred)
+config = {
+    "apiKey": FB_API_KEY,
+    "authDomain": FB_DOMAIN,
+    "storageBucket": FB_STORAGE_BUCKET,
+    "projectId": FB_PROJECT_ID,
+    "messagingSenderId": FB_MESSAGING_ID,
+    "databaseURL": FB_DATABASE_URL
+}
 
-database = firebase_admin.firestore.client()
+firebase = pyrebase.initialize_app(config)
+database = firebase.database()
 
 # -- Circular imports --
 from .callback import callback

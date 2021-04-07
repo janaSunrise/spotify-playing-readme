@@ -18,8 +18,7 @@ def cb():
     access_token = token["access_token"]
     user_id = get_user_info(access_token)["id"]
 
-    users = database.collection("users").document(user_id)
-    users.set(token)
+    database.child("users").child(user_id).set(token)
 
     return render_template(
         "cb.html.j2",
