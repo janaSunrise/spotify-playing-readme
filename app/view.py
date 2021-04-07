@@ -49,17 +49,18 @@ def make_svg(item, theme, is_now_playing):
     num_bar = 75
 
     if theme == "plain":
-        height = 84
-        num_bar = 100
+        height = 90
+        num_bar = 40
     elif theme == "wavy":
-        height = 100
-        num_bar = 100
+        height = 120
+        num_bar = 85
+
+    content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
 
     if is_now_playing:
-        title_text = "Vibing to"
-        content_bar = "".join(["<div class='bar'></div>" for i in range(num_bar)])
+        title_text = "Vibing to:"
     else:
-        title_text = "Was listening to"
+        title_text = "Was listening to:"
         content_bar = ""
 
     css_bar = generate_bar(num_bar)
@@ -69,10 +70,11 @@ def make_svg(item, theme, is_now_playing):
         "num_bar": num_bar,
         "content_bar": content_bar,
         "css_bar": css_bar,
-        "title_text": title_text,
+        "status": title_text,
         "artist_name": artist_name,
         "song_name": song_name,
         "img": img,
+        "is_now_playing": is_now_playing
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)

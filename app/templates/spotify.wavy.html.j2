@@ -59,7 +59,7 @@
                     bottom: 1px;
                     height: 3px;
                     position: absolute;
-                    background: #1DB954cc;
+                    background: #1DB954;
                     animation: sound 0ms -800ms linear infinite alternate;
                 }
 
@@ -77,6 +77,7 @@
                         opacity: 0.95;
                     }
                 }
+
                 {{css_bar|safe}}}
             </style>
 
@@ -90,12 +91,11 @@
                 </a>
 
                 <div class="content">
+                    <div class="song">{{song_name}}</div>
                     <div class="artist">{{artist_name}}</div>
-                  <div class="song">{{song_name}}</div>
-                  <div id='bars'>{{content_bar | safe}}</div>
+                  <div id="bars">{{content_bar|safe}}</div>
                 </div>
             </div>
-
         </div>
     </foreignObject>
 </svg>
