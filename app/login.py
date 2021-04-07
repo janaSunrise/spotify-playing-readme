@@ -6,5 +6,5 @@ login = Blueprint("login", __name__)
 
 
 @login.route("/login")
-def login():
+def login_():
     return redirect(SPOTIFY__LOGIN)
