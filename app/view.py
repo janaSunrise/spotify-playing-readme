@@ -97,7 +97,7 @@ def render_img():
         if data is not None and data != {}:
             item = data["item"]
             item["currently_playing_type"] = data["currently_playing_type"]
-            is_now_playing = data["is_playing"]
+            is_now_playing_ = data["is_playing"]
         else:
             recent_plays = get_recently_played(access_token)
             size_recent_play = len(recent_plays["items"])
@@ -105,9 +105,9 @@ def render_img():
 
             item = recent_plays["items"][idx]["track"]
             item["currently_playing_type"] = "track"
-            is_now_playing = data["is_playing"]
+            is_now_playing_ = False
 
-        return item, is_now_playing
+        return item, is_now_playing_
 
     user_id = request.args.get("id")
     theme = request.args.get("theme", default="plain")
