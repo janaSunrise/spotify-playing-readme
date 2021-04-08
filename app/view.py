@@ -3,8 +3,9 @@ import random
 
 import requests
 from flask import Blueprint, Response, render_template, request
+from memoization import cached
 
-from .utils import get_recently_played, get_now_playing, get_access_token, timed_lru_cache
+from .utils import get_recently_played, get_now_playing, get_access_token
 
 view = Blueprint("/view", __name__, template_folder="templates")
 
@@ -26,7 +27,7 @@ def load_image_b64(url):
     return base64.b64encode(response.content).decode("ascii")
 
 
-@timed_lru_cache(15)
+@cached(ttl=5, max_size=128)
 def make_svg(item, theme, is_now_playing):
     currently_playing_type = item.get("currently_playing_type", "track")
 
@@ -81,7 +82,7 @@ def make_svg(item, theme, is_now_playing):
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
 
 
-@view.route("/view")
+@view.route("/spotify")
 def render_img():
     def get_song_info(uid):
         access_token = get_access_token(uid)
@@ -90,14 +91,14 @@ def render_img():
         if data:
             item = data["item"]
             item["currently_playing_type"] = data["currently_playing_type"]
-            is_now_playing = True
+            is_now_playing = data['is_playing']
         else:
             recent_plays = get_recently_played(access_token)
             size_recent_play = len(recent_plays["items"])
             idx = random.randint(0, size_recent_play - 1)
             item = recent_plays["items"][idx]["track"]
             item["currently_playing_type"] = "track"
-            is_now_playing = False
+            is_now_playing = data['is_playing']
 
         return item, is_now_playing
 

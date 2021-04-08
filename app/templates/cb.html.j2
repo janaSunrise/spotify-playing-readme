@@ -90,7 +90,7 @@
         };
 
         const change_url = () => {
-            let base_url = "{{ base_url }}/view?";
+            let base_url = "{{ base_url }}/spotify?";
             let url = base_url + $.param(parameters, true);
 
             code.text(`![Spotify playing](${url})`);
