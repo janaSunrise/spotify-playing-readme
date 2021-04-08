@@ -2,83 +2,83 @@
     <foreignObject width="480" height="173">
         <div xmlns="http://www.w3.org/1999/xhtml" class="container">
             <style>
-                .main {
-                    margin-top: 40px;
-                    display: flex;
-                }
-                .currentStatus {
-                    float: left;
-                    font-size: 24px;
-                    position: static;
-                    margin-top: -5px;
-                    margin-left: 10px;
-                }
+            .main {
+                margin-top: 40px;
+                display: flex;
+            }
+            .currentStatus {
+                float: left;
+                font-size: 24px;
+                position: static;
+                margin-top: -5px;
+                margin-left: 10px;
+            }
 
-                .container {
-                    border-radius: 5px;
-                    padding: 10px 10px 10px 0px;
-                }
-                .art {
-                    width: 27%;
-                    float: left;
-                    margin-left: -5px;
-                }
-                .content {
-                    width: 71%;
-                }
-                .song {
-                    color: #666;
-                    overflow:hidden;
-                    margin-top: 3px;
-                    font-size: 24px;
-                    text-align: center;
-                    white-space:nowrap;
-                    text-overflow:ellipsis;
-                }
-                .artist {
-                    color: #b3b3b3;
-                    font-size: 20px;
-                    margin-top: 4px;
-                    text-align: center;
-                    margin-bottom: 5px;
-                }
-                .cover {
-                    width: 100px;
-                    height: 100px;
-                    border-radius: 5px;
-                }
-                #bars {
-                    width: 40px;
-                    height: 30px;
-                    bottom: 23px;
-                    position: absolute;
-                    margin: -20px 0 0 0px;
-                }
-                .bar {
-                    width: 3px;
-                    bottom: 1px;
+            .container {
+                border-radius: 5px;
+                padding: 10px 10px 10px 0px;
+            }
+            .art {
+                width: 27%;
+                float: left;
+                margin-left: -5px;
+            }
+            .content {
+                width: 71%;
+            }
+            .song {
+                color: #666;
+                overflow:hidden;
+                margin-top: 3px;
+                font-size: 24px;
+                text-align: center;
+                white-space:nowrap;
+                text-overflow:ellipsis;
+            }
+            .artist {
+                color: #b3b3b3;
+                font-size: 20px;
+                margin-top: 4px;
+                text-align: center;
+                margin-bottom: 5px;
+            }
+            .cover {
+                width: 100px;
+                height: 100px;
+                border-radius: 5px;
+            }
+            #bars {
+                width: 40px;
+                height: 30px;
+                bottom: 23px;
+                position: absolute;
+                margin: -20px 0 0 0px;
+            }
+            .bar {
+                width: 3px;
+                bottom: 1px;
+                height: 3px;
+                position: absolute;
+                background: #1DB954;
+                animation: sound 0ms -800ms linear infinite alternate;
+            }
+
+            div {
+                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+            }
+
+            @keyframes sound {
+                0% {
                     height: 3px;
-                    position: absolute;
-                    background: #1DB954;
-                    animation: sound 0ms -800ms linear infinite alternate;
+                    opacity: .35;
                 }
-
-                div {
-                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+                100% {
+                    height: 15px;
+                    opacity: 0.95;
                 }
+            }
 
-                @keyframes sound {
-                    0% {
-                        height: 3px;
-                        opacity: .35;
-                    }
-                    100% {
-                        height: 15px;
-                        opacity: 0.95;
-                    }
-                }
-
-                {{css_bar|safe}}}
+            {{ css_bar|safe }}
             </style>
 
             <div class="currentStatus">{{status}}</div>

@@ -40,6 +40,7 @@ def generate_token(authorization_code):
     return response.json()
 
 
+@cached(ttl=60, max_size=128)
 def generate_base64_auth(client_id, client_secret):
     return base64.b64encode(f"{client_id}:{client_secret}".encode()).decode("utf-8")
 
@@ -64,6 +65,7 @@ def get_recently_played(access_token):
     return response.json()
 
 
+@cached(ttl=3, max_size=128)
 def get_user_info(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__USER_INFO, headers=headers)
@@ -85,9 +87,9 @@ def get_access_token(uid):
 
     if expired_time is None or current_time >= expired_time:
         refresh_token = token_info["refresh_token"]
-
         new_token = get_refresh_token(refresh_token)
         expired_time = int(time()) + new_token["expires_in"]
+
         update_data = {"access_token": new_token["access_token"], "expired_time": expired_time}
 
         database.child("users").child(uid).update(update_data)

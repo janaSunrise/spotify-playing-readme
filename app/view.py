@@ -31,41 +31,47 @@ def load_image_b64(url):
 def make_svg(item, theme, is_now_playing):
     currently_playing_type = item.get("currently_playing_type", "track")
 
-    img = ""
-    artist_name = ""
-    song_name = ""
+    img, artist_name, song_name = "", "", ""
+
+    title_text_mapping = {
+        True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
+        False: ["Was listening to", "Previously binding to", "Was vibing to"]
+    }
+
+    theme_mapping = {
+        "plain": {
+            "height": 90,
+            "num_bar": 40
+        },
+        "wavy": {
+            "height": 120,
+            "num_bar": 85
+        },
+        None: {
+            "height": 40,
+            "num_bar": 30
+        }
+    }
 
     if currently_playing_type == "track":
         img = load_image_b64(item["album"]["images"][1]["url"])
-    elif currently_playing_type == "episode":
-        img = load_image_b64(item["images"][1]["url"])
-
-    if currently_playing_type == "track":
         artist_name = item["artists"][0]["name"].replace("&", "&amp;")
         song_name = item["name"].replace("&", "&amp;")
     elif currently_playing_type == "episode":
+        img = load_image_b64(item["images"][1]["url"])
         artist_name = item["show"]["publisher"].replace("&", "&amp;")
         song_name = item["name"].replace("&", "&amp;")
 
-    height = 0
-    num_bar = 75
-
-    if theme == "plain":
-        height = 90
-        num_bar = 40
-    elif theme == "wavy":
-        height = 120
-        num_bar = 85
-
+    height = theme_mapping[theme]["height"]
+    num_bar = theme_mapping[theme]["num_bar"]
     content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
+    css_bar = generate_bar(num_bar)
 
     if is_now_playing:
-        title_text = "Vibing to:"
+        title_text = random.choice(title_text_mapping[True]) + ":"
     else:
-        title_text = "Was listening to:"
+        title_text = random.choice(title_text_mapping[False]) + ":"
         content_bar = ""
-
-    css_bar = generate_bar(num_bar)
 
     rendered_data = {
         "height": height,
@@ -84,30 +90,33 @@ def make_svg(item, theme, is_now_playing):
 
 @view.route("/spotify")
 def render_img():
-    def get_song_info(uid):
-        access_token = get_access_token(uid)
+    def get_song_info(user_id):
+        access_token = get_access_token(user_id)
         data = get_now_playing(access_token)
 
         if data:
             item = data["item"]
             item["currently_playing_type"] = data["currently_playing_type"]
-            is_now_playing = data['is_playing']
+            is_now_playing = data["is_playing"]
         else:
             recent_plays = get_recently_played(access_token)
             size_recent_play = len(recent_plays["items"])
             idx = random.randint(0, size_recent_play - 1)
+
             item = recent_plays["items"][idx]["track"]
             item["currently_playing_type"] = "track"
-            is_now_playing = data['is_playing']
+            is_now_playing = data["is_playing"]
 
         return item, is_now_playing
 
-    uid = request.args.get("id")
+    user_id = request.args.get("id")
     theme = request.args.get("theme", default="plain")
-    item, is_now_playing = get_song_info(uid)
+    item, is_now_playing = get_song_info(user_id)
 
+    # Generate the SVG
     svg = make_svg(item, theme, is_now_playing)
 
+    # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")
     resp.headers["Cache-Control"] = "s-maxage=1"
 

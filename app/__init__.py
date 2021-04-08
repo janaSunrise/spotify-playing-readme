@@ -1,6 +1,3 @@
-import base64
-import json
-
 import pyrebase
 from flask import Flask
 
