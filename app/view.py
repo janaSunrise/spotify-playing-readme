@@ -40,12 +40,12 @@ def make_svg(item, theme, is_now_playing):
 
     theme_mapping = {
         "plain": {
-            "height": 90,
-            "num_bar": 30
+            "height": 105,
+            "num_bar": 35
         },
         "wavy": {
             "height": 120,
-            "num_bar": 85
+            "num_bar": 90
         },
         None: {
             "height": 40,
