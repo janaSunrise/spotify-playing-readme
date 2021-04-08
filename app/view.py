@@ -35,7 +35,7 @@ def make_svg(item, theme, is_now_playing):
 
     title_text_mapping = {
         True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
-        False: ["Was listening to", "Previously binding to", "Was vibing to"]
+        False: ["Was listening to", "Previously binging to", "Was vibing to"]
     }
 
     theme_mapping = {
@@ -94,7 +94,7 @@ def render_img():
         access_token = get_access_token(user_id)
         data = get_now_playing(access_token)
 
-        if data:
+        if data is not None and data != {}:
             item = data["item"]
             item["currently_playing_type"] = data["currently_playing_type"]
             is_now_playing = data["is_playing"]
