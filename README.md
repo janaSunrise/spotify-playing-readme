@@ -47,6 +47,31 @@ Here's the info about the variables
 
 **Once done, Run the server using `pipenv run start`! It should boot up at `localhost:5000`! Enjoy!**
 
+## TODOs Planned
+
+There are several things planned for this project. Here are the TODOs, Kept public for reference,
+and transparent-ness.
+
+- [ ] FAQ
+  - How to contribute
+  - How to add a theme
+  - How to work with options
+  - Adding more features
+  - Customization
+- [ ] Improve the current themes  
+- [ ] Add more themes
+- [ ] Add more customization options
+  - Background color
+  - Duration display
+  - Marquee show
+  - Dancing bars display
+  - Changing the image size, Options: Large, medium, small
+- [ ] Bar customization
+  - No bars
+  - Green normal bars
+  - Spectograph
+- [ ] More Features and plans.
+
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can just submit 

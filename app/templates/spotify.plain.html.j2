@@ -82,6 +82,18 @@
           width: 3px;
           animation: sound 0ms -800ms linear infinite alternate;
       }
+
+      .explicit-music {
+        background-color: #2C2F33;
+        font-size: 10px;
+        color: white;
+        border-radius: 5px;
+        vertical-align: baseline;
+        padding: 1px 3px 1px 3px;
+        margin-top: 0;
+        margin-left: 3px;
+      }
+
       @keyframes sound {
           0% {
             opacity: .35;
@@ -105,7 +117,12 @@
                     </center>
                   </a>
                 <div class="text-container">
-                    <div class="song">{{song_name}}</div>
+                    <div class="song">
+                        {% if explicit %}
+                            <span class="explicit-music">E</span>
+                        {% endif %}
+                        {{song_name}}
+                    </div>
                     <div class="artist">{{artist_name}}</div>
                     <div id='bars'>{{content_bar|safe}}</div>
                 </div>

@@ -29,9 +29,14 @@ def load_image_b64(url):
 
 @cached(ttl=5, max_size=128)
 def make_svg(item, theme, is_now_playing):
+    def milliseconds_to_minute(ms):
+        seconds = int((ms / 1000) % 60)
+        minutes = int((ms / (1000 * 60)) % 60)
+        return str("%d:%d" % (minutes, seconds))
+
     currently_playing_type = item.get("currently_playing_type", "track")
 
-    img, artist_name, song_name = "", "", ""
+    img, artist_name, song_name, explicit = "", "", "", False
 
     title_text_mapping = {
         True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
@@ -62,6 +67,10 @@ def make_svg(item, theme, is_now_playing):
         artist_name = item["show"]["publisher"].replace("&", "&amp;")
         song_name = item["name"].replace("&", "&amp;")
 
+    is_explicit = item["explicit"]
+    duration = item["duration_ms"]
+
+    default_duration = milliseconds_to_minute(duration)
     height = theme_mapping[theme]["height"]
     num_bar = theme_mapping[theme]["num_bar"]
     content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
@@ -82,7 +91,11 @@ def make_svg(item, theme, is_now_playing):
         "artist_name": artist_name,
         "song_name": song_name,
         "img": img,
-        "is_now_playing": is_now_playing
+        "is_now_playing": is_now_playing,
+        "explicit": is_explicit,
+        "show_animation": len(song_name) > 27,
+        "duration": duration,
+        "default_duration": default_duration
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
