@@ -1,84 +1,98 @@
 <svg width="480" height="173" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <foreignObject width="480" height="173">
         <div xmlns="http://www.w3.org/1999/xhtml" class="container">
-            <style>
-            .main {
-                margin-top: 40px;
-                display: flex;
-            }
-            .currentStatus {
-                float: left;
-                font-size: 20px;
-                position: static;
-                margin-top: -2px;
-                margin-left: 10px;
-            }
+            <defs>
+                <style type="text/css">
+                    <![CDATA[
+                        @font-face {
+                            font-family: 'Poppins';
+                            font-style: normal;
+                            font-weight: 400;
+                            src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfecg.woff2) format('woff2');
+                            unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+                        }
+                    ]]>
+                </style>
+            </defs>
 
-            .container {
-                border-radius: 5px;
-                padding: 10px 10px 10px 0px;
-            }
-            .art {
-                width: 27%;
-                float: left;
-                margin-left: -5px;
-            }
-            .content {
-                width: 71%;
-            }
-            .song {
-                color: #666;
-                overflow:hidden;
-                margin-top: 3px;
-                font-size: 24px;
-                text-align: center;
-                white-space:nowrap;
-                text-overflow:ellipsis;
-            }
-            .artist {
-                color: #b3b3b3;
-                font-size: 20px;
-                margin-top: 4px;
-                text-align: center;
-                margin-bottom: 5px;
-            }
-            .cover {
-                width: 100px;
-                height: 100px;
-                border-radius: 5px;
-            }
-            #bars {
-                width: 40px;
-                height: 30px;
-                bottom: 23px;
-                position: absolute;
-                margin: -20px 0 0 0px;
-            }
-            .bar {
-                width: 3px;
-                bottom: 1px;
-                height: 3px;
-                position: absolute;
-                background: #1DB954;
-                animation: sound 0ms -800ms linear infinite alternate;
-            }
+            <style type="text/css">
+                .main {
+                    margin-top: 40px;
+                    display: flex;
+                }
+                .currentStatus {
+                    float: left;
+                    font-size: 20px;
+                    position: static;
+                    margin-top: -2px;
+                    margin-left: 10px;
+                }
 
-            div {
-                font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-            }
-
-            @keyframes sound {
-                0% {
+                .container {
+                    border-radius: 5px;
+                    padding: 10px 10px 10px 0px;
+                }
+                .art {
+                    width: 27%;
+                    float: left;
+                    margin-left: -5px;
+                }
+                .content {
+                    width: 71%;
+                }
+                .song {
+                    color: #666;
+                    overflow:hidden;
+                    margin-top: 3px;
+                    font-size: 24px;
+                    text-align: center;
+                    white-space:nowrap;
+                    text-overflow:ellipsis;
+                }
+                .artist {
+                    color: #b3b3b3;
+                    font-size: 20px;
+                    margin-top: 4px;
+                    text-align: center;
+                    margin-bottom: 5px;
+                }
+                .cover {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 5px;
+                }
+                #bars {
+                    width: 40px;
+                    height: 30px;
+                    bottom: 23px;
+                    position: absolute;
+                    margin: -20px 0 0 0px;
+                }
+                .bar {
+                    width: 3px;
+                    bottom: 1px;
                     height: 3px;
-                    opacity: .35;
+                    position: absolute;
+                    background: #1DB954;
+                    animation: sound 0ms -800ms linear infinite alternate;
                 }
-                100% {
-                    height: 15px;
-                    opacity: 0.95;
-                }
-            }
 
-            {{ css_bar|safe }}
+                div {
+                    font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+                }
+
+                @keyframes sound {
+                    0% {
+                        height: 3px;
+                        opacity: .35;
+                    }
+                    100% {
+                        height: 15px;
+                        opacity: 0.95;
+                    }
+                }
+
+                {{ css_bar|safe }}
             </style>
 
             <div class="currentStatus">{{status}}</div>
@@ -93,7 +107,7 @@
                 <div class="content">
                     <div class="song">{{song_name}}</div>
                     <div class="artist">{{artist_name}}</div>
-                  <div id="bars">{{content_bar|safe}}</div>
+                    <div id="bars">{{content_bar|safe}}</div>
                 </div>
             </div>
         </div>
