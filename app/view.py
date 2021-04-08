@@ -2,9 +2,9 @@ import base64
 import random
 
 import requests
-from flask import Blueprint, Response, render_template, request, redirect
+from flask import Blueprint, Response, render_template, request
 
-from .utils import get_recently_played, get_now_playing, get_access_token
+from .utils import get_recently_played, get_now_playing, get_access_token, timed_lru_cache
 
 view = Blueprint("/view", __name__, template_folder="templates")
 
@@ -26,6 +26,7 @@ def load_image_b64(url):
     return base64.b64encode(response.content).decode("ascii")
 
 
+@timed_lru_cache(15)
 def make_svg(item, theme, is_now_playing):
     currently_playing_type = item.get("currently_playing_type", "track")
 
