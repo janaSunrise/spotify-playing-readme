@@ -49,6 +49,7 @@
                     text-align: center;
                     white-space: nowrap;
                     text-overflow: ellipsis;
+                    margin-left: 2px;
                 }
 
                 .artist {
@@ -57,6 +58,7 @@
                     margin-top: 4px;
                     text-align: center;
                     margin-bottom: 5px;
+                    margin-left: 2px;
                 }
                 .cover {
                     width: 100px;
@@ -111,11 +113,13 @@
             <div class="currentStatus">{{status}}</div>
 
             <div class="main">
-                <a class="art" href="{}" target="_blank">
-                    <center>
-                        <img src="data:image/png;base64, {{img}}" class="cover" />
-                    </center>
-                </a>
+                {% if needs_cover_image %}
+                    <a class="art">
+                        <center>
+                            <img src="data:image/png;base64, {{img}}" class="cover" />
+                        </center>
+                    </a>
+                {% endif %}
 
                 <div class="content">
                     <div class="song">

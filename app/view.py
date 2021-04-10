@@ -28,7 +28,7 @@ def load_image_b64(url):
 
 
 @cached(ttl=5, max_size=128)
-def make_svg(item, theme, is_now_playing):
+def make_svg(item, theme, is_now_playing, needs_cover_image):
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
         minutes = int((ms / (1000 * 60)) % 60)
@@ -87,13 +87,17 @@ def make_svg(item, theme, is_now_playing):
         "num_bar": num_bar,
         "content_bar": content_bar,
         "css_bar": css_bar,
+
         "status": title_text,
         "artist_name": artist_name,
         "song_name": song_name,
         "img": img,
         "is_now_playing": is_now_playing,
         "explicit": is_explicit,
+
         "show_animation": len(song_name) > 27,
+        "needs_cover_image": needs_cover_image,
+
         "duration": duration,
         "default_duration": default_duration
     }
@@ -124,10 +128,12 @@ def render_img():
 
     user_id = request.args.get("id")
     theme = request.args.get("theme", default="plain")
+    needs_cover_image = True if request.args.get("image", default="true") == "true" else False
+
     item, is_now_playing = get_song_info(user_id)
 
     # Generate the SVG
-    svg = make_svg(item, theme, is_now_playing)
+    svg = make_svg(item, theme, is_now_playing, needs_cover_image)
 
     # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")

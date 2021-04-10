@@ -53,6 +53,14 @@
         </div>
 
         <br />
+        <br />
+
+        <div class="columns is-mobile is-centered">
+            <label class="checkbox">
+              <input type="checkbox" id="needs-image" checked>
+              Show cover image
+            </label>
+        </div>
 
         <div class="columns is-mobile is-centered">
           <div class="column is-narrow">
@@ -86,7 +94,8 @@
 
         let parameters = {
             id: user_id,
-            theme: "plain"
+            theme: "plain",
+            image: true
         };
 
         const change_url = () => {
@@ -97,7 +106,12 @@
         }
 
         change_url();
-        $('select').change(function() {parameters.theme = this.value; change_url();});
+        $('select').change(function() {
+            parameters.theme = this.value; change_url();
+        });
+        $('#needs-image').change(function() {
+            parameters.image = this.checked; change_url();
+        });
     </script>
 
   </body>

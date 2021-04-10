@@ -111,11 +111,13 @@
       <div xmlns="http://www.w3.org/1999/xhtml" class="container">
         {% if is_now_playing %}
             <div class="main">
-                  <a href="{}" target="_BLANK" class="cover-link">
+                {% if needs_cover_image %}
+                  <a class="cover-link">
                     <center>
                        <img src="data:image/png;base64, {{img}}" width="75" height="75" class="cover" />
                     </center>
                   </a>
+                {% endif %}
                 <div class="text-container">
                     <div class="song">
                         {% if explicit %}
@@ -129,11 +131,13 @@
             </div>
         {% else %}
             <div class="main">
-                  <a href="{}" target="_BLANK" class="cover-link">
-                    <center>
-                       <img src="data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="60" height="60" />
-                    </center>
-                  </a>
+                  {% if needs_cover_image %}
+                      <a target="_BLANK" class="cover-link">
+                        <center>
+                           <img src="data:image/gif;base64,R0lGODlhAQABAPAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" width="60" height="60" />
+                        </center>
+                      </a>
+                  {% endif %}
                 <div class="playing not-play">Nothing playing on Spotify</div>
             </div>
         {% endif %}
