@@ -6,10 +6,10 @@ from .config import FB_API_KEY, FB_DOMAIN, FB_PROJECT_ID, FB_MESSAGING_ID, FB_ST
 config = {
     "apiKey": FB_API_KEY,
     "authDomain": FB_DOMAIN,
-    "storageBucket": FB_STORAGE_BUCKET,
+    "databaseURL": FB_DATABASE_URL,
     "projectId": FB_PROJECT_ID,
+    "storageBucket": FB_STORAGE_BUCKET,
     "messagingSenderId": FB_MESSAGING_ID,
-    "databaseURL": FB_DATABASE_URL
 }
 
 firebase = pyrebase.initialize_app(config)
