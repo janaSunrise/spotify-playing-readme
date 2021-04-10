@@ -1,4 +1,4 @@
-<svg width="480" height="173" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="480" height="175" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <foreignObject width="480" height="173">
         <div xmlns="http://www.w3.org/1999/xhtml" class="container">
             <defs>
@@ -96,6 +96,15 @@
                     }
                 }
 
+                @keyframes marquee {
+                    0% {
+                      transform: translateX(100%);
+                    }
+                    100% {
+                      transform: translateX(-100%);
+                    }
+                  }
+
                 .explicit-music {
                     background-color: #2C2F33;
                     font-size: 10px;
@@ -106,6 +115,21 @@
                     margin-top: 0;
                     margin-left: 3px;
                   }
+
+                 .scrolling {
+                    animation: marquee 10s linear infinite;
+                    display: inline-block;
+                    padding-right: 20px;
+                  }
+
+                 .song-container {
+                    overflow: hidden;
+                    white-space: nowrap;
+                  }
+                  .song-container::before {
+                    content: '\00a0';
+                  }
+
 
                 {{ css_bar|safe }}
             </style>
@@ -122,8 +146,16 @@
                 {% endif %}
 
                 <div class="content">
-                    <div class="song">
-                        {{song_name}}
+                    <div class="song-container">
+                    {% if show_animation %}
+                        <div class="song scrolling">
+                            {{song_name}}
+                        </div>
+                    {% else %}
+                        <div class="song">
+                            {{song_name}}
+                        </div>
+                    {% endif %}
                     </div>
                     <div class="artist">
                         {% if explicit %}
