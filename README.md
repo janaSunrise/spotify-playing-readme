@@ -73,7 +73,6 @@ and transparent-ness.
 - [x] Improve the current themes  
 - [ ] Add more themes
 - [ ] Add more customization options
-  - [ ] Background color
   - [ ] Duration display
   - [x] Marquee show
   - [ ] Dancing bars display
