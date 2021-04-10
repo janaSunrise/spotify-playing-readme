@@ -10,6 +10,7 @@ from .utils import get_recently_played, get_now_playing, get_access_token
 view = Blueprint("/view", __name__, template_folder="templates")
 
 
+@cached(ttl=30, max_size=128)
 def generate_bar(bar_count=75):
     css_bar = ""
     left = 1
@@ -22,6 +23,7 @@ def generate_bar(bar_count=75):
     return css_bar
 
 
+@cached(ttl=5, max_size=128)
 def load_image_b64(url):
     response = requests.get(url)
     return base64.b64encode(response.content).decode("ascii")
@@ -29,6 +31,7 @@ def load_image_b64(url):
 
 @cached(ttl=5, max_size=128)
 def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening):
+    @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
         minutes = int((ms / (1000 * 60)) % 60)
