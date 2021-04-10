@@ -82,6 +82,15 @@
           </div>
         </div>
 
+        <br />
+
+        <div class="columns is-mobile is-centered">
+            <label class="checkbox">
+              <input type="checkbox" id="link-to-profile">
+              Combine with a link to your profile
+            </label>
+        </div>
+
         <div class="columns is-mobile is-centered">
           <div class="column is-narrow">
             <p class="bd-notification is-primary">
@@ -97,6 +106,7 @@
     <script>
         let user_id = "{{ id }}";
         let code = $("#readme");
+        let link_to_profile = false;
 
         let parameters = {
             id: user_id,
@@ -109,7 +119,9 @@
             let base_url = "{{ base_url }}/spotify?";
             let url = base_url + $.param(parameters, true);
 
-            code.text(`![Spotify playing](${url})`);
+            code.text(
+                link_to_profile ? `[![Spotify playing](${url})](https://open.spotify.com/user/${user_id})` : `![Spotify playing](${url})`
+            );
         }
 
         change_url();
@@ -121,6 +133,9 @@
         });
         $('#bars-when-not-listening').change(function() {
             parameters.bars_when_not_listening = this.checked; change_url();
+        });
+        $('#link-to-profile').change(function() {
+            link_to_profile = this.checked; change_url();
         });
     </script>
 
