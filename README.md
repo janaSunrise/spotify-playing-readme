@@ -8,6 +8,12 @@ Here's the embed from the site.
 
 ![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true)
 
+## Security notice
+
+**NOTE**: As a security notice, We declare that, we're not storing the sensitive tokens, We just store the 
+access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with 
+only read permissions and scopes. You can check it in the configuration file for the scopes.
+
 ## Setting up the development environment
 
 #### Install the dependencies
@@ -59,22 +65,22 @@ There are several things planned for this project. Here are the TODOs, Kept publ
 and transparent-ness.
 
 - [ ] FAQ
-  - How to contribute
-  - How to add a theme
-  - How to work with options
-  - Adding more features
-  - Customization
+  - [ ] How to contribute
+  - [ ] How to add a theme
+  - [ ] How to work with options
+  - [ ] Adding more features
+  - [ ] Customization
 - [x] Improve the current themes  
 - [ ] Add more themes
 - [ ] Add more customization options
-  - Background color
-  - Duration display
-  - Marquee show
-  - Dancing bars display
+  - [ ] Background color
+  - [ ] Duration display
+  - [x] Marquee show
+  - [ ] Dancing bars display
 - [ ] Bar customization
-  - No bars
-  - Green normal bars
-  - Spectograph
+  - [ ] No bars
+  - [x] Green normal bars
+  - [ ] Spectograph
 - [ ] More Features and plans.
 
 ## 🤝 Contributing
