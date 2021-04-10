@@ -2,6 +2,12 @@
 
 A really easy way to display your spotify listening status on spotify.
 
+## Demo
+
+Here's the embed from the site.
+
+![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true)
+
 ## Setting up the development environment
 
 #### Install the dependencies
