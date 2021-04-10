@@ -58,14 +58,13 @@ and transparent-ness.
   - How to work with options
   - Adding more features
   - Customization
-- [ ] Improve the current themes  
+- [x] Improve the current themes  
 - [ ] Add more themes
 - [ ] Add more customization options
   - Background color
   - Duration display
   - Marquee show
   - Dancing bars display
-  - Changing the image size, Options: Large, medium, small
 - [ ] Bar customization
   - No bars
   - Green normal bars
