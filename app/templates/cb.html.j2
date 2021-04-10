@@ -61,6 +61,12 @@
               Show cover image
             </label>
         </div>
+        <div class="columns is-mobile is-centered">
+            <label class="checkbox">
+              <input type="checkbox" id="bars-when-not-listening" checked>
+              Display bars when not listening
+            </label>
+        </div>
 
         <div class="columns is-mobile is-centered">
           <div class="column is-narrow">
@@ -95,7 +101,8 @@
         let parameters = {
             id: user_id,
             theme: "plain",
-            image: true
+            image: true,
+            bars_when_not_listening: false
         };
 
         const change_url = () => {
@@ -111,6 +118,9 @@
         });
         $('#needs-image').change(function() {
             parameters.image = this.checked; change_url();
+        });
+        $('#bars-when-not-listening').change(function() {
+            parameters.bars_when_not_listening = this.checked; change_url();
         });
     </script>
 

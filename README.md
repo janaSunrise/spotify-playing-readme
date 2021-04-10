@@ -6,7 +6,7 @@ A really easy way to display your spotify listening status on spotify.
 
 Here's the embed from the site.
 
-![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true)
+![Spotify playing](http://127.0.0.1:5000/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true)
 
 ## Security notice
 
@@ -77,6 +77,7 @@ and transparent-ness.
   - [ ] Duration display
   - [x] Marquee show
   - [ ] Dancing bars display
+  - [x] Display bars when not listening.
 - [ ] Bar customization
   - [ ] No bars
   - [x] Green normal bars

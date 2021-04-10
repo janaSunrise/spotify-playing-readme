@@ -28,7 +28,7 @@ def load_image_b64(url):
 
 
 @cached(ttl=5, max_size=128)
-def make_svg(item, theme, is_now_playing, needs_cover_image):
+def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening):
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
         minutes = int((ms / (1000 * 60)) % 60)
@@ -80,7 +80,8 @@ def make_svg(item, theme, is_now_playing, needs_cover_image):
         title_text = random.choice(title_text_mapping[True]) + ":"
     else:
         title_text = random.choice(title_text_mapping[False]) + ":"
-        content_bar = ""
+        if not bars_when_not_listening:
+            content_bar = ""
 
     rendered_data = {
         "height": height,
@@ -129,11 +130,13 @@ def render_img():
     user_id = request.args.get("id")
     theme = request.args.get("theme", default="plain")
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
+    bars_when_not_listening = True if request.args.get(
+        "bars_when_not_listening", default="true") == "true" else False
 
     item, is_now_playing = get_song_info(user_id)
 
     # Generate the SVG
-    svg = make_svg(item, theme, is_now_playing, needs_cover_image)
+    svg = make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening)
 
     # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")
