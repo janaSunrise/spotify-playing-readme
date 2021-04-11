@@ -81,7 +81,7 @@ and transparent-ness.
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
 - [ ] Bar customization
-  - [ ] No bars
+  - [x] No bars
   - [x] Green normal bars
   - [ ] Spectograph
 - [ ] More Features and plans.
