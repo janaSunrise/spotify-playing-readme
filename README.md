@@ -8,6 +8,10 @@ Here's the embed from the site.
 
 [![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
 
+#### Customized card, with theming
+
+[![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&eq_bar_theme=plain&bars_when_not_listening=true&bg_color=black&font_color=cyan)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
+
 ## Security notice
 
 **NOTE**: As a security notice, We declare that, we're not storing the sensitive tokens, We just store the 
