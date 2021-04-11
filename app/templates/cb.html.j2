@@ -131,12 +131,14 @@
                 <strong>TIP: Fill either of the columns to apply same value to both.</strong>
             </p>
 
-            <p class="bd-notification is-primary">
-              <label>Enter the Title color</label>
-              <input class="input is-info" id="title-color" type="text" placeholder="Leave empty for default color.">
-            </p>
+            <div id="title-color-p">
+                <p class="bd-notification is-primary">
+                  <label>Enter the Title color</label>
+                  <input class="input is-info" id="title-color" type="text" placeholder="Leave empty for default color.">
+                </p>
 
-            <br />
+                <br />
+            </div>
 
             <p class="bd-notification is-primary">
               <label>Enter the Text color</label>
@@ -207,7 +209,16 @@
             parameters.bars_when_not_listening = this.checked; change_url();
         });
         $('#hide-status').change(function() {
-            parameters.hide_status = this.checked; change_url();
+            parameters.hide_status = this.checked;
+
+            if(parameters.hide_status === true) {
+                $("#title-color-p").hide();
+            }
+            else {
+                $("#title-color-p").show();
+            }
+
+            change_url();
         });
         $('#link-to-profile').change(function() {
             link_to_profile = this.checked; change_url();
