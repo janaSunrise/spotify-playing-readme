@@ -73,9 +73,23 @@
             <p class="bd-notification is-primary">
               <label>Card theme</label>
               <div class="select is-primary">
-                  <select>
+                  <select id="theme-select">
                     <option>plain</option>
                     <option>wavy</option>
+                  </select>
+                </div>
+            </p>
+          </div>
+
+          <br />
+
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+              <label>EQ Bar theme</label>
+              <div class="select is-primary">
+                  <select id="eq-bar-theme-select">
+                    <option>none</option>
+                    <option>plain</option>
                   </select>
                 </div>
             </p>
@@ -129,6 +143,7 @@
             id: user_id,
             theme: "plain",
             image: true,
+            eq_bar_theme: "plain",
             bars_when_not_listening: false
         };
 
@@ -143,8 +158,11 @@
         }
 
         change_url();
-        $('select').change(function() {
+        $('#theme-select').change(function() {
             parameters.theme = this.value; change_url();
+        });
+        $('#eq-bar-theme-select').change(function() {
+            parameters.eq_bar_theme = this.value; change_url();
         });
         $('#needs-image').change(function() {
             parameters.image = this.checked; change_url();

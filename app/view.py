@@ -30,7 +30,7 @@ def load_image_b64(url):
 
 
 @cached(ttl=5, max_size=128)
-def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening):
+def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
@@ -40,6 +40,15 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     currently_playing_type = item.get("currently_playing_type", "track")
 
     img, artist_name, song_name, explicit = "", "", "", False
+
+    if currently_playing_type == "track":
+        img = load_image_b64(item["album"]["images"][1]["url"])
+        artist_name = item["artists"][0]["name"].replace("&", "&amp;")
+        song_name = item["name"].replace("&", "&amp;")
+    elif currently_playing_type == "episode":
+        img = load_image_b64(item["images"][1]["url"])
+        artist_name = item["show"]["publisher"].replace("&", "&amp;")
+        song_name = item["name"].replace("&", "&amp;")
 
     title_text_mapping = {
         True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
@@ -64,15 +73,6 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
         }
     }
 
-    if currently_playing_type == "track":
-        img = load_image_b64(item["album"]["images"][1]["url"])
-        artist_name = item["artists"][0]["name"].replace("&", "&amp;")
-        song_name = item["name"].replace("&", "&amp;")
-    elif currently_playing_type == "episode":
-        img = load_image_b64(item["images"][1]["url"])
-        artist_name = item["show"]["publisher"].replace("&", "&amp;")
-        song_name = item["name"].replace("&", "&amp;")
-
     is_explicit = item["explicit"]
     duration = item["duration_ms"]
 
@@ -81,8 +81,21 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     height = theme_mapping[theme]["height"]
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
-    content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
-    css_bar = generate_bar(num_bar)
+
+    # EQ Bar section
+    eq_bar_theme_mapping = {
+        "none": {
+            "content_bar": "",
+            "css_bar": ""
+        },
+        "plain": {
+            "content_bar": "".join(["<div class='bar'></div>" for _ in range(num_bar)]),
+            "css_bar": generate_bar(num_bar)
+        }
+    }
+
+    content_bar = eq_bar_theme_mapping[eq_bar_theme]["content_bar"]
+    css_bar = eq_bar_theme_mapping[eq_bar_theme]["css_bar"]
 
     if is_now_playing:
         title_text = random.choice(title_text_mapping[True]) + ":"
@@ -94,11 +107,13 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     rendered_data = {
         "width": width,
         "height": height,
+
         "num_bar": num_bar,
         "content_bar": content_bar,
         "css_bar": css_bar,
 
         "status": title_text,
+
         "artist_name": artist_name,
         "song_name": song_name,
         "img": img,
@@ -138,14 +153,16 @@ def render_img():
 
     user_id = request.args.get("id")
     theme = request.args.get("theme", default="plain")
+    eq_bar_theme = request.args.get("eq_bar_theme", default="plain")
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
     bars_when_not_listening = True if request.args.get(
-        "bars_when_not_listening", default="true") == "true" else False
+        "bars_when_not_listening", default="true"
+    ) == "true" else False
 
     item, is_now_playing = get_song_info(user_id)
 
     # Generate the SVG
-    svg = make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening)
+    svg = make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme)
 
     # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")
