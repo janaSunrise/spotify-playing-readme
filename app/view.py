@@ -96,11 +96,12 @@ def make_svg(item, info):
     if bg_color == "":
         bg_color = "white"
 
-    if title_color == "":
-        title_color = "black"
-
-    if text_color == "":
-        text_color = "#212122"
+    if title_color == "" and text_color == "":
+        text_color, title_color = "#212122", "#212122"
+    elif title_color == "" and text_color != "":
+        title_color = text_color
+    elif title_color != "" and text_color == "":
+        text_color = title_color
 
     # EQ Bar section
     eq_bar_theme_mapping = {
