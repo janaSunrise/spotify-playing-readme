@@ -30,15 +30,23 @@ def load_image_b64(url):
 
 
 @cached(ttl=5, max_size=128)
-def make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, hide_status, eq_bar_theme, title_color,
-        text_color, bg_color
-):
+def make_svg(item, info):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
         minutes = int((ms / (1000 * 60)) % 60)
         return str("%d:%d" % (minutes, seconds))
+
+    # Parsing
+    theme = info["theme"]
+    is_now_playing = info["is_now_playing"]
+    needs_cover_image = info["needs_cover_image"]
+    bars_when_not_listening = info["bars_when_not_listening"]
+    hide_status = info["hide_status"]
+    eq_bar_theme = info["eq_bar_theme"]
+    title_color = info["title_color"]
+    text_color = info["text_color"]
+    bg_color = info["bg_color"]
 
     currently_playing_type = item.get("currently_playing_type", "track")
 
@@ -187,11 +195,20 @@ def render_img():
 
     item, is_now_playing = get_song_info(user_id)
 
+    info = {
+        "theme": theme,
+        "is_now_playing": is_now_playing,
+        "needs_cover_image": needs_cover_image,
+        "bars_when_not_listening": bars_when_not_listening,
+        "hide_status": hide_status,
+        "eq_bar_theme": eq_bar_theme,
+        "title_color": title_color,
+        "text_color": text_color,
+        "bg_color": bg_color
+    }
+
     # Generate the SVG
-    svg = make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, hide_status, eq_bar_theme, title_color,
-        text_color, bg_color
-    )
+    svg = make_svg(item, info)
 
     # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")
