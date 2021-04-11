@@ -17,10 +17,12 @@
 
     <style>
       .main {
+          color: {{ text_color | safe }};
           margin-top: 15px;
           display: flex;
       }
       .currentStatus {
+          color: {{ title_color | safe }};
           font-size: 12px;
           position: static;
           margin-top: -1px;
@@ -29,7 +31,6 @@
       div {
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
           background-color: {{ bg_color | safe }};
-          color: {{ font_color | safe }};
       }
       .container {
           display: flex;
@@ -82,7 +83,7 @@
       }
 
       .explicit-music {
-        background-color: {{ font_color | safe }};
+        background-color: {{ text_color | safe }};
         color: {{ bg_color | safe }};
         font-size: 10px;
         border-radius: 5px;

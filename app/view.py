@@ -31,7 +31,8 @@ def load_image_b64(url):
 
 @cached(ttl=5, max_size=128)
 def make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, bg_color, font_color
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, title_color, text_color,
+        bg_color
 ):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
@@ -84,11 +85,11 @@ def make_svg(
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
 
-    if bg_color == "":
-        bg_color = "white"
+    if title_color == "":
+        title_color = "black"
 
-    if font_color == "":
-        font_color = "black"
+    if text_color == "":
+        text_color = "#212122"
 
     # EQ Bar section
     eq_bar_theme_mapping = {
@@ -135,7 +136,8 @@ def make_svg(
         "default_duration": default_duration,
 
         "bg_color": bg_color,
-        "font_color": font_color
+        "title_color": title_color,
+        "text_color": text_color
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
@@ -172,14 +174,16 @@ def render_img():
         "bars_when_not_listening", default="true"
     ) == "true" else False
 
+    title_color = escape(request.args.get("title_color", default=""))
+    text_color = escape(request.args.get("text_color", default=""))
     bg_color = escape(request.args.get("bg_color", default=""))
-    font_color = escape(request.args.get("font_color", default=""))
 
     item, is_now_playing = get_song_info(user_id)
 
     # Generate the SVG
     svg = make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, bg_color, font_color
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, title_color, text_color,
+        bg_color
     )
 
     # Generate the response with the SVG
