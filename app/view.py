@@ -48,15 +48,18 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
 
     theme_mapping = {
         "plain": {
+            "width": 350,
             "height": 105,
             "num_bar": 35
         },
         "wavy": {
-            "height": 120,
+            "width": 480,
+            "height": 175,
             "num_bar": 90
         },
         None: {
-            "height": 40,
+            "width": 150,
+            "height": 75,
             "num_bar": 15
         }
     }
@@ -74,7 +77,9 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     duration = item["duration_ms"]
 
     default_duration = milliseconds_to_minute(duration)
+
     height = theme_mapping[theme]["height"]
+    width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
     content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
     css_bar = generate_bar(num_bar)
@@ -87,6 +92,7 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
             content_bar = ""
 
     rendered_data = {
+        "width": width,
         "height": height,
         "num_bar": num_bar,
         "content_bar": content_bar,
