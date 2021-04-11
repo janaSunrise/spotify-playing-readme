@@ -80,6 +80,10 @@ and transparent-ness.
   - [ ] Dancing bars display
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
+  - [ ] Theme
+  - [ ] Hide status
+  - [ ] HTML Image tag generation
+  - [ ] Bordering system.
 - [ ] Bar customization
   - [x] No bars
   - [x] Green normal bars
