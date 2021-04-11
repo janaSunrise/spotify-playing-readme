@@ -111,6 +111,20 @@
               <textarea class="textarea is-primary" id="readme" readonly></textarea>
             </p>
           </div>
+
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+              <label>Enter the background color</label>
+              <input class="input is-info" id="bg-color" type="text" placeholder="Leave empty for default color.">
+            </p>
+
+            <br />
+
+            <p class="bd-notification is-primary">
+              <label>Enter the Font color</label>
+              <input class="input is-info" id="font-color" type="text" placeholder="Leave empty for default color.">
+            </p>
+          </div>
         </div>
 
         <br />
@@ -144,7 +158,9 @@
             theme: "plain",
             image: true,
             eq_bar_theme: "plain",
-            bars_when_not_listening: false
+            bars_when_not_listening: false,
+            bg_color: "",
+            font_color: "",
         };
 
         const change_url = () => {
@@ -172,6 +188,12 @@
         });
         $('#link-to-profile').change(function() {
             link_to_profile = this.checked; change_url();
+        });
+        $('#bg-color').keyup(function() {
+            parameters.bg_color = $('#bg-color').val(); change_url();
+        });
+        $('#font-color').keyup(function() {
+            parameters.font_color = $('#font-color').val(); change_url();
         });
     </script>
 

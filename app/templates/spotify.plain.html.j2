@@ -28,6 +28,8 @@
       }
       div {
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+          background-color: {{ bg_color | safe }};
+          color: {{ font_color | safe }};
       }
       .container {
           display: flex;
@@ -46,24 +48,20 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          color: #53b14f;
           font-weight: bold;
           text-align: center;
           margin-bottom: 8px;
       }
       .not-play {
-          color: #00bebe;
           text-align: center;
           margin-bottom: 0;
       }
       .artist {
-          color: #121212;
           font-weight: 500;
           font-size: 14px;
           margin-bottom: 15px;
       }
       .song {
-          color: #212122;
           font-size: 14px;
           margin-bottom: 10px;
       }
@@ -84,9 +82,9 @@
       }
 
       .explicit-music {
-        background-color: #2C2F33;
+        background-color: {{ font_color | safe }};
+        color: {{ bg_color | safe }};
         font-size: 10px;
-        color: white;
         border-radius: 5px;
         vertical-align: baseline;
         padding: 1px 3px 1px 3px;

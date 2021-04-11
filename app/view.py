@@ -2,7 +2,7 @@ import base64
 import random
 
 import requests
-from flask import Blueprint, Response, render_template, request
+from flask import Blueprint, Response, escape, render_template, request
 from memoization import cached
 
 from .utils import get_recently_played, get_now_playing, get_access_token
@@ -30,7 +30,9 @@ def load_image_b64(url):
 
 
 @cached(ttl=5, max_size=128)
-def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme):
+def make_svg(
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, bg_color, font_color
+):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
         seconds = int((ms / 1000) % 60)
@@ -82,6 +84,12 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
 
+    if bg_color == "":
+        bg_color = "white"
+
+    if font_color == "":
+        font_color = "black"
+
     # EQ Bar section
     eq_bar_theme_mapping = {
         "none": {
@@ -124,7 +132,10 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
         "needs_cover_image": needs_cover_image,
 
         "duration": duration,
-        "default_duration": default_duration
+        "default_duration": default_duration,
+
+        "bg_color": bg_color,
+        "font_color": font_color
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
@@ -161,10 +172,15 @@ def render_img():
         "bars_when_not_listening", default="true"
     ) == "true" else False
 
+    bg_color = escape(request.args.get("bg_color", default=""))
+    font_color = escape(request.args.get("font_color", default=""))
+
     item, is_now_playing = get_song_info(user_id)
 
     # Generate the SVG
-    svg = make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme)
+    svg = make_svg(
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, bg_color, font_color
+    )
 
     # Generate the response with the SVG
     resp = Response(svg, mimetype="image/svg+xml")
