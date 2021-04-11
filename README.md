@@ -2,11 +2,6 @@
 
 A really easy way to display your spotify listening status on READMEs.
 
-**NOTE**: If you customize the colors, and change the BG (Background) color, You need to customize both text and title,
-if it doesn't suit with the Background color. Both title and text are different now, due to more customizing in them,
-So you can have different pallets for them. **We have a TODO** to have the same color for both, if either of them is left 
-empty.
-
 ## Demo
 
 Here's the embed from the site.
@@ -90,10 +85,10 @@ and transparent-ness.
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
   - [ ] Theme
-  - [ ] Hide status
+  - [x] Abiltiy to Hide status
   - [ ] HTML Image tag generation
   - [ ] Bordering system.
-  - [ ] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
+  - [x] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
 - [ ] Bar customization
   - [x] No bars
   - [x] Green normal bars
