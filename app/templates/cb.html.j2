@@ -99,6 +99,22 @@
           </div>
         </div>
 
+        <br />
+
+        <h2 class="title has-text-centered">
+            Embed Preview
+        </h2>
+
+        <br />
+
+        <div class="columns is-mobile is-centered">
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+                <img id="preview-img" />
+            </p>
+          </div>
+        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -106,6 +122,7 @@
     <script>
         let user_id = "{{ id }}";
         let code = $("#readme");
+        let preview_section = $("#preview");
         let link_to_profile = false;
 
         let parameters = {
@@ -119,6 +136,7 @@
             let base_url = "{{ base_url }}/spotify?";
             let url = base_url + $.param(parameters, true);
 
+            $("#preview-img").attr("src", url)
             code.text(
                 link_to_profile ? `[![Spotify playing](${url})](https://open.spotify.com/user/${user_id})` : `![Spotify playing](${url})`
             );
