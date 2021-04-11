@@ -31,8 +31,8 @@ def load_image_b64(url):
 
 @cached(ttl=5, max_size=128)
 def make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, title_color, text_color,
-        bg_color
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, hide_status, eq_bar_theme, title_color,
+        text_color, bg_color
 ):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
@@ -85,6 +85,9 @@ def make_svg(
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
 
+    if bg_color == "":
+        bg_color = "white"
+
     if title_color == "":
         title_color = "black"
 
@@ -131,6 +134,7 @@ def make_svg(
 
         "show_animation": len(song_name) > 27,
         "needs_cover_image": needs_cover_image,
+        "hide_status": hide_status,
 
         "duration": duration,
         "default_duration": default_duration,
@@ -173,6 +177,9 @@ def render_img():
     bars_when_not_listening = True if request.args.get(
         "bars_when_not_listening", default="true"
     ) == "true" else False
+    hide_status = True if request.args.get(
+        "hide_status", default="true"
+    ) == "true" else False
 
     title_color = escape(request.args.get("title_color", default=""))
     text_color = escape(request.args.get("text_color", default=""))
@@ -182,8 +189,8 @@ def render_img():
 
     # Generate the SVG
     svg = make_svg(
-        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, eq_bar_theme, title_color, text_color,
-        bg_color
+        item, theme, is_now_playing, needs_cover_image, bars_when_not_listening, hide_status, eq_bar_theme, title_color,
+        text_color, bg_color
     )
 
     # Generate the response with the SVG

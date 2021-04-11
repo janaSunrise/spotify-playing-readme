@@ -131,7 +131,9 @@
                 {{ css_bar|safe }}
             </style>
 
-            <div class="currentStatus">{{status}}</div>
+            {% if not hide_status %}
+                <div class="currentStatus">{{status}}</div>
+            {% endif %}
 
             <div class="main">
                 {% if needs_cover_image %}

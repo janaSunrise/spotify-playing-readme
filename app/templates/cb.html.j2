@@ -100,6 +100,13 @@
 
         <div class="columns is-mobile is-centered">
             <label class="checkbox">
+              <input type="checkbox" id="hide-status">
+              Hide status
+            </label>
+        </div>
+
+        <div class="columns is-mobile is-centered">
+            <label class="checkbox">
               <input type="checkbox" id="link-to-profile">
               Combine with a link to your profile
             </label>
@@ -169,6 +176,7 @@
             bg_color: "",
             title_color: "",
             text_color: "",
+            hide_status: false
         };
 
         const change_url = () => {
@@ -193,6 +201,9 @@
         });
         $('#bars-when-not-listening').change(function() {
             parameters.bars_when_not_listening = this.checked; change_url();
+        });
+        $('#hide-status').change(function() {
+            parameters.hide_status = this.checked; change_url();
         });
         $('#link-to-profile').change(function() {
             link_to_profile = this.checked; change_url();
