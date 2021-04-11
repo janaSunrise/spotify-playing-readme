@@ -178,7 +178,7 @@ def render_img():
         "bars_when_not_listening", default="true"
     ) == "true" else False
     hide_status = True if request.args.get(
-        "hide_status", default="true"
+        "hide_status", default="false"
     ) == "true" else False
 
     title_color = escape(request.args.get("title_color", default=""))
