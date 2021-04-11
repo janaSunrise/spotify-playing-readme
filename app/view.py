@@ -58,7 +58,7 @@ def make_svg(item, theme, is_now_playing, needs_cover_image, bars_when_not_liste
     theme_mapping = {
         "plain": {
             "width": 350,
-            "height": 105,
+            "height": 140,
             "num_bar": 35
         },
         "wavy": {
@@ -152,8 +152,10 @@ def render_img():
         return item, is_now_playing_
 
     user_id = request.args.get("id")
+
     theme = request.args.get("theme", default="plain")
     eq_bar_theme = request.args.get("eq_bar_theme", default="plain")
+
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
     bars_when_not_listening = True if request.args.get(
         "bars_when_not_listening", default="true"
