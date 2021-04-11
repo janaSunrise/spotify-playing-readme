@@ -73,9 +73,8 @@ and transparent-ness.
 - [x] Improve the current themes  
 - [ ] Add more themes
 - [ ] Add more customization options
-  - [ ] Previews when customizing the card
-  - [ ] Allow customizing Background and font color 
-    - Will be redeveloped, with all security issues fixed  
+  - [x] Previews when customizing the card
+  - [ ] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
   - [ ] Duration display
   - [x] Marquee show
   - [ ] Dancing bars display
