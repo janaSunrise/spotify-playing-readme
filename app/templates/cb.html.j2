@@ -113,6 +113,13 @@
         </div>
 
         <div class="columns is-mobile is-centered">
+            <label class="checkbox">
+              <input type="checkbox" id="website-img">
+              Generate the link for your website
+            </label>
+        </div>
+
+        <div class="columns is-mobile is-centered">
           <div class="column is-narrow">
             <p class="bd-notification is-primary">
               <textarea class="textarea is-primary" id="readme" readonly></textarea>
@@ -172,6 +179,7 @@
         let code = $("#readme");
         let preview_section = $("#preview");
         let link_to_profile = false;
+        let img_for_website = false;
 
         let parameters = {
             id: user_id,
@@ -188,11 +196,20 @@
         const change_url = () => {
             let base_url = "{{ base_url }}/spotify?";
             let url = base_url + $.param(parameters, true);
+            let spotify_url = `https://open.spotify.com/user/${user_id}`;
+
+            let md_img = `![Spotify playing](${url})`;
+            let md_img_url = `[![Spotify playing](${url})](spotify_url)`;
+            let website_img = `<img src="${url}" />`
+            let website_img_url = `<a href="${spotify_url}"><img src="${url}" /></a>`
 
             $("#preview-img").attr("src", url)
-            code.text(
-                link_to_profile ? `[![Spotify playing](${url})](https://open.spotify.com/user/${user_id})` : `![Spotify playing](${url})`
-            );
+
+            if(img_for_website){
+                code.text(link_to_profile ? website_img_url : website_img);
+            } else {
+                code.text(link_to_profile ? md_img_url : md_img);
+            }
         }
 
         change_url();
@@ -222,6 +239,9 @@
         });
         $('#link-to-profile').change(function() {
             link_to_profile = this.checked; change_url();
+        });
+        $('#website-img').change(function() {
+            img_for_website = this.checked; change_url();
         });
         $('#title-color').keyup(function() {
             parameters.title_color = $(this).val(); change_url();
