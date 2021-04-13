@@ -1,4 +1,9 @@
 THEMES = {
+    "none": {
+        "title_color": "",
+        "text_color": "",
+        "bg_color": "",
+    },
     "dark": {
         "title_color": "#fff",
         "text_color": "#9f9f9f",

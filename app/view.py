@@ -6,6 +6,7 @@ from flask import Blueprint, Response, escape, render_template, request
 from memoization import cached
 
 from .utils import get_recently_played, get_now_playing, get_access_token
+from .themes import THEMES
 
 view = Blueprint("/view", __name__, template_folder="templates")
 
@@ -43,10 +44,9 @@ def make_svg(item, info):
     needs_cover_image = info["needs_cover_image"]
     bars_when_not_listening = info["bars_when_not_listening"]
     hide_status = info["hide_status"]
+
     eq_bar_theme = info["eq_bar_theme"]
-    title_color = info["title_color"]
-    text_color = info["text_color"]
-    bg_color = info["bg_color"]
+    color_theme = info["color_theme"]
 
     currently_playing_type = item.get("currently_playing_type", "track")
 
@@ -92,6 +92,23 @@ def make_svg(item, info):
     height = theme_mapping[theme]["height"]
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
+
+    # THEME MAPPING
+    if color_theme not in THEMES:
+        color_theme = "none"
+
+    bg_color = THEMES[color_theme]["bg_color"]
+    title_color = THEMES[color_theme]["title_color"]
+    text_color = THEMES[color_theme]["text_color"]
+
+    if title_color != "" and info["title_color"] != "":
+        title_color = info["title_color"]
+
+    if text_color != "" and info["text_color"] != "":
+        text_color = info["text_color"]
+
+    if bg_color != "" and info["bg_color"] != "":
+        bg_color = info["bg_color"]
 
     if bg_color == "":
         bg_color = "white"
@@ -190,9 +207,10 @@ def render_img():
         "hide_status", default="false"
     ) == "true" else False
 
-    title_color = escape(request.args.get("title_color", default=""))
-    text_color = escape(request.args.get("text_color", default=""))
-    bg_color = escape(request.args.get("bg_color", default=""))
+    title_color = str(escape(request.args.get("title_color", default="")))
+    text_color = str(escape(request.args.get("text_color", default="")))
+    bg_color = str(escape(request.args.get("bg_color", default="")))
+    color_theme = request.args.get("color_theme", default="none")
 
     item, is_now_playing = get_song_info(user_id)
 
@@ -203,6 +221,7 @@ def render_img():
         "bars_when_not_listening": bars_when_not_listening,
         "hide_status": hide_status,
         "eq_bar_theme": eq_bar_theme,
+        "color_theme": color_theme,
         "title_color": title_color,
         "text_color": text_color,
         "bg_color": bg_color
