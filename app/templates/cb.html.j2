@@ -98,6 +98,29 @@
 
         <br />
 
+          <div class="column is-narrow">
+            <p class="bd-notification is-primary">
+              <label>Color theme</label>
+              <div class="select is-primary">
+                  <select id="color-theme-select">
+                    <option>none</option>
+                    <option>dark</option>
+                    <option>radical</option>
+                    <option>tokyonight</option>
+                    <option>onedark</option>
+                    <option>cobalt</option>
+                    <option>synthwave</option>
+                    <option>algolia</option>
+                    <option>great_gatsby</option>
+                    <option>darcula</option>
+                  </select>
+                </div>
+            </p>
+          </div>
+        </div>
+
+        <br />
+
         <div class="columns is-mobile is-centered">
             <label class="checkbox">
               <input type="checkbox" id="hide-status">
@@ -186,6 +209,7 @@
             theme: "plain",
             image: true,
             eq_bar_theme: "plain",
+            color_theme: "none",
             bars_when_not_listening: false,
             bg_color: "",
             title_color: "",
@@ -215,6 +239,9 @@
         change_url();
         $('#theme-select').change(function() {
             parameters.theme = this.value; change_url();
+        });
+        $('#color-theme-select').change(function() {
+            parameters.color_theme = this.value; change_url();
         });
         $('#eq-bar-theme-select').change(function() {
             parameters.eq_bar_theme = this.value; change_url();
