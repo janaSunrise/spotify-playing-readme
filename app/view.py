@@ -101,13 +101,13 @@ def make_svg(item, info):
     title_color = THEMES[color_theme]["title_color"]
     text_color = THEMES[color_theme]["text_color"]
 
-    if title_color != "" and info["title_color"] != "":
+    if info["title_color"] != "":
         title_color = info["title_color"]
 
-    if text_color != "" and info["text_color"] != "":
+    if info["text_color"] != "":
         text_color = info["text_color"]
 
-    if bg_color != "" and info["bg_color"] != "":
+    if info["bg_color"] != "":
         bg_color = info["bg_color"]
 
     if bg_color == "":
