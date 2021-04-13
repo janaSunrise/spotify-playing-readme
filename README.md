@@ -81,19 +81,17 @@ and transparent-ness.
   - [x] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
   - [ ] Duration display
   - [x] Marquee show
-  - [ ] Dancing bars display
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
-  - [ ] Theme
+  - [x] Color Theme
   - [x] Abiltiy to Hide status
-  - [ ] HTML Image tag generation
+  - [x] HTML Image tag generation
   - [ ] Bordering system.
   - [x] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
 - [ ] Bar customization
   - [x] No bars
   - [x] Green normal bars
   - [ ] Spectograph
-- [ ] More Features and plans.
 
 ## 🤝 Contributing
 
