@@ -1,5 +1,6 @@
 import base64
 import random
+from textwrap import dedent
 
 import requests
 from flask import Blueprint, Response, escape, render_template, request
@@ -11,14 +12,19 @@ from .themes import THEMES
 view = Blueprint("/view", __name__, template_folder="templates")
 
 
-@cached(ttl=30, max_size=128)
+@cached(ttl=60, max_size=128)
 def generate_bar(bar_count=75):
     css_bar = ""
     left = 1
 
     for i in range(1, bar_count + 1):
         anim = random.randint(300, 600)
-        css_bar += f".bar:nth-child({i})  {{ left: {left}px; animation-duration: {anim}ms; }}"
+        css_bar += dedent(f"""
+        .bar:nth-child({i}) {{
+            left: {left}px;
+            animation-duration: {anim}ms;
+        }}
+        """)
         left += 4
 
     return css_bar
@@ -52,6 +58,7 @@ def make_svg(item, info):
 
     img, artist_name, song_name, explicit = "", "", "", False
 
+    # Get the info
     if currently_playing_type == "track":
         img = load_image_b64(item["album"]["images"][1]["url"])
         artist_name = item["artists"][0]["name"].replace("&", "&amp;")
@@ -61,6 +68,7 @@ def make_svg(item, info):
         artist_name = item["show"]["publisher"].replace("&", "&amp;")
         song_name = item["name"].replace("&", "&amp;")
 
+    # Mappings
     title_text_mapping = {
         True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
         False: ["Was listening to", "Previously binging to", "Was vibing to"]
@@ -200,12 +208,8 @@ def render_img():
     eq_bar_theme = request.args.get("eq_bar_theme", default="plain")
 
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
-    bars_when_not_listening = True if request.args.get(
-        "bars_when_not_listening", default="true"
-    ) == "true" else False
-    hide_status = True if request.args.get(
-        "hide_status", default="false"
-    ) == "true" else False
+    bars_when_not_listening = True if request.args.get("bars_when_not_listening", default="true") == "true" else False
+    hide_status = True if request.args.get("hide_status", default="false") == "true" else False
 
     title_color = str(escape(request.args.get("title_color", default="")))
     text_color = str(escape(request.args.get("text_color", default="")))
