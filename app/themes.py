@@ -48,5 +48,15 @@ THEMES = {
         "title_color": "#BA5F17",
         "text_color": "#BEBEBE",
         "bg_color": "#242424",
+    },
+    "outrun": {
+        "title_color": "#ffcc00",
+        "text_color": "#8080ff",
+        "bg_color": "#141439",
+    },
+    "city_lights": {
+        "title_color": "#5D8CB3",
+        "text_color": "#718CA1",
+        "bg_color": "#1D252C"
     }
 }
