@@ -21,7 +21,7 @@ def cb():
     database.child("users").child(user_id).set(token)
 
     return render_template(
-        "cb.html.j2",
+        "cb.html",
         id=user_id,
         base_url=BASE_URL,
     )

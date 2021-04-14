@@ -1,68 +1,59 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spotify playing README</title>
+{% extends "base.html" %}
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+{% block title %}Spotify playing README{% endblock %}
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
+{% block head %}
+<style>
+    #center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 25px;
+    }
+</style>
+{% endblock %}
 
-        #center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 25px;
-        }
-    </style>
-
-  </head>
-  <body>
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-      <div class="container is-max-desktop">
-          <div class="navbar-brand">
+{% block content %}
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="container is-max-desktop">
+        <div class="navbar-brand">
             <p class="navbar-item">
                 <strong>Spotify playing README</strong>
             </p>
 
             <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </a>
-          </div>
-
-           <div class="navbar-end">
-               <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
-                   GITHUB
-               </a>
-           </div>
         </div>
-    </nav>
 
-    <div class="container is-max-desktop" id="center">
-        <h1 class="subtitle is-4">Connect with Spotify to get started with Spotify for README!</h1>
+        <div class="navbar-end">
+            <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
+                GITHUB
+            </a>
+       </div>
     </div>
+</nav>
 
-    <br />
-    <br />
+<div class="container is-max-desktop" id="center">
+    <h1 class="subtitle is-4">Connect with Spotify to get started with Spotify for README!</h1>
+</div>
 
-    <div class="has-text-centered">
-        <button id="login-redirect" class="button is-primary is-light is-medium">
-            Authenticate with Spotify!
-        </button>
-    </div>
+<br />
+<br />
 
-    <script>
-        document.querySelector("#login-redirect").onclick = () => {
-            location.href = "/login";
-        }
-    </script>
-  </body>
-</html>
+<div class="has-text-centered">
+    <button id="login-redirect" class="button is-primary is-light is-medium">
+        Authenticate with Spotify!
+    </button>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    document.querySelector("#login-redirect").onclick = () => {
+        location.href = "/login";
+    }
+</script>
+{% endblock %}

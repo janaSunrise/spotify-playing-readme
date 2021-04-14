@@ -1,0 +1,273 @@
+{% extends "base.html" %}
+
+{% block title %}Spotify playing README{% endblock %}
+
+{% block head %}
+<style>
+    #readme {
+        height: 120px;
+        width: 400px;
+        padding: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+    <div class="container is-max-desktop">
+      <div class="navbar-brand">
+        <p class="navbar-item">
+            <strong>Spotify playing README</strong>
+        </p>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+       <div class="navbar-end">
+           <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
+               GITHUB
+           </a>
+       </div>
+    </div>
+</nav>
+
+<div class="container is-max-desktop">
+    <br />
+
+    <h1 class="title has-text-centered">
+        README code section
+    </h1>
+</div>
+
+<br />
+<br />
+
+<div class="columns is-mobile is-centered">
+    <label class="checkbox">
+        <input type="checkbox" id="needs-image" checked>
+            Show cover image
+    </label>
+</div>
+<div class="columns is-mobile is-centered">
+    <label class="checkbox">
+      <input type="checkbox" id="bars-when-not-listening">
+      Display bars when not listening
+    </label>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <label>Card theme</label>
+            <div class="select is-primary">
+                <select id="theme-select">
+                    <option>plain</option>
+                    <option>wavy</option>
+                </select>
+            </div>
+        </p>
+    </div>
+
+    <br />
+
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <label>EQ Bar theme</label>
+            <div class="select is-primary">
+                <select id="eq-bar-theme-select">
+                    <option>none</option>
+                    <option selected>plain</option>
+                </select>
+            </div>
+        </p>
+    </div>
+
+    <br />
+
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <label>Color theme</label>
+            <div class="select is-primary">
+                <select id="color-theme-select">
+                    <option>none</option>
+                    <option>dark</option>
+                    <option>radical</option>
+                    <option>tokyonight</option>
+                    <option>onedark</option>
+                    <option>cobalt</option>
+                    <option>synthwave</option>
+                    <option>algolia</option>
+                    <option>great_gatsby</option>
+                    <option>darcula</option>
+                    <option>outrun</option>
+                    <option>city_lights</option>
+                </select>
+            </div>
+        </p>
+    </div>
+</div>
+
+<br />
+
+<div class="columns is-mobile is-centered">
+    <label class="checkbox">
+      <input type="checkbox" id="hide-status">
+      Hide status
+    </label>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <label class="checkbox">
+      <input type="checkbox" id="link-to-profile">
+      Combine with a link to your profile
+    </label>
+</div>
+
+<div class="columns is-mobile is-centered">
+    <label class="checkbox">
+      <input type="checkbox" id="website-img">
+      Generate the link for your website
+    </label>
+</div>
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-narrow">
+    <p class="bd-notification is-primary">
+      <textarea class="textarea is-primary" id="readme" readonly></textarea>
+    </p>
+  </div>
+
+  <div class="column is-narrow">
+    <p class="bd-notification is-primary">
+      <label>Enter the Background color</label>
+      <input class="input is-info" id="bg-color" type="text" placeholder="Leave empty for default color.">
+    </p>
+
+    <br />
+
+    <p style="font-size: 14px;">
+        <strong>TIP: Fill either of the columns to apply same value to both.</strong>
+    </p>
+
+    <div id="title-color-p">
+        <p class="bd-notification is-primary">
+          <label>Enter the Title color</label>
+          <input class="input is-info" id="title-color" type="text" placeholder="Leave empty for default color.">
+        </p>
+
+        <br />
+    </div>
+
+    <p class="bd-notification is-primary">
+      <label>Enter the Text color</label>
+      <input class="input is-info" id="text-color" type="text" placeholder="Leave empty for default color.">
+    </p>
+  </div>
+</div>
+
+<br />
+
+<h2 class="title has-text-centered">
+    Embed Preview
+</h2>
+
+<br />
+
+<div class="columns is-mobile is-centered">
+  <div class="column is-narrow">
+    <p class="bd-notification is-primary">
+        <img id="preview-img" alt="The spotify embed preview" />
+    </p>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    let user_id = "{{ id }}";
+    let code = $("#readme");
+    let link_to_profile = false;
+    let img_for_website = false;
+
+    let parameters = {
+        id: user_id,
+        theme: "plain",
+        image: true,
+        eq_bar_theme: "plain",
+        color_theme: "none",
+        bars_when_not_listening: false,
+        bg_color: "",
+        title_color: "",
+        text_color: "",
+        hide_status: false
+    };
+
+    const change_url = () => {
+        let base_url = "{{ base_url }}/spotify?";
+        let url = base_url + $.param(parameters, true);
+        let spotify_url = `https://open.spotify.com/user/${user_id}`;
+
+        let md_img = `![Spotify playing](${url})`;
+        let md_img_url = `[![Spotify playing](${url})](${spotify_url})`;
+        let website_img = `<img src="${url}" />`
+        let website_img_url = `<a href="${spotify_url}"><img src="${url}" /></a>`
+
+        $("#preview-img").attr("src", url)
+
+        if(img_for_website){
+            code.text(link_to_profile ? website_img_url : website_img);
+        } else {
+            code.text(link_to_profile ? md_img_url : md_img);
+        }
+    }
+
+    change_url();
+
+    $('#theme-select').change(function() {
+        parameters.theme = this.value; change_url();
+    });
+    $('#color-theme-select').change(function() {
+        parameters.color_theme = this.value; change_url();
+    });
+    $('#eq-bar-theme-select').change(function() {
+        parameters.eq_bar_theme = this.value; change_url();
+    });
+    $('#needs-image').change(function() {
+        parameters.image = this.checked; change_url();
+    });
+    $('#bars-when-not-listening').change(function() {
+        parameters.bars_when_not_listening = this.checked; change_url();
+    });
+    $('#hide-status').change(function() {
+        parameters.hide_status = this.checked;
+
+        if(parameters.hide_status === true) {
+            $("#title-color-p").hide();
+        }
+        else {
+            $("#title-color-p").show();
+        }
+
+        change_url();
+    });
+    $('#link-to-profile').change(function() {
+        link_to_profile = this.checked; change_url();
+    });
+    $('#website-img').change(function() {
+        img_for_website = this.checked; change_url();
+    });
+    $('#title-color').keyup(function() {
+        parameters.title_color = $(this).val(); change_url();
+    });
+    $('#text-color').keyup(function() {
+        parameters.text_color = $(this).val(); change_url();
+    });
+    $('#bg-color').keyup(function() {
+        parameters.bg_color = $(this).val(); change_url();
+    });
+</script>
+{% endblock %}
