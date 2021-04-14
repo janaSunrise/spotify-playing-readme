@@ -18,6 +18,19 @@ Here's the embed from the site.
 access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with 
 only read permissions and scopes. You can check it in the configuration file for the scopes.
 
+## URL Parameters
+
+- `id`: Your spotify ID
+- `theme`: The card theme
+- `image`: If cover image to be included
+- `eq_bar_theme`: The theme for the EQ bar
+- `color_theme`: The color theme for the Card
+- `bars_when_not_listening`: If bars should be shown when not listening
+- `bg_color`: The BG color for the card
+- `title_color`: The title color for the card
+- `text_color`: The text color for the card
+- `hide_status`: If the status for song should be shown.
+
 ## Setting up the development environment
 
 #### Install the dependencies
