@@ -40,8 +40,8 @@ def load_image_b64(url):
 def make_svg(item, info):
     @cached(ttl=30, max_size=128)
     def milliseconds_to_minute(ms):
-        seconds = int((ms / 1000) % 60)
-        minutes = int((ms / (1000 * 60)) % 60)
+        seconds, milliseconds = divmod(ms, 1000)
+        minutes, seconds = divmod(seconds, 60)
         return str("%d:%d" % (minutes, seconds))
 
     # Parsing
