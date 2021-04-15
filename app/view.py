@@ -189,7 +189,10 @@ def render_img():
 
         if data is not None and data != {}:
             item = data["item"]
-            item["currently_playing_type"] = data["currently_playing_type"]
+
+            if not data.get("currently_playing_type"):
+                item["currently_playing_type"] = data["currently_playing_type"]
+
             is_now_playing_ = data["is_playing"]
         else:
             recent_plays = get_recently_played(access_token)
