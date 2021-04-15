@@ -5,7 +5,7 @@
 {% block head %}
 <style>
     #readme {
-        height: 120px;
+        height: 150px;
         width: 400px;
         padding: 5px;
     }
@@ -192,7 +192,6 @@
     let code = $("#readme");
     let link_to_profile = false;
     let img_for_website = false;
-
     let parameters = {
         id: user_id,
         theme: "plain",
@@ -213,8 +212,8 @@
 
         let md_img = `![Spotify playing](${url})`;
         let md_img_url = `[![Spotify playing](${url})](${spotify_url})`;
-        let website_img = `<img src="${url}" />`
-        let website_img_url = `<a href="${spotify_url}"><img src="${url}" /></a>`
+        let website_img = `<img src="${url}" alt="spotify-readme-card"/>`
+        let website_img_url = `<a href="${spotify_url}"><img src="${url}" alt="spotify-readme-card"/></a>`
 
         $("#preview-img").attr("src", url)
 

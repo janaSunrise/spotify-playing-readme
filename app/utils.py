@@ -65,7 +65,7 @@ def get_recently_played(access_token):
     return response.json()
 
 
-@cached(ttl=3, max_size=128)
+@cached(ttl=5, max_size=128)
 def get_user_info(access_token):
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__USER_INFO, headers=headers)

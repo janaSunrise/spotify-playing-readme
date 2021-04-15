@@ -93,6 +93,13 @@
         margin-left: 3px;
       }
 
+      .duration {
+          position:fixed;
+          background-color: {{ text_color | safe }};
+          color: {{ bg_color | safe }};
+          border-radius: 5px;
+      }
+
       @keyframes sound {
           0% {
             opacity: .35;
@@ -124,7 +131,10 @@
                         {% endif %}
                         {{song_name}}
                     </div>
-                    <div class="artist">{{artist_name}}</div>
+                    <div class="artist">
+                        {{artist_name}}
+                        <span id="duration" class="duration">{{default_duration}}</span>
+                    </div>
                     <div id='bars'>{{content_bar|safe}}</div>
                 </div>
             </div>
@@ -141,5 +151,32 @@
             </div>
         {% endif %}
     </div>
+    <script>
+        const startTimer = (duration) => {
+            var minute = Math.floor(duration / 60000);
+            var sec = ((duration % 60000) / 1000).toFixed(0);
+            var musicTimer = setInterval(function() {
+
+                if(minute == -1){
+                    minute = 0
+                    sec = 0
+                    clearInterval(musicTimer)
+                }
+                if(!(parseInt(sec.toString()) > 9)) {
+                    sec = "0" + parseInt(sec.toString())
+                }
+
+                document.querySelector('#duration').textContent = minute + ":" + sec;
+
+                sec--;
+                if (sec == 00) {
+                    minute--;
+                    sec = 60;
+                }
+            }, 1000);
+        }
+
+        startTimer({{duration}});
+    </script>
   </foreignObject>
 </svg>

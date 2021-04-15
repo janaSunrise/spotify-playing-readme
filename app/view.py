@@ -93,8 +93,8 @@ def make_svg(item, info):
     }
 
     is_explicit = item["explicit"]
-    duration = item["duration_ms"]
 
+    duration = item["duration_ms"]
     default_duration = milliseconds_to_minute(duration)
 
     height = theme_mapping[theme]["height"]
