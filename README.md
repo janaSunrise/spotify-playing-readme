@@ -89,17 +89,16 @@ and transparent-ness.
   - [ ] Customization
 - [x] Improve the current themes  
 - [ ] Add more themes
-- [ ] Add more customization options
+- [x] Add more customization options
   - [x] Previews when customizing the card
   - [x] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
-  - [ ] Duration display
+  - [x] Duration display
   - [x] Marquee show
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
   - [x] Color Theme
   - [x] Abiltiy to Hide status
   - [x] HTML Image tag generation
-  - [ ] Bordering system.
   - [x] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
 - [ ] Bar customization
   - [x] No bars
