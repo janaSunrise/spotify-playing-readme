@@ -89,7 +89,7 @@ and transparent-ness.
   - [ ] Customization
 - [x] Improve the current themes  
 - [ ] Add more themes
-- [ ] Add more customization options
+- [x] Add more customization options
   - [x] Previews when customizing the card
   - [x] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
   - [x] Duration display
