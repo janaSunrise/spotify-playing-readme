@@ -138,6 +138,9 @@
   <div class="column is-narrow">
     <p class="bd-notification is-primary">
       <textarea class="textarea is-primary" id="readme" readonly></textarea>
+        <div class="box has-text-centered">
+            <button id="copy-to-clipboard" class="button is-link">Copy to Clipboard</button>
+        </div>
     </p>
   </div>
 
@@ -268,5 +271,12 @@
     $('#bg-color').keyup(function() {
         parameters.bg_color = $(this).val(); change_url();
     });
+
+    // Copy to clipboard
+    $("#copy-to-clipboard").click(function(){
+        $("textarea").select();
+        document.execCommand('copy');
+    });
+
 </script>
 {% endblock %}
