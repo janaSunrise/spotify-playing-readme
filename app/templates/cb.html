@@ -15,47 +15,45 @@
 {% block content %}
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
     <div class="container is-max-desktop">
-      <div class="navbar-brand">
-        <p class="navbar-item">
-            <strong>Spotify playing README</strong>
-        </p>
+        <div class="navbar-brand">
+            <p class="navbar-item">
+                <strong>Spotify playing README</strong>
+            </p>
 
-        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
 
-       <div class="navbar-end">
-           <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
-               GITHUB
-           </a>
-       </div>
+        <div class="navbar-end">
+            <a class="navbar-item" href="https://github.com/janaSunrise/spotify-playing-readme">
+                GITHUB
+            </a>
+        </div>
     </div>
 </nav>
 
 <div class="container is-max-desktop">
-    <br />
-
     <h1 class="title has-text-centered">
         README code section
     </h1>
 </div>
 
-<br />
-<br />
+<br/>
+<br/>
 
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
         <input type="checkbox" id="needs-image" checked>
-            Show cover image
+        Show cover image
     </label>
 </div>
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
-      <input type="checkbox" id="bars-when-not-listening">
-      Display bars when not listening
+        <input type="checkbox" id="bars-when-not-listening">
+        Display bars when not listening
     </label>
 </div>
 
@@ -63,132 +61,126 @@
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
             <label>Card theme</label>
-            <div class="select is-primary">
-                <select id="theme-select">
-                    <option>plain</option>
-                    <option>wavy</option>
-                </select>
-            </div>
+        <div class="select is-primary">
+            <select id="theme-select">
+                <option>plain</option>
+                <option>wavy</option>
+            </select>
+        </div>
         </p>
     </div>
-
-    <br />
 
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
             <label>EQ Bar theme</label>
-            <div class="select is-primary">
-                <select id="eq-bar-theme-select">
-                    <option>none</option>
-                    <option selected>plain</option>
-                </select>
-            </div>
+        <div class="select is-primary">
+            <select id="eq-bar-theme-select">
+                <option>none</option>
+                <option selected>plain</option>
+            </select>
+        </div>
         </p>
     </div>
-
-    <br />
 
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
             <label>Color theme</label>
-            <div class="select is-primary">
-                <select id="color-theme-select">
-                    <option>none</option>
-                    <option>dark</option>
-                    <option>radical</option>
-                    <option>tokyonight</option>
-                    <option>onedark</option>
-                    <option>cobalt</option>
-                    <option>synthwave</option>
-                    <option>algolia</option>
-                    <option>great_gatsby</option>
-                    <option>darcula</option>
-                    <option>outrun</option>
-                    <option>city_lights</option>
-                </select>
-            </div>
+        <div class="select is-primary">
+            <select id="color-theme-select">
+                <option>none</option>
+                <option>dark</option>
+                <option>radical</option>
+                <option>tokyonight</option>
+                <option>onedark</option>
+                <option>cobalt</option>
+                <option>synthwave</option>
+                <option>algolia</option>
+                <option>great_gatsby</option>
+                <option>darcula</option>
+                <option>outrun</option>
+                <option>city_lights</option>
+            </select>
+        </div>
         </p>
     </div>
 </div>
 
-<br />
-
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
-      <input type="checkbox" id="hide-status">
-      Hide status
+        <input type="checkbox" id="hide-status">
+        Hide status
     </label>
 </div>
 
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
-      <input type="checkbox" id="link-to-profile">
-      Combine with a link to your profile
+        <input type="checkbox" id="link-to-profile">
+        Combine with a link to your profile
     </label>
 </div>
 
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
-      <input type="checkbox" id="website-img">
-      Generate the link for your website
+        <input type="checkbox" id="website-img">
+        Generate the link for your website
     </label>
 </div>
 
 <div class="columns is-mobile is-centered">
-  <div class="column is-narrow">
-    <p class="bd-notification is-primary">
-      <textarea class="textarea is-primary" id="readme" readonly></textarea>
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <textarea class="textarea is-primary" id="readme" readonly></textarea>
         <div class="box has-text-centered">
             <button id="copy-to-clipboard" class="button is-link">
-                <svg style="width: 1.75rem; height: 1.75rem" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> &nbsp;
+                <svg style="width: 1.75rem; height: 1.75rem" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                </svg> &nbsp;
                 Copy to Clipboard
             </button>
         </div>
-    </p>
-  </div>
-
-  <div class="column is-narrow">
-    <p class="bd-notification is-primary">
-      <label>Enter the Background color</label>
-      <input class="input is-info" id="bg-color" type="text" placeholder="Leave empty for default color.">
-    </p>
-
-    <br />
-
-    <p style="font-size: 14px;">
-        <strong>TIP: Fill either of the columns to apply same value to both.</strong>
-    </p>
-
-    <div id="title-color-p">
-        <p class="bd-notification is-primary">
-          <label>Enter the Title color</label>
-          <input class="input is-info" id="title-color" type="text" placeholder="Leave empty for default color.">
         </p>
-
-        <br />
     </div>
 
-    <p class="bd-notification is-primary">
-      <label>Enter the Text color</label>
-      <input class="input is-info" id="text-color" type="text" placeholder="Leave empty for default color.">
-    </p>
-  </div>
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <label>Enter the Background color</label>
+            <input class="input is-info" id="bg-color" type="text" placeholder="Leave empty for default color.">
+        </p>
+
+        <p style="font-size: 14px;">
+            <strong>TIP: Fill either of the columns to apply same value to both.</strong>
+        </p>
+
+        <br/>
+
+        <div id="title-color-p">
+            <p class="bd-notification is-primary">
+                <label>Enter the Title color</label>
+                <input class="input is-info" id="title-color" type="text" placeholder="Leave empty for default color.">
+            </p>
+        </div>
+
+        <p class="bd-notification is-primary">
+            <label>Enter the Text color</label>
+            <input class="input is-info" id="text-color" type="text" placeholder="Leave empty for default color.">
+        </p>
+    </div>
 </div>
 
-<br />
+<br/>
 
 <h2 class="title has-text-centered">
     Embed Preview
 </h2>
 
-<br />
-
 <div class="columns is-mobile is-centered">
-  <div class="column is-narrow">
-    <p class="bd-notification is-primary">
-        <img id="preview-img" alt="The spotify embed preview" />
-    </p>
-  </div>
+    <div class="column is-narrow">
+        <p class="bd-notification is-primary">
+            <img id="preview-img" alt="The spotify embed preview"/>
+        </p>
+    </div>
 </div>
 {% endblock %}
 
@@ -223,7 +215,7 @@
 
         $("#preview-img").attr("src", url)
 
-        if(img_for_website){
+        if (img_for_website) {
             code.text(link_to_profile ? website_img_url : website_img);
         } else {
             code.text(link_to_profile ? md_img_url : md_img);
@@ -232,58 +224,67 @@
 
     change_url();
 
-    $('#theme-select').change(function() {
-        parameters.theme = this.value; change_url();
+    $('#theme-select').change(function () {
+        parameters.theme = this.value;
+        change_url();
     });
-    $('#color-theme-select').change(function() {
-        parameters.color_theme = this.value; change_url();
+    $('#color-theme-select').change(function () {
+        parameters.color_theme = this.value;
+        change_url();
     });
-    $('#eq-bar-theme-select').change(function() {
-        parameters.eq_bar_theme = this.value; change_url();
+    $('#eq-bar-theme-select').change(function () {
+        parameters.eq_bar_theme = this.value;
+        change_url();
     });
-    $('#needs-image').change(function() {
-        parameters.image = this.checked; change_url();
+    $('#needs-image').change(function () {
+        parameters.image = this.checked;
+        change_url();
     });
-    $('#bars-when-not-listening').change(function() {
-        parameters.bars_when_not_listening = this.checked; change_url();
+    $('#bars-when-not-listening').change(function () {
+        parameters.bars_when_not_listening = this.checked;
+        change_url();
     });
-    $('#hide-status').change(function() {
+    $('#hide-status').change(function () {
         parameters.hide_status = this.checked;
 
-        if(parameters.hide_status === true) {
+        if (parameters.hide_status === true) {
             $("#title-color-p").hide();
-        }
-        else {
+        } else {
             $("#title-color-p").show();
         }
 
         change_url();
     });
-    $('#link-to-profile').change(function() {
-        link_to_profile = this.checked; change_url();
+    $('#link-to-profile').change(function () {
+        link_to_profile = this.checked;
+        change_url();
     });
-    $('#website-img').change(function() {
-        img_for_website = this.checked; change_url();
+    $('#website-img').change(function () {
+        img_for_website = this.checked;
+        change_url();
     });
-    $('#title-color').keyup(function() {
-        parameters.title_color = $(this).val(); change_url();
+    $('#title-color').keyup(function () {
+        parameters.title_color = $(this).val();
+        change_url();
     });
-    $('#text-color').keyup(function() {
-        parameters.text_color = $(this).val(); change_url();
+    $('#text-color').keyup(function () {
+        parameters.text_color = $(this).val();
+        change_url();
     });
-    $('#bg-color').keyup(function() {
-        parameters.bg_color = $(this).val(); change_url();
+    $('#bg-color').keyup(function () {
+        parameters.bg_color = $(this).val();
+        change_url();
     });
 
     // Copy to clipboard
     $('#copy-to-clipboard').click(function () {
-      const textarea = $('textarea');
-      if ('clipboard' in navigator) {
-        navigator.clipboard.writeText(textarea.value);
-      } else {
-        textarea.select();
-        document.execCommand('copy');
-      }
+        const textarea = $('textarea');
+        if ('clipboard' in navigator) {
+            navigator.clipboard.writeText(textarea.value);
+        } else {
+            textarea.select();
+            document.execCommand('copy');
+        }
     });
 
 
