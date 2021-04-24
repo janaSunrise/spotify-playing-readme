@@ -36,15 +36,15 @@ def load_image_b64(url):
     return base64.b64encode(response.content).decode("ascii")
 
 
+@cached(ttl=30, max_size=256)
+def milliseconds_to_minute(ms):
+    seconds, milliseconds = divmod(ms, 1000)
+    minutes, seconds = divmod(seconds, 60)
+    return str("%d:%d" % (minutes, seconds))
+
+
 @cached(ttl=5, max_size=128)
 def make_svg(item, info):
-    @cached(ttl=30, max_size=128)
-    def milliseconds_to_minute(ms):
-        seconds, milliseconds = divmod(ms, 1000)
-        minutes, seconds = divmod(seconds, 60)
-        return str("%d:%d" % (minutes, seconds))
-
-    # Parsing
     theme = info["theme"]
     is_now_playing = info["is_now_playing"]
     needs_cover_image = info["needs_cover_image"]
