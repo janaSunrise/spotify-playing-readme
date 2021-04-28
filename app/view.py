@@ -30,6 +30,26 @@ def generate_bar(bar_count=75):
     return css_bar
 
 
+@cached(ttl=60, max_size=128)
+def generate_spectograph(bar_count=35):
+    css_bar = ""
+    start_bar = 1700
+    animations = ['animation1', 'animation2', 'animation3']
+
+    for i in range(1, bar_count + 1):
+        start_bar += 100
+        z = random.randint(0, 2)
+
+        css_bar += dedent(f"""
+        .bar:nth-child({i}) {{
+            animation-name: {animations[z]}
+            animation-duration: {start_bar}ms;
+        }}
+        """)
+
+    return css_bar
+
+
 @cached(ttl=5, max_size=128)
 def load_image_b64(url):
     response = requests.get(url)
