@@ -32,3 +32,5 @@ SPOTIFY__LOGIN = (
         f"&scope=user-read-currently-playing,user-read-recently-played&"
         f"redirect_uri={REDIRECT_URI}"
 )
+
+GITHUB_URL = ""

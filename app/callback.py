@@ -1,7 +1,7 @@
 from flask import Blueprint, Response, request, render_template
 
 from . import database
-from .config import BASE_URL
+from .config import BASE_URL, GITHUB_URL
 from .utils import generate_token, get_user_info
 
 callback = Blueprint("/callback", __name__, template_folder="templates")
@@ -27,4 +27,5 @@ def cb():
         "cb.html",
         id=user_id,
         base_url=BASE_URL,
+        github_url=GITHUB_URL
     )
