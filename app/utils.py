@@ -16,9 +16,7 @@ from .config import (
 
 
 def get_refresh_token(refresh_token):
-    headers = {
-        "Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"
-    }
+    headers = {"Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"}
     payload = {
         "grant_type": "refresh_token",
         "refresh_token": refresh_token

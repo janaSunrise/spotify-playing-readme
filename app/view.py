@@ -30,26 +30,6 @@ def generate_bar(bar_count=75):
     return css_bar
 
 
-@cached(ttl=60, max_size=128)
-def generate_spectograph(bar_count=35):
-    css_bar = ""
-    start_bar = 1700
-    animations = ['animation1', 'animation2', 'animation3']
-
-    for i in range(1, bar_count + 1):
-        start_bar += 100
-        z = random.randint(0, 2)
-
-        css_bar += dedent(f"""
-        .bar:nth-child({i}) {{
-            animation-name: {animations[z]}
-            animation-duration: {start_bar}ms;
-        }}
-        """)
-
-    return css_bar
-
-
 @cached(ttl=5, max_size=128)
 def load_image_b64(url):
     response = requests.get(url)
@@ -76,6 +56,7 @@ def make_svg(item, info):
 
     currently_playing_type = item.get("currently_playing_type", "track")
 
+    # Initialize the variables on a function-global scope
     img, artist_name, song_name, explicit = "", "", "", False
 
     # Get the info
@@ -98,7 +79,7 @@ def make_svg(item, info):
         "plain": {
             "width": 350,
             "height": 140,
-            "num_bar": 35
+            "num_bar": 40
         },
         "wavy": {
             "width": 480,
@@ -129,6 +110,7 @@ def make_svg(item, info):
     title_color = THEMES[color_theme]["title_color"]
     text_color = THEMES[color_theme]["text_color"]
 
+    # ------------- Default Matching ------------- #
     if info["title_color"] != "":
         title_color = info["title_color"]
 
@@ -140,6 +122,7 @@ def make_svg(item, info):
 
     if bg_color == "":
         bg_color = "white"
+    # -------------------------------------------- #
 
     if title_color == "" and text_color == "":
         text_color, title_color = "#212122", "#212122"

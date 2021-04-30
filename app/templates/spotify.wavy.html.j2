@@ -70,8 +70,10 @@
                     height: 30px;
                     bottom: 23px;
                     position: absolute;
-                    margin: -20px 0 0 0px;
+                    display: flex;
+                    align-items: flex-end;
                 }
+
                 .bar {
                     width: 3px;
                     bottom: 1px;
@@ -171,7 +173,7 @@
                         {% endif %}
                         {{artist_name}}
                     </div>
-                    <div id="bars">{{content_bar|safe}}</div>
+                    <div id="bars">{{ content_bar|safe }}</div>
                 </div>
             </div>
         </div>
