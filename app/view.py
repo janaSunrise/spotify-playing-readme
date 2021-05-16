@@ -36,13 +36,6 @@ def load_image_b64(url):
     return base64.b64encode(response.content).decode("ascii")
 
 
-@cached(ttl=30, max_size=256)
-def milliseconds_to_minute(ms):
-    seconds, milliseconds = divmod(ms, 1000)
-    minutes, seconds = divmod(seconds, 60)
-    return str("%d:%d" % (minutes, seconds))
-
-
 @cached(ttl=5, max_size=128)
 def make_svg(item, info):
     theme = info["theme"]
@@ -51,7 +44,6 @@ def make_svg(item, info):
     bars_when_not_listening = info["bars_when_not_listening"]
     hide_status = info["hide_status"]
 
-    eq_bar_theme = info["eq_bar_theme"]
     color_theme = info["color_theme"]
 
     currently_playing_type = item.get("currently_playing_type", "track")
@@ -95,9 +87,6 @@ def make_svg(item, info):
 
     is_explicit = item["explicit"]
 
-    duration = item["duration_ms"]
-    default_duration = milliseconds_to_minute(duration)
-
     height = theme_mapping[theme]["height"]
     width = theme_mapping[theme]["width"]
     num_bar = theme_mapping[theme]["num_bar"]
@@ -131,20 +120,8 @@ def make_svg(item, info):
     elif title_color != "" and text_color == "":
         text_color = title_color
 
-    # EQ Bar section
-    eq_bar_theme_mapping = {
-        "none": {
-            "content_bar": "",
-            "css_bar": ""
-        },
-        "plain": {
-            "content_bar": "".join(["<div class='bar'></div>" for _ in range(num_bar)]),
-            "css_bar": generate_bar(num_bar)
-        }
-    }
-
-    content_bar = eq_bar_theme_mapping[eq_bar_theme]["content_bar"]
-    css_bar = eq_bar_theme_mapping[eq_bar_theme]["css_bar"]
+    content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
+    css_bar = generate_bar(num_bar)
 
     if is_now_playing:
         title_text = random.choice(title_text_mapping[True]) + ":"
@@ -173,9 +150,6 @@ def make_svg(item, info):
         "needs_cover_image": needs_cover_image,
         "hide_status": hide_status,
 
-        "duration": duration,
-        "default_duration": default_duration,
-
         "bg_color": bg_color,
         "title_color": title_color,
         "text_color": text_color
@@ -186,15 +160,15 @@ def make_svg(item, info):
 
 @view.route("/spotify")
 def render_img():
-    def get_song_info(user_id):
-        access_token = get_access_token(user_id)
+    def get_song_info(user_id_):
+        access_token = get_access_token(user_id_)
         data = get_now_playing(access_token)
 
         if data is not None and data != {}:
-            item = data["item"]
+            song = data["item"]
 
             if not data.get("currently_playing_type"):
-                item["currently_playing_type"] = data["currently_playing_type"]
+                song["currently_playing_type"] = data["currently_playing_type"]
 
             is_now_playing_ = data["is_playing"]
         else:
@@ -202,16 +176,15 @@ def render_img():
             size_recent_play = len(recent_plays["items"])
             idx = random.randint(0, size_recent_play - 1)
 
-            item = recent_plays["items"][idx]["track"]
-            item["currently_playing_type"] = "track"
+            song = recent_plays["items"][idx]["track"]
+            song["currently_playing_type"] = "track"
             is_now_playing_ = False
 
-        return item, is_now_playing_
+        return song, is_now_playing_
 
     user_id = request.args.get("id")
 
     theme = request.args.get("theme", default="plain")
-    eq_bar_theme = request.args.get("eq_bar_theme", default="plain")
 
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
     bars_when_not_listening = True if request.args.get("bars_when_not_listening", default="true") == "true" else False
@@ -230,7 +203,6 @@ def render_img():
         "needs_cover_image": needs_cover_image,
         "bars_when_not_listening": bars_when_not_listening,
         "hide_status": hide_status,
-        "eq_bar_theme": eq_bar_theme,
         "color_theme": color_theme,
         "title_color": title_color,
         "text_color": text_color,

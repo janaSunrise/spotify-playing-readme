@@ -1,6 +1,6 @@
 # Spotify playing README
 
-A really easy way to display your spotify listening status on READMEs.
+A really easy way to display your spotify listening status on READMEs and Websites too!
 
 ## Demo
 
@@ -10,7 +10,7 @@ Here's the embed from the site.
 
 #### Customized card, with theming
 
-[![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&eq_bar_theme=plain&bars_when_not_listening=true&bg_color=black&title_color=cyan&text_color=cyan)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
+[![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true&bg_color=black&title_color=cyan&text_color=cyan)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
 
 ## Security notice
 
@@ -43,7 +43,7 @@ pipenv sync -d
 
 #### Setting up spotify
 
-- Go to the developer panel at spotify. [Link](https://developer.spotify.com)
+- Go to the developer panel at spotify. [Panel URL](https://developer.spotify.com)
 - Make an APP, Specify the name, and description.
 - Add `http://localhost:5000/callback` to the URLs
 - Take a note of the Client ID, and Client Secret for setting up `.env`
@@ -92,7 +92,6 @@ and transparent-ness.
 - [x] Add more customization options
   - [x] Previews when customizing the card
   - [x] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
-  - [x] Duration display
   - [x] Marquee show
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
@@ -100,10 +99,6 @@ and transparent-ness.
   - [x] Abiltiy to Hide status
   - [x] HTML Image tag generation
   - [x] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
-- [ ] Bar customization
-  - [x] No bars
-  - [x] Green normal bars
-  - [ ] Spectograph
 
 ## 🤝 Contributing
 

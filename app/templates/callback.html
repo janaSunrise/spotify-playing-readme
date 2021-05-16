@@ -72,18 +72,6 @@
 
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
-            <label>EQ Bar theme</label>
-        <div class="select is-primary">
-            <select id="eq-bar-theme-select">
-                <option>none</option>
-                <option selected>plain</option>
-            </select>
-        </div>
-        </p>
-    </div>
-
-    <div class="column is-narrow">
-        <p class="bd-notification is-primary">
             <label>Color theme</label>
         <div class="select is-primary">
             <select id="color-theme-select">
@@ -195,7 +183,6 @@
         id: user_id,
         theme: "plain",
         image: true,
-        eq_bar_theme: "plain",
         color_theme: "none",
         bars_when_not_listening: false,
         bg_color: "",
@@ -211,6 +198,7 @@
 
         let md_img = `![Spotify playing](${url})`;
         let md_img_url = `[![Spotify playing](${url})](${spotify_url})`;
+
         let website_img = `<img src="${url}" alt="spotify-readme-card"/>`
         let website_img_url = `<a href="${spotify_url}"><img src="${url}" alt="spotify-readme-card"/></a>`
 
@@ -231,10 +219,6 @@
     });
     $('#color-theme-select').change(function () {
         parameters.color_theme = this.value;
-        change_url();
-    });
-    $('#eq-bar-theme-select').change(function () {
-        parameters.eq_bar_theme = this.value;
         change_url();
     });
     $('#needs-image').change(function () {

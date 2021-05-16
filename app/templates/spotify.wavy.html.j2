@@ -130,13 +130,6 @@
                     white-space: nowrap;
                   }
 
-                  .duration {
-                      position:fixed;
-                      background-color: {{ text_color | safe }};
-                      color: {{ bg_color | safe }};
-                      border-radius: 5px;
-                  }
-
                 {{ css_bar|safe }}
             </style>
             {% if not hide_status %}
@@ -164,45 +157,15 @@
                         </div>
                     {% endif %}
                     </div>
-                    {% if is_now_playing %}
-                        <span id="duration" class="duration">{{default_duration}}</span>
-                    {% endif %}
                     <div class="artist">
                         {% if explicit %}
                             <span class="explicit-music">E</span>
                         {% endif %}
                         {{artist_name}}
                     </div>
-                    <div id="bars">{{ content_bar|safe }}</div>
+                    <div id="bars">{{ content_bar | safe }}</div>
                 </div>
             </div>
         </div>
-        <script>
-            const startTimer = (duration) => {
-                var minute = Math.floor(duration / 60000);
-                var sec = ((duration % 60000) / 1000).toFixed(0);
-                var musicTimer = setInterval(function() {
-
-                    if(minute == -1){
-                        minute = 0
-                        sec = 0
-                        clearInterval(musicTimer)
-                    }
-                    if(!(parseInt(sec.toString()) > 9)) {
-                        sec = "0" + parseInt(sec.toString())
-                    }
-
-                    document.querySelector('#duration').textContent = minute + ":" + sec;
-
-                    sec--;
-                    if (sec == 00) {
-                        minute--;
-                        sec = 60;
-                    }
-                }, 1000);
-            }
-
-            startTimer({{duration}});
-        </script>
     </foreignObject>
 </svg>
