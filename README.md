@@ -120,10 +120,6 @@ If you have various suggestions, questions or want to discuss things wit our com
 We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
 also be sure to contribute, if you're interested!
 
-## License
-
-- [GPL V3](https://github.com/janaSunrise/spotify-playing-readme/blob/main/LICENSE)
-
 **Inspired by [Novatorem](https://github.com/novatorem)**
 
 <div align="center">
