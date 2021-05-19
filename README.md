@@ -23,13 +23,14 @@ only read permissions and scopes. You can check it in the configuration file for
 - `id`: Your spotify ID
 - `theme`: The card theme
 - `image`: If cover image to be included
-- `display_timer`: If the Timer should be displayed when listening. [Does not work realtime]
 - `color_theme`: The color theme for the Card
 - `bars_when_not_listening`: If bars should be shown when not listening
 - `bg_color`: The BG color for the card
 - `title_color`: The title color for the card
 - `text_color`: The text color for the card
 - `hide_status`: If the status for song should be shown.
+
+**NOTE**: You can generate the card easily by visiting the panel. Check the repo description link for it.
 
 ## Setting up the development environment
 

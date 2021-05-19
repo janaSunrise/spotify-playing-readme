@@ -12,13 +12,6 @@ from .themes import THEMES
 view = Blueprint("/view", __name__, template_folder="templates")
 
 
-@cached(ttl=30, max_size=256)
-def milliseconds_to_minute(ms):
-    seconds, milliseconds = divmod(ms, 1000)
-    minutes, seconds = divmod(seconds, 60)
-    return str("%d:%d" % (minutes, seconds))
-
-
 @cached(ttl=60, max_size=128)
 def generate_bar(bar_count=75):
     css_bar = ""
@@ -137,17 +130,6 @@ def make_svg(item, info):
         if not bars_when_not_listening:
             content_bar = ""
 
-    # ---- Timer ---- #
-    progress_ms = info["progress_ms"]
-    duration = item["duration_ms"]
-
-    default_duration, progress_duration = None, None
-
-    if is_now_playing:
-        default_duration = milliseconds_to_minute(duration)
-        progress_duration = milliseconds_to_minute(progress_ms)
-    # -------------- #
-
     rendered_data = {
         "width": width,
         "height": height,
@@ -171,11 +153,6 @@ def make_svg(item, info):
         "bg_color": bg_color,
         "title_color": title_color,
         "text_color": text_color,
-
-        "progress_duration": progress_duration,
-        "default_duration": default_duration,
-
-        "display_timer": info["display_timer"]
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
@@ -186,7 +163,6 @@ def render_img():
     def get_song_info(user_id_):
         access_token = get_access_token(user_id_)
         data = get_now_playing(access_token)
-        progress_ms = None
 
         if data is not None and data != {}:
             song = data["item"]
@@ -195,7 +171,6 @@ def render_img():
                 song["currently_playing_type"] = data["currently_playing_type"]
 
             is_now_playing_ = data["is_playing"]
-            progress_ms = data.get("progress_ms")
         else:
             recent_plays = get_recently_played(access_token)
             size_recent_play = len(recent_plays["items"])
@@ -206,7 +181,7 @@ def render_img():
 
             is_now_playing_ = False
 
-        return song, is_now_playing_, progress_ms
+        return song, is_now_playing_
 
     user_id = request.args.get("id")
 
@@ -215,14 +190,13 @@ def render_img():
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
     bars_when_not_listening = True if request.args.get("bars_when_not_listening", default="true") == "true" else False
     hide_status = True if request.args.get("hide_status", default="false") == "true" else False
-    display_timer = True if request.args.get("display_timer", default="false") == "true" else False
 
     title_color = str(escape(request.args.get("title_color", default="")))
     text_color = str(escape(request.args.get("text_color", default="")))
     bg_color = str(escape(request.args.get("bg_color", default="")))
     color_theme = request.args.get("color_theme", default="none")
 
-    item, is_now_playing, progress_ms = get_song_info(user_id)
+    item, is_now_playing = get_song_info(user_id)
 
     info = {
         "theme": theme,
@@ -234,8 +208,6 @@ def render_img():
         "title_color": title_color,
         "text_color": text_color,
         "bg_color": bg_color,
-        "progress_ms": progress_ms,
-        "display_timer": display_timer
     }
 
     # Generate the SVG

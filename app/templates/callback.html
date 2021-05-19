@@ -80,13 +80,6 @@
 
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
-        <input type="checkbox" id="display-timer">
-        Display Timer <strong>[Realtime support doesn't work.]</strong>
-    </label>
-</div>
-
-<div class="columns is-mobile is-centered">
-    <label class="checkbox">
         <input type="checkbox" id="link-to-profile">
         Combine with a link to your profile
     </label>
@@ -199,10 +192,6 @@
 
     change_url();
 
-    $('#display-timer').change(function () {
-        parameters.display_timer = this.checked;
-        change_url();
-    });
     $('#theme-select').change(function () {
         parameters.theme = this.value;
         change_url();
