@@ -23,7 +23,7 @@ only read permissions and scopes. You can check it in the configuration file for
 - `id`: Your spotify ID
 - `theme`: The card theme
 - `image`: If cover image to be included
-- `eq_bar_theme`: The theme for the EQ bar
+- `display_timer`: If the Timer should be displayed when listening. [Does not work realtime]
 - `color_theme`: The color theme for the Card
 - `bars_when_not_listening`: If bars should be shown when not listening
 - `bg_color`: The BG color for the card
