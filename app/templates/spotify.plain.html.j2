@@ -104,6 +104,14 @@
           }
       }
 
+      .duration {
+          position:fixed;
+          background-color: {{ text_color | safe }};
+          color: {{ bg_color | safe }};
+          border-radius: 5px;
+          font-size: 12px;
+    }
+
       {{css_bar|safe}}
     </style>
 
@@ -126,6 +134,11 @@
                     </div>
                     <div class="artist">
                         {{artist_name}}
+                        {% if display_timer %}
+                            {% if is_now_playing %}
+                                <span id="duration" class="duration">{{progress_duration}}/{{default_duration}}</span>
+                            {% endif %}
+                        {% endif %}
                     </div>
                     <div id='bars'>{{content_bar|safe}}</div>
                 </div>

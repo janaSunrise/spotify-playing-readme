@@ -12,6 +12,13 @@ from .themes import THEMES
 view = Blueprint("/view", __name__, template_folder="templates")
 
 
+@cached(ttl=30, max_size=256)
+def milliseconds_to_minute(ms):
+    seconds, milliseconds = divmod(ms, 1000)
+    minutes, seconds = divmod(seconds, 60)
+    return str("%d:%d" % (minutes, seconds))
+
+
 @cached(ttl=60, max_size=128)
 def generate_bar(bar_count=75):
     css_bar = ""
@@ -133,6 +140,12 @@ def make_svg(item, info):
     # ---- Timer ---- #
     progress_ms = info["progress_ms"]
     duration = item["duration_ms"]
+
+    default_duration, progress_duration = None, None
+
+    if is_now_playing:
+        default_duration = milliseconds_to_minute(duration)
+        progress_duration = milliseconds_to_minute(progress_ms)
     # -------------- #
 
     rendered_data = {
@@ -157,7 +170,12 @@ def make_svg(item, info):
 
         "bg_color": bg_color,
         "title_color": title_color,
-        "text_color": text_color
+        "text_color": text_color,
+
+        "progress_duration": progress_duration,
+        "default_duration": default_duration,
+
+        "display_timer": info["display_timer"]
     }
 
     return render_template(f"spotify.{theme}.html.j2", **rendered_data)
@@ -197,6 +215,7 @@ def render_img():
     needs_cover_image = True if request.args.get("image", default="true") == "true" else False
     bars_when_not_listening = True if request.args.get("bars_when_not_listening", default="true") == "true" else False
     hide_status = True if request.args.get("hide_status", default="false") == "true" else False
+    display_timer = True if request.args.get("display_timer", default="false") == "true" else False
 
     title_color = str(escape(request.args.get("title_color", default="")))
     text_color = str(escape(request.args.get("text_color", default="")))
@@ -215,7 +234,8 @@ def render_img():
         "title_color": title_color,
         "text_color": text_color,
         "bg_color": bg_color,
-        "progress_ms": progress_ms
+        "progress_ms": progress_ms,
+        "display_timer": display_timer
     }
 
     # Generate the SVG

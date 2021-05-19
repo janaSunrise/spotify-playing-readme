@@ -119,16 +119,24 @@
                     margin-left: 3px;
                   }
 
-                 .scrolling {
+                .scrolling {
                     animation: marquee 10s linear infinite;
                     display: inline-block;
                     padding-right: 20px;
-                  }
+                }
 
-                 .song-container {
+                .song-container {
                     overflow: hidden;
                     white-space: nowrap;
-                  }
+                }
+
+                .duration {
+                    position:fixed;
+                    background-color: {{ text_color | safe }};
+                    color: {{ bg_color | safe }};
+                    border-radius: 5px;
+                    font-size: 14px;
+                }
 
                 {{ css_bar|safe }}
             </style>
@@ -157,6 +165,11 @@
                         </div>
                     {% endif %}
                     </div>
+                    {% if display_timer %}
+                        {% if is_now_playing %}
+                            <span id="duration" class="duration">{{progress_duration}}/{{default_duration}}</span>
+                        {% endif %}
+                    {% endif %}
                     <div class="artist">
                         {% if explicit %}
                             <span class="explicit-music">E</span>
