@@ -130,6 +130,11 @@ def make_svg(item, info):
         if not bars_when_not_listening:
             content_bar = ""
 
+    # ---- Timer ---- #
+    progress_ms = info["progress_ms"]
+    duration = item["duration_ms"]
+    # -------------- #
+
     rendered_data = {
         "width": width,
         "height": height,
@@ -163,6 +168,7 @@ def render_img():
     def get_song_info(user_id_):
         access_token = get_access_token(user_id_)
         data = get_now_playing(access_token)
+        progress_ms = None
 
         if data is not None and data != {}:
             song = data["item"]
@@ -171,6 +177,7 @@ def render_img():
                 song["currently_playing_type"] = data["currently_playing_type"]
 
             is_now_playing_ = data["is_playing"]
+            progress_ms = data.get("progress_ms")
         else:
             recent_plays = get_recently_played(access_token)
             size_recent_play = len(recent_plays["items"])
@@ -178,9 +185,10 @@ def render_img():
 
             song = recent_plays["items"][idx]["track"]
             song["currently_playing_type"] = "track"
+
             is_now_playing_ = False
 
-        return song, is_now_playing_
+        return song, is_now_playing_, progress_ms
 
     user_id = request.args.get("id")
 
@@ -195,7 +203,7 @@ def render_img():
     bg_color = str(escape(request.args.get("bg_color", default="")))
     color_theme = request.args.get("color_theme", default="none")
 
-    item, is_now_playing = get_song_info(user_id)
+    item, is_now_playing, progress_ms = get_song_info(user_id)
 
     info = {
         "theme": theme,
@@ -206,7 +214,8 @@ def render_img():
         "color_theme": color_theme,
         "title_color": title_color,
         "text_color": text_color,
-        "bg_color": bg_color
+        "bg_color": bg_color,
+        "progress_ms": progress_ms
     }
 
     # Generate the SVG

@@ -26,11 +26,16 @@ SPOTIFY__NOW_PLAYING = SPOTIFY__BASE_URL + "/player/currently-playing?additional
 SPOTIFY__RECENTLY_PLAYED = SPOTIFY__BASE_URL + "/player/recently-played?limit=20"
 SPOTIFY__USER_INFO = SPOTIFY__BASE_URL
 
+SCOPES = [
+    "user-read-currently-playing",
+    "user-read-recently-played",
+]
+
 # Auth URL Spotify
 SPOTIFY__LOGIN = (
-        f"{SPOTIFY__AUTH_BASE}/authorize?client_id={SPOTIFY_CLIENT_ID}&response_type=code"
-        f"&scope=user-read-currently-playing,user-read-recently-played&"
-        f"redirect_uri={REDIRECT_URI}"
+    f"{SPOTIFY__AUTH_BASE}/authorize?client_id={SPOTIFY_CLIENT_ID}&response_type=code"
+    f"&scope={','.join(SCOPES)}"
+    f"&redirect_uri={REDIRECT_URI}"
 )
 
-GITHUB_URL = ""
+GITHUB_URL = "https://github.com/janaSunrise/spotify-playing-readme"
