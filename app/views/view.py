@@ -6,10 +6,10 @@ import requests
 from flask import Blueprint, Response, escape, render_template, request
 from memoization import cached
 
-from .utils import get_recently_played, get_now_playing, get_access_token
-from .themes import THEMES
+from app.utils import get_recently_played, get_now_playing, get_access_token
+from app.themes import THEMES
 
-view = Blueprint("/view", __name__, template_folder="templates")
+view = Blueprint("view", __name__, template_folder="templates")
 
 
 @cached(ttl=60, max_size=128)

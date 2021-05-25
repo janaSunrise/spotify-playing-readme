@@ -1,18 +1,18 @@
 from flask import Blueprint, Response, request, render_template
 
-from . import database
-from .config import BASE_URL, GITHUB_URL
-from .utils import generate_token, get_user_info
+from app import database
+from app.config import BASE_URL, GITHUB_URL
+from app.utils import generate_token, get_user_info
 
 callback = Blueprint("/callback", __name__, template_folder="templates")
 
 
 @callback.route("/callback")
-def cb():
+def callback_():
     code = request.args.get("code")
 
     if not code:
-        return Response("No code!")
+        return Response("No code found!")
 
     try:
         token = generate_token(code)

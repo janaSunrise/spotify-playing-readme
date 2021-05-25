@@ -1,8 +1,8 @@
 from flask import Blueprint, redirect, render_template
 
-from .config import SPOTIFY__LOGIN, GITHUB_URL
+from app.config import SPOTIFY__LOGIN, GITHUB_URL
 
-login = Blueprint("login", __name__)
+login = Blueprint("login", __name__, template_folder="templates")
 
 
 @login.route("/")
