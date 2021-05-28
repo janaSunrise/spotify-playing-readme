@@ -1,3 +1,6 @@
+import base64
+import json
+
 import pyrebase
 from flask import Flask
 
@@ -7,7 +10,8 @@ from .config import (
     FB_PROJECT_ID,
     FB_MESSAGING_ID,
     FB_STORAGE_BUCKET,
-    FB_DATABASE_URL
+    FB_DATABASE_URL,
+    FB_SERVICE_ACCOUNT
 )
 
 config = {
@@ -17,6 +21,7 @@ config = {
     "projectId": FB_PROJECT_ID,
     "storageBucket": FB_STORAGE_BUCKET,
     "messagingSenderId": FB_MESSAGING_ID,
+    "serviceAccount": json.loads(base64.b64decode(FB_SERVICE_ACCOUNT).decode())
 }
 
 firebase = pyrebase.initialize_app(config)

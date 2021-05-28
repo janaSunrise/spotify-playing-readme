@@ -46,7 +46,8 @@ pipenv sync -d
 
 - Go to the developer panel at spotify. [Panel URL](https://developer.spotify.com)
 - Make an APP, Specify the name, and description.
-- Add `http://localhost:5000/callback` to the URLs
+- Add `http://localhost:5000/callback` to the URLs for development. Add the respective IP / Domain / Host
+  if you're self hosting this App with the path of `/callback` to the end.
 - Take a note of the Client ID, and Client Secret for setting up `.env`
 
 #### Setting up Firebase
@@ -57,6 +58,10 @@ pipenv sync -d
 - Then go to the `Services account` tab, then the `Database secrets`, select the Database we're 
   using and copy the API.
 - Copy the domain from Realtime Database section in left, after initializing it.
+- Finally, For service accounts, Go to the `Services account` tab. Then download the service
+  account credentials and save it. Once done, Open VSCode, Download Base64 Encode extension, 
+  if you don't already have it. The Copy and Paste the JSON file contents in the `.env` and 
+  Encode it using Base64 after that.
 
 #### Setting up .env
 
@@ -65,7 +70,8 @@ values for it.
 
 Here's the info about the variables
 
-- `BASE_URL`: This is the basic URL for local dev, set it to `localhost:5000`
+- `BASE_URL`: This is the basic URL for getting the Callback URLs and more, set it 
+  to `localhost:5000` in development mode.
 - `SPOTIFY_CLIENT_ID`: This is the spotify client ID. 
 - `SPOTIFY_SECRET_ID`: This is the Spotify Secret.
 - `FB_API_KEY`: This is the API key for firebase, from Database secrets.
@@ -74,6 +80,12 @@ Here's the info about the variables
 - `FB_STORAGE_BUCKET`: The storage bucket from the normal firebase config.
 - `FB_MESSAGING_ID`: The messaging ID from normal firebase config.
 - `FB_DATABASE_URL`: The database URL from firebase config.
+- `FB_SERVICE_ACCOUNT`: The service account credentials obtained from the settings and encoded using base64.
+
+**NOTE**: Use the VSCode Base64 encode extension to encode the contents of the Service Account JSON file.
+
+You can change the port when self hosting / running by adding a `port` parameter to `flask_app`'s `run`
+function. You can do so like this `flask_app.run(debug=DEBUG, port=<the-port-you-need>)`
 
 **Once done, Run the server using `pipenv run start`! It should boot up at `localhost:5000`! Enjoy!**
 
@@ -92,7 +104,7 @@ and transparent-ness.
 - [ ] Add more themes
 - [x] Add more customization options
   - [x] Previews when customizing the card
-  - [x] Allow customizing Background and font color ( Will be redeveloped, with all security issues fixed )
+  - [x] Allow customizing Background and font color (Will be redeveloped, with all security issues fixed)
   - [x] Marquee show
   - [x] Display bars when not listening.
   - [x] Allow linking to your profile along with the link.
