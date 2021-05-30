@@ -87,7 +87,8 @@ Here's the info about the variables
 You can change the port when self hosting / running by adding a `port` parameter to `flask_app`'s `run`
 function. You can do so like this `flask_app.run(debug=DEBUG, port=<the-port-you-need>)`
 
-**Once done, Run the server using `pipenv run start`! It should boot up at `localhost:5000`! Enjoy!**
+Once done, Run the server using **`pipenv run start`**. It should boot up at `localhost:5000` in development mode, 
+or the settings you have provided.
 
 ## TODOs Planned
 
@@ -135,6 +136,4 @@ also be sure to contribute, if you're interested!
 
 **Inspired by [Novatorem](https://github.com/novatorem)**
 
-<div align="center">
-  Made by Sunrit Jana with ❤️
-</div>
+<div align="center">Made by Sunrit Jana with ❤️</div>
