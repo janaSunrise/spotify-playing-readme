@@ -14,7 +14,7 @@ Here's the embed from the site.
 
 ## Security notice
 
-**NOTE**: As a security notice, We declare that, we're not storing the sensitive tokens, We just store the 
+As a security notice, We declare that, we're not storing the sensitive tokens, We just store the 
 access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with 
 only read permissions and scopes. You can check it in the configuration file for the scopes.
 
