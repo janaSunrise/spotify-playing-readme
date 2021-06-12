@@ -4,34 +4,36 @@
 
 {% block head %}
 <style>
-    #center {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 25px;
-    }
+  #center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+  }
 </style>
 {% endblock %}
 
 {% block content %}
 <div class="container is-max-desktop" id="center">
-    <h1 class="subtitle is-4">Connect with Spotify to get started with Spotify for README!</h1>
+  <h1 class="subtitle is-4">
+    Connect with Spotify to get started with Spotify for README!
+  </h1>
 </div>
 
 <br />
 <br />
 
 <div class="has-text-centered" id="center">
-    <button id="login-redirect" class="button is-primary is-light is-medium">
-        Authenticate with Spotify!
-    </button>
+  <button id="login-redirect" class="button is-primary is-light is-medium">
+    Authenticate with Spotify!
+  </button>
 </div>
 {% endblock %}
 
 {% block script %}
 <script>
-    document.querySelector("#login-redirect").onclick = () => {
-        location.href = "/login";
-    }
+  document.querySelector("#login-redirect").onclick = () => {
+    location.href = "/login";
+  };
 </script>
 {% endblock %}
