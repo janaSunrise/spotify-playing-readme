@@ -42,7 +42,7 @@ The project uses pipenv for dependencies. Here's how to install the dependencies
 pipenv sync -d
 ```
 
-#### Setting up spotify
+#### Setting up Spotify
 
 - Go to the developer panel at spotify. [Panel URL](https://developer.spotify.com)
 - Make an APP, Specify the name, and description.
@@ -89,6 +89,31 @@ function. You can do so like this `flask_app.run(debug=DEBUG, port=<the-port-you
 
 Once done, Run the server using **`pipenv run start`**. It should boot up at `localhost:5000` in development mode, 
 or the settings you have provided.
+
+## Deploying your own instance
+
+To deploy your own instance, You need a proper hosting platform to run Python webapps.
+You can use Heroku, PythonAnywhere, Your own server or anywhere else.
+
+To self-host your instance, The steps are given above on how to do it. The instructions on
+option configuration is also given. It is recommended to run with Debug mode off, and Your 
+specific host and port.
+
+You can do so, like this:
+- Turn debug off, by toggling the Debug option to `False` in `config.py`
+- Change host and port: `flask.run(debug=DEBUG, host="<your-host>", port=<your-port>)` by replacing
+  the values given inside the angle brackets.
+  
+Here is the workflow on setting up:
+- Setup Spotify API and note it.
+- Setup Firebase for data store and note the API.
+- Fill the values as said in `.env`.
+- Configure the options as needed.
+- Install dependencies using `pipenv`.
+- Run using **`pipenv run start`**.
+- And, you should be good to go.
+
+**Note**: You can use out self hosted instance already running, or Self host your own like this.
 
 ## TODOs Planned
 
