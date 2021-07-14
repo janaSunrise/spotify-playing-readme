@@ -4,7 +4,7 @@ A really easy way to display your spotify listening status on READMEs and Websit
 
 ## Demo
 
-Here's the embed from the site.
+Here's the embed of Card from the site.
 
 [![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
 
@@ -42,7 +42,7 @@ The project uses pipenv for dependencies. Here's how to install the dependencies
 pipenv sync -d
 ```
 
-#### Setting up Spotify
+#### Setting up Spotify API for the project
 
 - Go to the developer panel at spotify. [Panel URL](https://developer.spotify.com)
 - Make an APP, Specify the name, and description.
@@ -68,7 +68,7 @@ pipenv sync -d
 Configure the environmental variables by renaming the `.env.example` file to `.env` with the respective 
 values for it.
 
-Here's the info about the variables
+Here's the info about the `.env` variables
 
 - `BASE_URL`: This is the basic URL for getting the Callback URLs and more, set it 
   to `localhost:5000` in development mode.
@@ -113,7 +113,7 @@ Here is the workflow on setting up:
 - Run using **`pipenv run start`**.
 - And, you should be good to go.
 
-**Note**: You can use out self hosted instance already running, or Self host your own like this.
+**Note**: You can use the self hosted instance already running, or Self host your own instance like this.
 
 ## TODOs Planned
 
