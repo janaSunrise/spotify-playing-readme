@@ -1,3 +1,3 @@
-from .callback import callbackg
+from .callback import callback
 from .login import login
 from .view import view
