@@ -49,7 +49,7 @@ def make_svg(item, info):
     currently_playing_type = item.get("currently_playing_type", "track")
 
     # Initialize the variables on a function-global scope
-    img, artist_name, song_name, explicit = "", "", "", False
+    img, artist_name, song_name, _ = "", "", "", False
 
     # Get the info
     if currently_playing_type == "track":

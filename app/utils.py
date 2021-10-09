@@ -98,4 +98,3 @@ def get_access_token(uid):
         access_token = new_token["access_token"]
 
     return access_token
-
