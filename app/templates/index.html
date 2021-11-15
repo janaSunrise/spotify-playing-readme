@@ -1,7 +1,4 @@
-{% extends "base.html" %}
-
-{% block title %}Spotify playing README{% endblock %}
-
+{% extends "base.html" %} {% block title %}Spotify playing README{% endblock %}
 {% block head %}
 <style>
   #center {
@@ -11,9 +8,7 @@
     margin-top: 25px;
   }
 </style>
-{% endblock %}
-
-{% block content %}
+{% endblock %} {% block content %}
 <div class="container is-max-desktop" id="center">
   <h1 class="subtitle is-4">
     Connect with Spotify to get started with Spotify for README!
@@ -28,9 +23,7 @@
     Authenticate with Spotify!
   </button>
 </div>
-{% endblock %}
-
-{% block script %}
+{% endblock %} {% block script %}
 <script>
   document.querySelector("#login-redirect").onclick = () => {
     location.href = "/login";

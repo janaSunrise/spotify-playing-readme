@@ -14,20 +14,21 @@
 
 {% block content %}
 <div class="container is-max-desktop">
-    <h1 class="title has-text-centered">
-        README code section
-    </h1>
+    <h1 class="title has-text-centered">README code section</h1>
 </div>
 
-<br/>
-<br/>
+<br />
+<br />
 
+<!-- Cover Image -->
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
         <input type="checkbox" id="needs-image" checked>
         Show cover image
     </label>
 </div>
+
+<!-- Display bars -->
 <div class="columns is-mobile is-centered">
     <label class="checkbox">
         <input type="checkbox" id="bars-when-not-listening">
@@ -39,34 +40,34 @@
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
             <label>Card theme</label>
-        <div class="select is-primary">
-            <select id="theme-select">
-                <option>plain</option>
-                <option>wavy</option>
-            </select>
-        </div>
+            <div class="select is-primary">
+                <select id="theme-select">
+                    <option>plain</option>
+                    <option>wavy</option>
+                </select>
+            </div>
         </p>
     </div>
 
     <div class="column is-narrow">
         <p class="bd-notification is-primary">
             <label>Color theme</label>
-        <div class="select is-primary">
-            <select id="color-theme-select">
-                <option>none</option>
-                <option>dark</option>
-                <option>radical</option>
-                <option>tokyonight</option>
-                <option>onedark</option>
-                <option>cobalt</option>
-                <option>synthwave</option>
-                <option>algolia</option>
-                <option>great_gatsby</option>
-                <option>darcula</option>
-                <option>outrun</option>
-                <option>city_lights</option>
-            </select>
-        </div>
+            <div class="select is-primary">
+                <select id="color-theme-select">
+                    <option>none</option>
+                    <option>dark</option>
+                    <option>radical</option>
+                    <option>tokyonight</option>
+                    <option>onedark</option>
+                    <option>cobalt</option>
+                    <option>synthwave</option>
+                    <option>algolia</option>
+                    <option>great_gatsby</option>
+                    <option>darcula</option>
+                    <option>outrun</option>
+                    <option>city_lights</option>
+                </select>
+            </div>
         </p>
     </div>
 </div>
@@ -97,16 +98,16 @@
         <p class="bd-notification is-primary">
             <textarea class="textarea is-primary" id="readme" readonly></textarea>
             <br/>
-        <div class="has-text-centered">
-            <button id="copy-to-clipboard" class="button is-link">
-                <svg style="width: 1.75rem; height: 1.75rem" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                          d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-                </svg> &nbsp;
-                Copy to Clipboard
-            </button>
-        </div>
+            <div class="has-text-centered">
+                <button id="copy-to-clipboard" class="button is-link">
+                    <svg style="width: 1.75rem; height: 1.75rem" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                    &nbsp; Copy to Clipboard
+                </button>
+            </div>
         </p>
     </div>
 
@@ -138,6 +139,7 @@
 
 <br/>
 
+<!-- Embed preview -->
 <h2 class="title has-text-centered">
     Embed Preview
 </h2>
@@ -153,10 +155,13 @@
 
 {% block script %}
 <script>
+    // Variables
     let user_id = "{{ id }}";
+
     let code = $("#readme");
     let link_to_profile = false;
     let img_for_website = false;
+
     let parameters = {
         id: user_id,
         theme: "plain",
@@ -191,22 +196,31 @@
 
     change_url();
 
+    // Select theme
     $('#theme-select').change(function () {
         parameters.theme = this.value;
         change_url();
     });
+
+    // Select color theme
     $('#color-theme-select').change(function () {
         parameters.color_theme = this.value;
         change_url();
     });
+
+    // Needs image in the embed
     $('#needs-image').change(function () {
         parameters.image = this.checked;
         change_url();
     });
+
+    // Display bars when not listening
     $('#bars-when-not-listening').change(function () {
         parameters.bars_when_not_listening = this.checked;
         change_url();
     });
+
+    // Hide status
     $('#hide-status').change(function () {
         parameters.hide_status = this.checked;
 
@@ -218,24 +232,34 @@
 
         change_url();
     });
+
+    // Link to profile
     $('#link-to-profile').change(function () {
         link_to_profile = this.checked;
         change_url();
     });
+
+    // Create embed for website
     $('#website-img').change(function () {
         img_for_website = this.checked;
         change_url();
     });
+
+    // Background color
+    $('#bg-color').keyup(function () {
+        parameters.bg_color = $(this).val();
+        change_url();
+    });
+
+    // Title color
     $('#title-color').keyup(function () {
         parameters.title_color = $(this).val();
         change_url();
     });
+
+    // Text color
     $('#text-color').keyup(function () {
         parameters.text_color = $(this).val();
-        change_url();
-    });
-    $('#bg-color').keyup(function () {
-        parameters.bg_color = $(this).val();
         change_url();
     });
 
@@ -249,7 +273,5 @@
             document.execCommand('copy');
         }
     });
-
-
 </script>
 {% endblock %}

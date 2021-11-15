@@ -14,8 +14,8 @@ Here's the embed of Card from the site.
 
 ## Security notice
 
-As a security notice, We're not storing any of the sensitive tokens, We just store the 
-access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with 
+As a security notice, We're not storing any of the sensitive tokens, We just store the
+access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with
 only read permissions and scopes. You can check it in the configuration file for the scopes.
 
 ## URL Parameters
@@ -55,24 +55,24 @@ pipenv sync -d
 - Go to the firebase panel.
 - Make a new project, and setup as a Web SDK and enable it.
 - Go to Settings, and the web apps section, and copy the config, and keep a note.
-- Then go to the `Services account` tab, then the `Database secrets`, select the Database we're 
+- Then go to the `Services account` tab, then the `Database secrets`, select the Database we're
   using and copy the API.
 - Copy the domain from Realtime Database section in left, after initializing it.
 - Finally, For service accounts, Go to the `Services account` tab. Then download the service
-  account credentials and save it. Once done, Open VSCode, Download Base64 Encode extension, 
-  if you don't already have it. The Copy and Paste the JSON file contents in the `.env` and 
+  account credentials and save it. Once done, Open VSCode, Download Base64 Encode extension,
+  if you don't already have it. The Copy and Paste the JSON file contents in the `.env` and
   Encode it using Base64 after that.
 
 #### Setting up .env
 
-Configure the environmental variables by renaming the `.env.example` file to `.env` with the respective 
+Configure the environmental variables by renaming the `.env.example` file to `.env` with the respective
 values for it.
 
 Here's the info about the `.env` variables
 
-- `BASE_URL`: This is the basic URL for getting the Callback URLs and more, set it 
+- `BASE_URL`: This is the basic URL for getting the Callback URLs and more, set it
   to `localhost:5000` in development mode.
-- `SPOTIFY_CLIENT_ID`: This is the spotify client ID. 
+- `SPOTIFY_CLIENT_ID`: This is the spotify client ID.
 - `SPOTIFY_SECRET_ID`: This is the Spotify Secret.
 - `FB_API_KEY`: This is the API key for firebase, from Database secrets.
 - `FB_DOMAIN`: This is the domain from `Realtime Database` section.
@@ -87,7 +87,7 @@ Here's the info about the `.env` variables
 You can change the port when self hosting / running by adding a `port` parameter to `flask_app`'s `run`
 function. You can do so like this `flask_app.run(debug=DEBUG, port=<the-port-you-need>)`
 
-Once done, Run the server using **`pipenv run start`**. It should boot up at `localhost:5000` in development mode, 
+Once done, Run the server using **`pipenv run start`**. It should boot up at `localhost:5000` in development mode,
 or the settings you have provided.
 
 ## Deploying your own instance
@@ -96,15 +96,17 @@ To deploy your own instance, You need a proper hosting platform to run Python we
 You can use Heroku, PythonAnywhere, Your own server or anywhere else.
 
 To self-host your instance, The steps are given above on how to do it. The instructions on
-option configuration is also given. It is recommended to run with Debug mode off, and Your 
+option configuration is also given. It is recommended to run with Debug mode off, and Your
 specific host and port.
 
 You can do so, like this:
+
 - Turn debug off, by toggling the Debug option to `False` in `config.py`
 - Change host and port: `flask.run(debug=DEBUG, host="<your-host>", port=<your-port>)` by replacing
   the values given inside the angle brackets.
-  
+
 Here is the workflow on setting up:
+
 - Setup Spotify API and note it.
 - Setup Firebase for data store and note the API.
 - Fill the values as said in `.env`.
@@ -126,7 +128,7 @@ and transparent-ness.
   - [ ] How to work with options
   - [ ] Adding more features
   - [ ] Customization
-- [x] Improve the current themes  
+- [x] Improve the current themes
 - [ ] Add more themes
 - [x] Add more customization options
   - [x] Previews when customizing the card
@@ -141,16 +143,16 @@ and transparent-ness.
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can 
+Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can
 just submit a PR to this repo and it will be deployed once it's accepted.
 
-⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand 
-about your commit or the PR Created. Read 
+⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand
+about your commit or the PR Created. Read
 [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before making the commit message.
 
 ## Show your support
 
-We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and 
+We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and
 also be sure to contribute, if you're interested!
 
 **Inspired by [Novatorem](https://github.com/novatorem)**
