@@ -1,4 +1,4 @@
-from flask import Blueprint, Response, request, render_template
+from flask import Blueprint, Response, render_template, request
 
 from app import database
 from app.config import BASE_URL, GITHUB_URL

@@ -1,4 +1,5 @@
 import base64
+import typing as t
 from time import time
 
 import requests
@@ -7,18 +8,18 @@ from memoization import cached
 
 from . import database
 from .config import (
-    SPOTIFY__REFRESH_TOKEN,
+    REDIRECT_URI,
+    SPOTIFY_CLIENT_ID,
+    SPOTIFY_SECRET_ID,
     SPOTIFY__GENERATE_TOKEN,
     SPOTIFY__NOW_PLAYING,
     SPOTIFY__RECENTLY_PLAYED,
-    SPOTIFY__USER_INFO,
-    SPOTIFY_CLIENT_ID,
-    SPOTIFY_SECRET_ID,
-    REDIRECT_URI
+    SPOTIFY__REFRESH_TOKEN,
+    SPOTIFY__USER_INFO
 )
 
 
-def get_refresh_token(refresh_token):
+def get_refresh_token(refresh_token: str) -> dict:
     headers = {"Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"}
     payload = {
         "grant_type": "refresh_token",
@@ -29,7 +30,7 @@ def get_refresh_token(refresh_token):
     return response.json()
 
 
-def generate_token(authorization_code):
+def generate_token(authorization_code: str) -> dict:
     headers = {"Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"}
     payload = {
         "grant_type": "authorization_code",
@@ -42,11 +43,11 @@ def generate_token(authorization_code):
 
 
 @cached(ttl=60, max_size=128)
-def generate_base64_auth(client_id, client_secret):
+def generate_base64_auth(client_id: str, client_secret: str) -> str:
     return base64.b64encode(f"{client_id}:{client_secret}".encode()).decode("utf-8")
 
 
-def get_now_playing(access_token):
+def get_now_playing(access_token: str) -> dict:
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__NOW_PLAYING, headers=headers)
 
@@ -56,7 +57,7 @@ def get_now_playing(access_token):
     return response.json()
 
 
-def get_recently_played(access_token):
+def get_recently_played(access_token: str) -> dict:
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__RECENTLY_PLAYED, headers=headers)
 
@@ -67,14 +68,14 @@ def get_recently_played(access_token):
 
 
 @cached(ttl=5, max_size=128)
-def get_user_info(access_token):
+def get_user_info(access_token: str) -> dict:
     headers = {"Authorization": f"Bearer {access_token}"}
     response = requests.get(SPOTIFY__USER_INFO, headers=headers)
     return response.json()
 
 
 @cached(ttl=5, max_size=128)
-def get_access_token(uid):
+def get_access_token(uid: str) -> t.Union[str, Response]:
     user = database.child("users").child(uid).get()
 
     if not user:

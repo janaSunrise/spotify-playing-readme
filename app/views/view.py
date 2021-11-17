@@ -6,8 +6,8 @@ import requests
 from flask import Blueprint, Response, escape, render_template, request
 from memoization import cached
 
-from app.utils import get_recently_played, get_now_playing, get_access_token
 from app.themes import THEMES
+from app.utils import get_access_token, get_now_playing, get_recently_played
 
 view = Blueprint("view", __name__, template_folder="templates")
 

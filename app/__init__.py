@@ -6,12 +6,12 @@ from flask import Flask
 
 from .config import (
     FB_API_KEY,
-    FB_DOMAIN,
-    FB_PROJECT_ID,
-    FB_MESSAGING_ID,
-    FB_STORAGE_BUCKET,
     FB_DATABASE_URL,
-    FB_SERVICE_ACCOUNT
+    FB_DOMAIN,
+    FB_MESSAGING_ID,
+    FB_PROJECT_ID,
+    FB_SERVICE_ACCOUNT,
+    FB_STORAGE_BUCKET
 )
 
 config = {
@@ -27,8 +27,8 @@ config = {
 firebase = pyrebase.initialize_app(config)
 database = firebase.database()
 
-# -- Circular imports --
-from app import views
+# Preventing circular imports
+from app import views  # noqa: E402, F401, I100, I202
 
 flask_app = Flask(__name__)
 

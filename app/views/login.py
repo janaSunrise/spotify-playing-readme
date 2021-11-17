@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, render_template
 
-from app.config import SPOTIFY__LOGIN, GITHUB_URL
+from app.config import GITHUB_URL, SPOTIFY__LOGIN
 
 login = Blueprint("login", __name__, template_folder="templates")
 
