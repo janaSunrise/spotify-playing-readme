@@ -1,10 +1,10 @@
 # Spotify playing README
 
-A really easy way to display your spotify listening status on READMEs and Websites too!
+A really easy way to display your spotify listening status on READMEs and websites too!
 
 ## Demo
 
-Here's the embed of Card from the site.
+Here's the embed of the card from website.
 
 [![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
 
