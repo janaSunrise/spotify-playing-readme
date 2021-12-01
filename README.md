@@ -14,8 +14,8 @@ Here's the embed of the card from website.
 
 ## Security notice
 
-As a security notice, We're not storing any of the sensitive tokens, We just store the
-access tokens securely, used for generating temporary refresh tokens, and getting just the status data, with
+As a security notice, We're not storing any of the sensitive tokens. We just store the
+access tokens securely used for generating temporary refresh tokens, and getting just the status data, with
 only read permissions and scopes. You can check it in the configuration file for the scopes.
 
 ## URL Parameters
