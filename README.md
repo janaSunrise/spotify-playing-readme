@@ -25,7 +25,7 @@ only read permissions and scopes. You can check it in the configuration file for
 - `image`: If cover image to be included
 - `color_theme`: The color theme for the Card
 - `bars_when_not_listening`: If bars should be shown when not listening
-- `bg_color`: The BG color for the card
+- `bg_color`: The background color for the card
 - `title_color`: The title color for the card
 - `text_color`: The text color for the card
 - `hide_status`: If the status for song should be shown.
@@ -152,8 +152,8 @@ about your commit or the PR Created. Read
 
 ## Show your support
 
-We love people's support in growing and improving. Be sure to leave a ⭐️ if you like the project and
-also be sure to contribute, if you're interested!
+We love people's support to grow, improve and give the best. Be sure to drop a 🌟 if you like the project,
+and also contribute, if you're interested!
 
 **Inspired by [Novatorem](https://github.com/novatorem)**
 
