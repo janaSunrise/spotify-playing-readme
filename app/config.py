@@ -1,8 +1,10 @@
 import os
 
-# Normal ENV Variables.
+# Base environmental variables.
 DEBUG = True
 BASE_URL = os.getenv("BASE_URL")
+
+# Spotify Auth configuration.
 SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
 SPOTIFY_SECRET_ID = os.getenv("SPOTIFY_SECRET_ID")
 
