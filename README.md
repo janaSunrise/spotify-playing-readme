@@ -1,6 +1,6 @@
 # Spotify playing README
 
-A really easy way to display your spotify listening status on READMEs and websites too!
+A really easy way to display your spotify listening status on READMEs and websites!
 
 ## Demo
 
