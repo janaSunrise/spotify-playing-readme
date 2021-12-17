@@ -32,6 +32,6 @@ from app import views  # noqa: E402, F401, I100, I202
 
 flask_app = Flask(__name__)
 
-views_list = ("callback", "login", "view")
+views_list = ("base", "auth", "view")
 for view in views_list:
     flask_app.register_blueprint(getattr(views, view))

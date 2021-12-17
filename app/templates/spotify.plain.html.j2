@@ -24,6 +24,10 @@
     </defs>
 
     <style>
+      div {
+          font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+          background-color: {{ bg_color | safe }};
+      }
       .main {
           color: {{ text_color | safe }};
           margin-top: 15px;
@@ -35,10 +39,6 @@
           position: static;
           margin-top: -1px;
           margin-left: 3px;
-      }
-      div {
-          font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-          background-color: {{ bg_color | safe }};
       }
       .container {
           display: flex;
@@ -52,6 +52,7 @@
       .cover {
           border-radius: 1px;
           margin-right: 10px;
+          margin-top: -5px;
       }
       .playing {
           display: flex;

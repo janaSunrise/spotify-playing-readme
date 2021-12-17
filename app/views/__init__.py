@@ -1,3 +1,3 @@
-from .callback import callback
-from .login import login
+from .auth import auth
+from .base import base
 from .view import view
