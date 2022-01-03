@@ -214,7 +214,7 @@ def render_img():
     svg = make_svg(item, info)
 
     # Generate the response with the SVG
-    resp = Response(svg, mimetype="image/svg+xml")
-    resp.headers["Cache-Control"] = "s-maxage=1"
+    response = Response(svg, mimetype="image/svg+xml")
+    response.headers["Cache-Control"] = "s-maxage=1"
 
-    return resp
+    return response
