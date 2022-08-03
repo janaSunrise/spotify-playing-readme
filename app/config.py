@@ -13,6 +13,8 @@ class Config:
     SUPABASE_URL = cast(str, config("SUPABASE_URL"))
     SUPABASE_KEY = cast(str, config("SUPABASE_KEY"))
 
+    REDIRECT_URI = BASE_URL + "/dashboard"
+
     GITHUB_URL = "https://github.com/janaSunrise/spotify-playing-readme"
 
 

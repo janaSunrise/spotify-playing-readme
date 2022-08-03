@@ -4,7 +4,7 @@ from time import time
 
 from memoization import cached
 
-from ..core.app import supabase
+from ..core.app import spotify, supabase
 
 
 def insert_user(
@@ -53,9 +53,7 @@ def get_access_token(user_id: str) -> str | None:
     if current_time >= expired_time:
         refresh_token = token_info["refresh_token"]
 
-        new_token = {
-            "refresh_token": refresh_token
-        }  # TODO: Replace with the new refresh token
+        new_token = spotify.get_refresh_token(refresh_token)
         expired_time = int(time()) + new_token["expires_in"]
 
         update_user(user_id, new_token["expires_in"], expired_time)
