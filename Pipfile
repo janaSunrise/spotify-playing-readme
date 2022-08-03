@@ -4,21 +4,25 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "==2.1.0"
-requests = "==2.11.1"
-pyrebase = "==3.0.27"
+flask = "==2.2.0"
+requests = "==2.28.1"
+supabase = "==0.5.8"
 memoization = "==0.4.0"
+python-decouple = "==3.6"
 
 [dev-packages]
-flake8 = "==4.0.1"
-flake8-annotations = "==2.7.0"
-flake8-bugbear = "==22.3.23"
-flake8-import-order = "==0.18.1"
-flake8-tidy-imports = "==4.6.0"
-pep8-naming = "==0.12.1"
-pre-commit = "==2.17.0"
+flake8 = "~=4.0.1"
+flake8-annotations = "~=2.7.0"
+flake8-bugbear = "~=22.3.23"
+flake8-tidy-imports = "~=4.6.0"
+flake8-future-annotations = "~=0.0.5"
+pep8-naming = "~=0.12.1"
+black = "~=22.3.0"
+isort = "~=5.10.1"
+pre-commit = "~=2.17.0"
+pyright = "~=1.1.260"
 
 [scripts]
-start = "python -m app"
-lint = "pre-commit run --all-files"
 precommit = "pre-commit install"
+lint = "pre-commit run --all-files"
+start = "python -m app"
