@@ -1,6 +1,8 @@
-
 # Python cache
 __pycache__/
+
+# Node modules
+node_modules/
 
 # Editor generated files
 .idea/
@@ -27,3 +29,6 @@ logs/
 
 # MacOS generated file
 .DS_STORE
+
+# Ignore generated CSS files by tailwind
+css/
