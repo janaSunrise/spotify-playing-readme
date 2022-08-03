@@ -9,6 +9,11 @@ class Config:
 
     SPOTIFY_CLIENT_ID = cast(str, config("SPOTIFY_CLIENT_ID"))
     SPOTIFY_CLIENT_SECRET = cast(str, config("SPOTIFY_CLIENT_SECRET"))
+    SPOTIFY_SCOPES = [
+        "user-read-currently-playing",
+        "user-read-recently-played",
+        "user-top-read",
+    ]
 
     SUPABASE_URL = cast(str, config("SUPABASE_URL"))
     SUPABASE_KEY = cast(str, config("SUPABASE_KEY"))
@@ -16,14 +21,3 @@ class Config:
     REDIRECT_URI = BASE_URL + "/dashboard"
 
     GITHUB_URL = "https://github.com/janaSunrise/spotify-playing-readme"
-
-
-class SpotifyScopes:
-    LISTENING_TO = [
-        "user-read-currently-playing",
-        "user-read-recently-played",
-    ]
-
-    TOP_TRACKS = ["user-top-read"]
-
-    ALL_SCOPES = LISTENING_TO + TOP_TRACKS
