@@ -12,3 +12,16 @@ class Config:
 
     SUPABASE_URL = cast(str, config("SUPABASE_URL"))
     SUPABASE_KEY = cast(str, config("SUPABASE_KEY"))
+
+    GITHUB_URL = "https://github.com/janaSunrise/spotify-playing-readme"
+
+
+class SpotifyScopes:
+    LISTENING_TO = [
+        "user-read-currently-playing",
+        "user-read-recently-played",
+    ]
+
+    TOP_TRACKS = ["user-top-read"]
+
+    ALL_SCOPES = LISTENING_TO + TOP_TRACKS
