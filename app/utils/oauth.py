@@ -1,8 +1,13 @@
+from .url import form_url
+
+
 def generate_oauth_url(client_id: str, redirect_uri: str, scopes: list) -> str:
-    return (
-        "https://accounts.spotify.com/authorize"
-        f"?client_id={client_id}"
-        "&response_type=code"
-        f"&redirect_uri={redirect_uri}"
-        f"&scope={','.join(scopes)}"
+    return form_url(
+        "https://accounts.spotify.com/authorize",
+        {
+            "client_id": client_id,
+            "response_type": "code",
+            "redirect_uri": redirect_uri,
+            "scope": ",".join(scopes),
+        },
     )

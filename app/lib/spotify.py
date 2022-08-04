@@ -9,6 +9,7 @@ from typing import Any, Literal, cast
 import requests
 
 from ..config import Config
+from ..utils.url import form_url
 
 PYTHON_VERSION = (
     f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
@@ -31,14 +32,6 @@ class Spotify:
         return base64.b64encode(
             f"{self.client_id}:{self.client_secret}".encode()
         ).decode("utf-8")
-
-    @staticmethod
-    def _form_url(url: str, data: dict[str, Any]) -> str:
-        url += "?" + "&".join(
-            [f"{dict_key}={dict_value}" for dict_key, dict_value in data.items()]
-        )
-
-        return url
 
     # Authentication endpoints
     def get_refresh_token(self, refresh_token: str) -> dict[str, Any]:
@@ -79,13 +72,12 @@ class Spotify:
         data: Any | None = None,
     ) -> dict[str, Any] | None:
         if not headers:
-            headers = {
-                "Authorization": f"Bearer {access_token}",
-            }
+            headers = {}
 
         headers = {
             "User-Agent": self.USER_AGENT,
             "Content-Type": "application/json",
+            "Authorization": f"Bearer {access_token}",
             **headers,
         }
 
@@ -129,7 +121,7 @@ class Spotify:
     def currently_playing(self, access_token: str) -> dict[str, Any] | None:
         """Get the currently playing song/podcast."""
         return self.fetch(
-            self._form_url(
+            form_url(
                 "/me/player/currently-playing", {"additional_types": "track,episode"}
             ),
             access_token,
@@ -162,9 +154,7 @@ class Spotify:
 
         return cast(
             dict,
-            self.fetch(
-                self._form_url("/me/player/recently-played", data), access_token
-            ),
+            self.fetch(form_url("/me/player/recently-played", data), access_token),
         )
 
     def top_tracks(
@@ -180,6 +170,4 @@ class Spotify:
         if time_range:
             data["time_range"] = time_range
 
-        return cast(
-            dict, self.fetch(self._form_url("/me/top/tracks", data), access_token)
-        )
+        return cast(dict, self.fetch(form_url("/me/top/tracks", data), access_token))
