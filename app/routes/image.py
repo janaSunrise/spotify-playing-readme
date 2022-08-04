@@ -14,6 +14,18 @@ blueprint = Blueprint(
     "image", __name__, template_folder="templates", url_prefix="/image"
 )
 
+# Constants for the image endpoint.
+STATUS_MAPPING = {
+    True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
+    False: ["Was listening to", "Previously binging to", "Was vibing to"],
+}
+
+THEME_DISPLAY_MAPPING = {
+    "plain": {"width": 350, "height": 140, "num_bar": 40},
+    "wavy": {"width": 480, "height": 175, "num_bar": 90},
+    None: {"width": 150, "height": 75, "num_bar": 15},
+}
+
 
 # Utility methods for images
 @cached(ttl=5, max_size=128)
