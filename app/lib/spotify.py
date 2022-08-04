@@ -174,3 +174,18 @@ class Spotify:
             data["time_range"] = time_range
 
         return cast(dict, self.fetch(form_url("/me/top/tracks", data), access_token))
+
+    def top_artists(
+        self,
+        access_token: str,
+        limit: int = 20,
+        offset: int = 0,
+        time_range: Literal["short_term", "medium_term", "long_term"] | None = None,
+    ) -> dict[str, Any]:
+        """Get top artists of the user."""
+        data: dict[str, Any] = {"limit": limit, "offset": offset}
+
+        if time_range:
+            data["time_range"] = time_range
+
+        return cast(dict, self.fetch(form_url("/me/top/artists", data), access_token))
