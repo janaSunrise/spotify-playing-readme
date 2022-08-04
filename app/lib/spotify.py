@@ -34,7 +34,7 @@ class Spotify:
         ).decode("utf-8")
 
     # Authentication endpoints
-    def get_refresh_token(self, refresh_token: str) -> dict[str, Any]:
+    def get_access_token(self, refresh_token: str) -> dict[str, Any]:
         token = self.generate_base64_token()
 
         headers = {"Authorization": f"Basic {token}"}
@@ -46,7 +46,7 @@ class Spotify:
 
         return response.json()
 
-    def generate_token(self, auth_code: str) -> dict[str, Any]:
+    def get_reresh_token(self, auth_code: str) -> dict[str, Any]:
         token = self.generate_base64_token()
 
         headers = {"Authorization": f"Basic {token}"}
@@ -118,6 +118,9 @@ class Spotify:
                 return None
 
     # API endpoints
+    def get_user_info(self, access_token: str) -> dict[str, Any]:
+        return cast(dict, self.fetch("", access_token))
+
     def currently_playing(self, access_token: str) -> dict[str, Any] | None:
         """Get the currently playing song/podcast."""
         return self.fetch(

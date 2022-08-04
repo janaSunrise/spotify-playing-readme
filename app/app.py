@@ -1,8 +1,8 @@
 from flask import Flask
 from supabase.client import create_client
 
-from ..config import Config
-from ..lib.spotify import Spotify
+from .config import Config
+from .lib.spotify import Spotify
 
 app = Flask(__name__)
 
