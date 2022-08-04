@@ -10,6 +10,11 @@ from ..lib.supabase import get_user, insert_user, update_user_refresh_token
 blueprint = Blueprint("dashboard", __name__, template_folder="templates")
 
 
+@blueprint.route("/")
+def index() -> str:
+    return render_template("index.html", github_url=Config.GITHUB_URL)
+
+
 @blueprint.route("/dashboard")
 def dashboard() -> str | Response:
     code = request.args.get("code")
