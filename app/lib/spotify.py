@@ -125,7 +125,7 @@ class Spotify:
         """Get the currently playing song/podcast."""
         return self.fetch(
             form_url(
-                "/me/player/currently-playing", {"additional_types": "track,episode"}
+                "/player/currently-playing", {"additional_types": "track,episode"}
             ),
             access_token,
         )
@@ -157,7 +157,7 @@ class Spotify:
 
         return cast(
             dict,
-            self.fetch(form_url("/me/player/recently-played", data), access_token),
+            self.fetch(form_url("/player/recently-played", data), access_token),
         )
 
     def top_tracks(
@@ -173,7 +173,7 @@ class Spotify:
         if time_range:
             data["time_range"] = time_range
 
-        return cast(dict, self.fetch(form_url("/me/top/tracks", data), access_token))
+        return cast(dict, self.fetch(form_url("/top/tracks", data), access_token))
 
     def top_artists(
         self,
@@ -188,4 +188,4 @@ class Spotify:
         if time_range:
             data["time_range"] = time_range
 
-        return cast(dict, self.fetch(form_url("/me/top/artists", data), access_token))
+        return cast(dict, self.fetch(form_url("/top/artists", data), access_token))

@@ -1,14 +1,17 @@
 from __future__ import annotations
 
+import random
 from typing import Any
 
-from flask import Blueprint, request
+from flask import Blueprint, render_template, request
 from flask.wrappers import Response
 from memoization import cached
 
 from ..lib.supabase import get_user
 from ..models.song import Song
+from ..utils.css import generate_bar
 from ..utils.song import get_song_info
+from ..utils.themes import THEMES
 
 blueprint = Blueprint(
     "image", __name__, template_folder="templates", url_prefix="/image"
@@ -21,7 +24,7 @@ STATUS_MAPPING = {
 }
 
 THEME_DISPLAY_MAPPING = {
-    "plain": {"width": 350, "height": 140, "num_bar": 40},
+    "simple": {"width": 350, "height": 140, "num_bar": 40},
     "wavy": {"width": 480, "height": 175, "num_bar": 90},
     None: {"width": 150, "height": 75, "num_bar": 15},
 }
@@ -29,8 +32,57 @@ THEME_DISPLAY_MAPPING = {
 
 # Utility methods for images
 @cached(ttl=5, max_size=128)
-def make_svg(song: Song, params: dict[str, Any]) -> None:
-    ...  # TODO: Implement
+def make_svg(song: Song, params: dict[str, Any]) -> str:
+    theme = params["theme"]
+    color_theme = params["color_theme"]
+    bars_when_not_playing = params["bars_when_not_playing"]
+
+    # Get the dimensions and display parameters.
+    height = THEME_DISPLAY_MAPPING[theme]["height"]
+    width = THEME_DISPLAY_MAPPING[theme]["width"]
+    num_bar = THEME_DISPLAY_MAPPING[theme]["num_bar"]
+
+    if color_theme not in THEMES:
+        color_theme = "none"
+
+    # Generate the CSS bar
+    content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)])
+    css_bar = generate_bar(num_bar)
+
+    # Get the status text to be displayed
+    if song.is_now_playing:
+        status = random.choice(STATUS_MAPPING[True]) + ":"
+    else:
+        status = random.choice(STATUS_MAPPING[False]) + ":"
+        if not bars_when_not_playing:
+            content_bar = ""
+
+    # Get the colors for the background, title and text
+    background_color = THEMES[color_theme].background_color
+    title_color = THEMES[color_theme].title_color
+    text_color = THEMES[color_theme].text_color
+
+    rendered_data = {
+        "height": height,
+        "width": width,
+        "num_bar": num_bar,
+        "content_bar": content_bar,
+        "css_bar": css_bar,
+        "status": status,
+        "artist_name": song.artist,
+        "song_name": song.name,
+        "image": song.image,
+        "is_now_playing": song.is_now_playing,
+        "explicit": song.is_explicit,
+        "show_animation": len(song.name) > 27,
+        "display_cover": params["display_cover"],
+        "hide_status": params["hide_status"],
+        "background_color": background_color,
+        "title_color": title_color,
+        "text_color": text_color,
+    }
+
+    return render_template(f"image/spotify-playing.{theme}.html.j2", **rendered_data)
 
 
 # App Routes
@@ -38,30 +90,43 @@ def make_svg(song: Song, params: dict[str, Any]) -> None:
 def spotify_playing() -> Response:
     user_id = request.args.get("id")
 
-    theme = request.args.get("theme", default="simple")  # noqa: F841
-    color_theme = request.args.get("color_theme", default="none")  # noqa: F841
+    # Get the parameters
+    theme = request.args.get("theme", default="simple")
+    color_theme = request.args.get("color_theme", default="none")
 
-    display_cover = (  # noqa: F841
+    display_cover = (
         True if request.args.get("display_cover", default="true") == "true" else False
     )
-    bars_when_not_playing = (  # noqa: F841
+    bars_when_not_playing = (
         True
         if request.args.get("bars_when_not_playing", default="true") == "true"
         else False
     )
-    hide_status = (  # noqa: F841
-        True if request.args.get("hide_status", default="true") == "true" else False
+    hide_status = (
+        True if request.args.get("hide_status", default="false") == "true" else False
     )
 
     if not user_id:
-        return Response("No user id passed.")
+        return Response("No user id passed.")  # TODO: Display the error SVG
 
     user = get_user(user_id)
 
     if not user:
-        return Response("No user found with the ID.")
+        return Response("No user found with the ID.")  # TODO: Display the error SVG
 
-    song = get_song_info(user_id)  # noqa: F841
+    song = get_song_info(user_id)
 
-    # TODO: Generate SVG and Render it.
-    return Response("TODO.")
+    # Generate SVG and render it.
+    params = {
+        "theme": theme,
+        "color_theme": color_theme,
+        "display_cover": display_cover,
+        "bars_when_not_playing": bars_when_not_playing,
+        "hide_status": hide_status,
+    }
+    svg = make_svg(song, params)
+
+    response = Response(svg, mimetype="image/svg+xml")
+    response.headers["Cache-Control"] = "s-maxage=1"
+
+    return response

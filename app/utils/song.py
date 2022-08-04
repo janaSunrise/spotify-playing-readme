@@ -11,7 +11,7 @@ def get_song_info(user_id: str) -> Song:
     now_playing = spotify.currently_playing(access_token)
 
     # Check if song is playing.
-    if now_playing and now_playing != {}:
+    if now_playing and now_playing["currently_playing_type"] != "ad":
         song = now_playing["item"]
 
         # Ensure that there is a currently playing type
@@ -23,7 +23,6 @@ def get_song_info(user_id: str) -> Song:
         # Get recently played songs.
         recently_played = spotify.recently_played(access_token)
 
-        # Get a random song.
         size_recently_played = len(recently_played["items"])
         idx = random.randint(0, size_recently_played - 1)
 

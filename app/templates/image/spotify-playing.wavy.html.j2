@@ -1,0 +1,181 @@
+<svg
+  width="{{ width }}"
+  height="{{ height }}"
+  viewBox="0 0 {{ width }} {{ height }}"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  aria-labelledby="card-title"
+  role="img"
+>
+  <title id="card-title">Now playing on Spotify</title>
+  <foreignObject width="{{ width }}" height="{{ height }}">
+      {% include 'partial/svg-font.html.j2' %}
+
+      <style type="text/css">
+        <!-- Basic styling -->
+        div {
+          font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+          background-color: {{ bg_color | safe }};
+        }
+
+        .main {
+          color: {{ text_color | safe }};
+          margin-top: 40px;
+          display: flex;
+        }
+
+        .container {
+          border-radius: 5px;
+          padding: 10px 10px 10px 0px;
+        }
+
+        .current-status {
+          color: {{ title_color | safe }};
+          font-size: 15px;
+          position: static;
+          margin-top: -1px;
+          margin-bottom: 0px;
+          margin-left: 10px;
+        }
+
+        <!-- Song-related styling -->
+        .art {
+          width: 27%;
+          float: left;
+          margin-left: -5px;
+        }
+
+        .content {
+          width: 71%;
+        }
+
+        .song {
+          overflow: hidden;
+          margin-top: 4px;
+          font-size: 20px;
+          text-align: center;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          margin-left: 2px;
+        }
+
+        .artist {
+          font-size: 20px;
+          margin-top: 4px;
+          text-align: center;
+          margin-bottom: 5px;
+          margin-left: 2px;
+        }
+
+        .cover {
+          width: 100px;
+          height: 100px;
+          border-radius: 5px;
+        }
+
+        .explicit-music {
+          background-color: {{ text_color | safe }};
+          color: {{ bg_color | safe }};
+          font-size: 12px;
+          border-radius: 5px;
+          vertical-align: baseline;
+          padding: 1px 3px 1px 3px;
+          margin-top: 0;
+          margin-left: 3px;
+        }
+
+        .song-container {
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        <!-- Display long text as scrolling -->
+        .scrolling {
+          animation: marquee 10s linear infinite;
+          display: inline-block;
+          padding-right: 20px;
+        }
+
+        <!-- Bars styling -->
+        #bars {
+          width: 40px;
+          height: 30px;
+          bottom: 23px;
+          position: absolute;
+          display: flex;
+          align-items: flex-end;
+        }
+
+        .bar {
+          width: 3px;
+          bottom: 1px;
+          height: 3px;
+          position: absolute;
+          background: #1DB954;
+          animation: sound 0ms -800ms linear infinite alternate;
+        }
+
+        <!-- Animations -->
+        @keyframes sound {
+          0% {
+            height: 3px;
+            opacity: .35;
+          }
+          100% {
+            height: 15px;
+            opacity: 0.95;
+          }
+        }
+        @keyframes marquee {
+          0% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(-100%);
+          }
+        }
+
+        <!-- Display the CSS bar -->
+        {{css_bar|safe}}
+      </style>
+
+    <div xmlns="http://www.w3.org/1999/xhtml" class="container">
+      <!-- Display the status if enabled -->
+      {% if not hide_status %}
+        <div class="current-status">{{ status }}</div>
+      {% endif %}
+
+      <div class="main">
+        {% if display_cover %}
+        <a class="art">
+          <center>
+            <img src="data:image/png;base64, {{ image }}" class="cover" />
+          </center>
+        </a>
+        {% endif %}
+
+        <div class="content">
+          <!-- Display song name based on the length -->
+          <div class="song-container">
+            {% if show_animation %}
+              <div class="song scrolling">{{ song_name }}</div>
+            {% else %}
+              <div class="song">{{ song_name }}</div>
+            {% endif %}
+          </div>
+
+          <!-- Display artist info -->
+          <div class="artist">
+            {% if explicit %}
+              <span class="explicit-music">E</span>
+            {% endif %}
+
+            {{artist_name}}
+          </div>
+
+          <div id="bars">{{ content_bar | safe }}</div>
+        </div>
+      </div>
+    </div>
+  </foreignObject>
+</svg>
