@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from flask import Blueprint, render_template, request
-from flask.wrappers import Response
 
 from ..app import spotify
 from ..config import Config
@@ -16,11 +15,11 @@ def index() -> str:
 
 
 @blueprint.route("/dashboard")
-def dashboard() -> str | Response:
+def dashboard() -> str:
     code = request.args.get("code")
 
     if not code:
-        return Response("No code found, Please login!")
+        return render_template("error.html", error="No code found, Please login!")
 
     # Get the refresh & access token from the code
     try:
@@ -29,7 +28,10 @@ def dashboard() -> str | Response:
 
         user_id = spotify.get_user_info(access_token)["id"]
     except KeyError:
-        return Response("Invalid Auth workflow! Please login correctly.")
+        return render_template(
+            "error.html",
+            error="Invalid Spotify OAuth workflow. Please login correctly.",
+        )
 
     # Get the user from the database
     user = get_user(user_id)

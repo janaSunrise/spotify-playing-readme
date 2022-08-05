@@ -85,10 +85,6 @@ class Spotify:
         for _ in range(self.RETRY_ATTEMPTS):
             response = requests.get(f"{self.BASE_URL}{url}", headers=headers, json=data)
 
-            # Check if the request was successful.
-            if response.status_code == 200:
-                return response.json()
-
             try:
                 data = json.loads(response.text)
             except json.decoder.JSONDecodeError:

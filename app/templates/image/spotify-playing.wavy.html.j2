@@ -2,8 +2,8 @@
   width="{{ width }}"
   height="{{ height }}"
   viewBox="0 0 {{ width }} {{ height }}"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
   aria-labelledby="card-title"
   role="img"
 >
@@ -15,11 +15,11 @@
         <!-- Basic styling -->
         div {
           font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-          background-color: {{ background_color | safe }};
+          background-color: {{ colors.background | safe }};
         }
 
         .main {
-          color: {{ text_color | safe }};
+          color: {{ colors.text | safe }};
           margin-top: 40px;
           display: flex;
         }
@@ -30,17 +30,15 @@
         }
 
         .current-status {
-          color: {{ title_color | safe }};
-          font-size: 15px;
+          color: {{ colors.title | safe }};
+          font-size: 18px;
           position: static;
-          margin-top: -1px;
-          margin-bottom: 0px;
           margin-left: 10px;
         }
 
         <!-- Song-related styling -->
         .art {
-          width: 27%;
+          width: 25%;
           float: left;
           margin-left: -5px;
         }
@@ -74,13 +72,12 @@
         }
 
         .explicit-music {
-          background-color: {{ text_color | safe }};
-          color: {{ bg_color | safe }};
+          background-color: {{ colors.text | safe }};
+          color: {{ colors.background | safe }};
           font-size: 12px;
           border-radius: 5px;
           vertical-align: baseline;
-          padding: 1px 3px 1px 3px;
-          margin-top: 0;
+          padding: 1px 4px 1px 4px;
           margin-left: 3px;
         }
 
@@ -100,7 +97,11 @@
         #bars {
           width: 40px;
           height: 30px;
-          bottom: 23px;
+          {% if hide_status %}
+          bottom: 25px;
+          {% else %}
+          bottom: 10px;
+          {% endif %}
           position: absolute;
           display: flex;
           align-items: flex-end;
@@ -136,7 +137,7 @@
         }
 
         <!-- Display the CSS bar -->
-        {{css_bar|safe}}
+        {{ css_bar | safe }}
       </style>
 
     <div xmlns="http://www.w3.org/1999/xhtml" class="container">
@@ -149,7 +150,7 @@
         {% if display_cover %}
         <a class="art">
           <center>
-            <img src="data:image/png;base64, {{ image }}" class="cover" />
+            <img src="data:image/png;base64, {{ song.image }}" class="cover" />
           </center>
         </a>
         {% endif %}
@@ -158,19 +159,19 @@
           <!-- Display song name based on the length -->
           <div class="song-container">
             {% if show_animation %}
-              <div class="song scrolling">{{ song_name }}</div>
+              <div class="song scrolling">{{ song.name }}</div>
             {% else %}
-              <div class="song">{{ song_name }}</div>
+              <div class="song">{{ song.name }}</div>
             {% endif %}
           </div>
 
           <!-- Display artist info -->
           <div class="artist">
-            {% if explicit %}
+            {% if song.is_explicit %}
               <span class="explicit-music">E</span>
             {% endif %}
 
-            {{artist_name}}
+            {{ song.artist }}
           </div>
 
           <div id="bars">{{ content_bar | safe }}</div>

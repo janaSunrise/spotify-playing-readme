@@ -2,8 +2,8 @@
   width="{{ width }}"
   height="{{ height }}"
   viewBox="0 0 {{ width }} {{ height }}"
+  fill="none"
   xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
   aria-labelledby="card-title"
   role="img"
 >
@@ -15,11 +15,11 @@
       <!-- Basic styling -->
       div {
         font-family: 'Poppins', -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-        background-color: {{ background_color | safe }};
+        background-color: {{ colors.background | safe }};
       }
 
       .main {
-        color: {{ text_color | safe }};
+        color: {{ colors.text | safe }};
         margin-top: 15px;
         display: flex;
       }
@@ -44,18 +44,18 @@
 
       .artist {
         font-weight: 500;
-        font-size: 14px;
+        font-size: 15px;
         margin-bottom: 15px;
       }
 
       .song {
-        font-size: 14px;
+        font-size: 15px;
         margin-bottom: 10px;
       }
 
       .explicit-music {
-        background-color: {{ text_color | safe }};
-        color: {{ bg_color | safe }};
+        background-color: {{ colors.text | safe }};
+        color: {{ colors.background | safe }};
         font-size: 10px;
         border-radius: 5px;
         vertical-align: baseline;
@@ -114,14 +114,14 @@
     </style>
 
     <div xmlns="http://www.w3.org/1999/xhtml" class="container">
-      {% if is_now_playing %}
+      {% if song.is_now_playing %}
       <div class="main">
         <!-- Cover section -->
         {% if display_cover %}
         <a class="cover-link">
           <center>
             <img
-              src="data:image/png;base64, {{ image }}"
+              src="data:image/png;base64, {{ song.image }}"
               width="75"
               height="75"
               class="cover"
@@ -133,14 +133,14 @@
         <!-- Song details -->
         <div class="text-container">
           <div class="song">
-            {% if explicit %}
+            {% if song.is_explicit %}
               <span class="explicit-music">E</span>
             {% endif %}
 
-            {{song_name}}
+            {{ song.name }}
           </div>
 
-          <div class="artist">{{ artist_name }}</div>
+          <div class="artist">{{ song.artist }}</div>
 
           <div id="bars">{{ content_bar | safe }}</div>
         </div>

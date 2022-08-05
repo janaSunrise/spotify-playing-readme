@@ -25,7 +25,7 @@ STATUS_MAPPING = {
 
 PLAYING_CONFIG_MAPPING = {
     "simple": {"width": 350, "height": 140, "num_bar": 40},
-    "wavy": {"width": 480, "height": 175, "num_bar": 90},
+    "wavy": {"width": 480, "height": 180, "num_bar": 90},
     None: {"width": 150, "height": 75, "num_bar": 15},
 }
 
@@ -57,29 +57,25 @@ def make_spotify_playing_svg(song: Song, params: dict[str, Any]) -> str:
         if not bars_when_not_playing:
             content_bar = ""
 
-    # Get the colors for the background, title and text
-    background_color = THEMES[color_theme].background_color
-    title_color = THEMES[color_theme].title_color
-    text_color = THEMES[color_theme].text_color
-
     render_data = {
+        # Basic SVG Metadata
         "height": height,
         "width": width,
-        "num_bar": num_bar,
+        # Animated bars
         "content_bar": content_bar,
         "css_bar": css_bar,
+        # Song-related info
         "status": status,
-        "artist_name": song.artist,
-        "song_name": song.name,
-        "image": song.image,
-        "is_now_playing": song.is_now_playing,
-        "explicit": song.is_explicit,
+        "song": song,
+        # Other metadata
         "show_animation": len(song.name) > 27,
         "display_cover": params["display_cover"],
         "hide_status": params["hide_status"],
-        "background_color": background_color,
-        "title_color": title_color,
-        "text_color": text_color,
+        "colors": {
+            "background": THEMES[color_theme].background_color,
+            "title": THEMES[color_theme].title_color,
+            "text": THEMES[color_theme].text_color,
+        },
     }
 
     return render_template(f"image/spotify-playing.{theme}.html.j2", **render_data)
