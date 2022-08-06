@@ -23,10 +23,11 @@ class TopTrack:
         )
 
     @classmethod
-    def from_json(cls, data: dict[str, Any]) -> list[TopTrack]:
+    def from_json(cls, data: dict[str, Any], count: int = 5) -> list[TopTrack]:
         top_tracks = []
+        tracks = data["items"][:count]
 
-        for track in data["items"]:
+        for track in tracks:
             top_tracks.append(
                 cls(
                     track["name"].replace("&", "&amp;"),

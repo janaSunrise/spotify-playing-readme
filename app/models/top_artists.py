@@ -20,14 +20,15 @@ class TopArtist:
         )
 
     @classmethod
-    def from_json(cls, data: dict[str, Any]) -> list[TopArtist]:
+    def from_json(cls, data: dict[str, Any], count: int = 5) -> list[TopArtist]:
         top_artists = []
+        artists = data["items"][:count]
 
-        for track in data["items"]:
+        for artist in artists:
             top_artists.append(
                 cls(
-                    track["name"].replace("&", "&amp;"),
-                    track["images"][1]["url"],
+                    artist["name"].replace("&", "&amp;"),
+                    artist["images"][1]["url"],
                 )
             )
 
