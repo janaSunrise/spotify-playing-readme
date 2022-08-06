@@ -10,7 +10,7 @@ from memoization import cached
 from ..lib.supabase import get_user
 from ..models.song import Song
 from ..utils.css import generate_bar
-from ..utils.song import get_song_info
+from ..utils.spotify import get_song_info
 from ..utils.themes import THEMES
 
 blueprint = Blueprint(
@@ -26,7 +26,6 @@ STATUS_MAPPING = {
 PLAYING_CONFIG_MAPPING = {
     "simple": {"width": 350, "height": 140, "num_bar": 40},
     "wavy": {"width": 480, "height": 180, "num_bar": 90},
-    None: {"width": 150, "height": 75, "num_bar": 15},
 }
 
 

@@ -2,7 +2,7 @@ from flask import Blueprint, redirect
 from werkzeug.wrappers.response import Response
 
 from ..config import Config
-from ..utils.oauth import generate_oauth_url
+from ..utils.url import generate_oauth_url
 
 blueprint = Blueprint("auth", __name__, url_prefix="/auth")
 

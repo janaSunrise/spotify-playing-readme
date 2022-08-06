@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import base64
 from dataclasses import dataclass, field
-from typing import Any, Dict, Literal
+from typing import Any, Literal
 
 import requests
 
@@ -27,7 +27,7 @@ class Song:
         )
 
     @classmethod
-    def from_json(cls, song: Dict[str, Any]) -> "Song":
+    def from_json(cls, song: dict[str, Any]) -> "Song":
         is_now_playing = song["is_now_playing"]
         currently_playing_type = song["currently_playing_type"]
 
