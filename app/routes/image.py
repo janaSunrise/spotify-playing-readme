@@ -10,6 +10,7 @@ from memoization import cached
 from ..lib.supabase import get_user
 from ..models.song import Song
 from ..utils.css import generate_bar
+from ..utils.dtype import parse_boolean
 from ..utils.spotify import get_song_info
 from ..utils.themes import THEMES
 
@@ -86,23 +87,19 @@ def spotify_playing(user_id: str) -> Response:
     theme = request.args.get("theme", default="simple")
     color_theme = request.args.get("color_theme", default="none")
 
-    display_cover = (
-        True if request.args.get("display_cover", default="true") == "true" else False
+    display_cover = parse_boolean(request.args.get("display_cover", default="true"))
+    bars_when_not_playing = parse_boolean(
+        request.args.get("bars_when_not_playing", default="true")
     )
-    bars_when_not_playing = (
-        True
-        if request.args.get("bars_when_not_playing", default="true") == "true"
-        else False
-    )
-    hide_status = (
-        True if request.args.get("hide_status", default="false") == "true" else False
-    )
+    hide_status = parse_boolean(request.args.get("hide_status", default="false"))
 
     # Get the user from the ID
     user = get_user(user_id)
 
     if not user:
-        return Response("No user found with the ID.")  # TODO: Display the error SVG
+        return Response(
+            "No user found with the ID.", 404
+        )  # TODO: Display the error SVG
 
     song = get_song_info(user_id)
 

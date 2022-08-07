@@ -65,11 +65,11 @@ def get_access_token(user_id: str) -> str | None:
 
     if current_time >= expired_time:
         refresh_token = user["refresh_token"]
-
         new_token = spotify.get_access_token(refresh_token)
-        expired_time = int(time()) + new_token["expires_in"]
 
-        update_user_access_token(user_id, new_token["access_token"], expired_time)
+        update_user_access_token(
+            user_id, new_token["access_token"], new_token["expires_in"]
+        )
 
         access_token = new_token["access_token"]
 
