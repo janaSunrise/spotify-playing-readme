@@ -121,21 +121,23 @@ def spotify_playing(user_id: str) -> Response:
 
 @blueprint.route("/top-tracks/<user_id>")
 def top_tracks(user_id: str) -> Response:
-    # Get the user from the ID
     user = get_user(user_id)
 
     if not user:
-        return Response("No user found with the ID.")  # TODO: Display the error SVG
+        return Response(
+            "No user found with the ID.", 404
+        )  # TODO: Display the error SVG
 
     return Response("TODO: Top tracks")
 
 
 @blueprint.route("/top-artists/<user_id>")
 def top_artists(user_id: str) -> Response:
-    # Get the user from the ID
     user = get_user(user_id)
 
     if not user:
-        return Response("No user found with the ID.")  # TODO: Display the error SVG
+        return Response(
+            "No user found with the ID.", 404
+        )  # TODO: Display the error SVG
 
     return Response("TODO: Top artists")
