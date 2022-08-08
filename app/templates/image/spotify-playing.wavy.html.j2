@@ -20,8 +20,9 @@
 
         .main {
           color: {{ colors.text | safe }};
-          margin-top: 40px;
+          /** margin-top: 40px; **/
           display: flex;
+          padding: 10px;
         }
 
         .container {
@@ -39,8 +40,12 @@
         <!-- Song-related styling -->
         .art {
           width: 25%;
-          float: left;
-          margin-left: -5px;
+          /*float: left;
+          margin-left: -5px; */
+          display: flex;
+          align-items: content;
+          justify-content: center;
+          height: 100%;
         }
 
         .content {
@@ -55,10 +60,11 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           margin-left: 2px;
+          font-weight: 800;
         }
 
         .artist {
-          font-size: 20px;
+          font-size: 17px;
           margin-top: 4px;
           text-align: center;
           margin-bottom: 5px;
@@ -95,16 +101,12 @@
 
         <!-- Bars styling -->
         #bars {
-          width: 40px;
+          width: 70%;
           height: 30px;
-          {% if hide_status %}
-          bottom: 25px;
-          {% else %}
-          bottom: 10px;
-          {% endif %}
           position: absolute;
           display: flex;
           align-items: flex-end;
+          overflow: hidden;
         }
 
         .bar {
