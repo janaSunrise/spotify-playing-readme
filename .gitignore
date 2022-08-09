@@ -21,7 +21,6 @@ TODO
 # Database files
 *.sqlite3
 *.sqlite
-*.sql
 *.db
 
 # Ignore personal log files
