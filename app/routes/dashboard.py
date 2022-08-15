@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from flask import Blueprint, render_template, request
+from flask.wrappers import Response
 
 from ..app import spotify
 from ..config import Config
@@ -53,3 +54,15 @@ def dashboard() -> str:
         base_url=Config.BASE_URL,
         github_url=Config.GITHUB_URL,
     )
+
+
+# NOTE: Debug Route - Remove after testing.
+@blueprint.route("/error")
+def error() -> Response:
+    response = Response(
+        render_template("error/error-svg.html.j2", error="Test error!"),
+        mimetype="image/svg+xml",
+    )
+    response.headers["Cache-Control"] = "s-maxage=1"
+
+    return response
