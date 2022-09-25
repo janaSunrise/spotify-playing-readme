@@ -18,7 +18,7 @@ blueprint = Blueprint(
     "image", __name__, template_folder="templates", url_prefix="/image"
 )
 
-# Constants for the spotify playing image endpoint.
+# Constants for the spotify playing image endpoint
 STATUS_MAPPING = {
     True: ["Vibing to", "Binging to", "Listening to", "Obsessed with"],
     False: ["Was listening to", "Previously binging to", "Was vibing to"],
