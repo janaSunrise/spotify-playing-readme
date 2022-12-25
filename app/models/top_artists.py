@@ -8,7 +8,7 @@ import requests
 
 
 @dataclass
-class TopArtist:
+class TopArtists:
     artist: str
 
     image_url: str
@@ -20,7 +20,7 @@ class TopArtist:
         )
 
     @classmethod
-    def from_json(cls, data: dict[str, Any], count: int = 5) -> list[TopArtist]:
+    def from_json(cls, data: dict[str, Any], count: int = 5) -> list[TopArtists]:
         top_artists = []
         artists = data["items"][:count]
 

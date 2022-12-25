@@ -9,7 +9,7 @@ from ..app import spotify, supabase
 
 
 def get_user(user_id: str) -> dict[str, Any] | None:
-    users = supabase.table("Users").select("*").eq("user_id", user_id).execute().data
+    users = supabase.table("user").select("*").eq("user_id", user_id).execute().data
 
     if len(users) == 0:
         return None
@@ -22,7 +22,7 @@ def insert_user(
 ) -> None:
     expired_time = int(time()) + expires_in
 
-    supabase.table("Users").insert(
+    supabase.table("user").insert(
         {
             "user_id": user_id,
             "refresh_token": refresh_token,
@@ -35,7 +35,7 @@ def insert_user(
 
 
 def update_user_refresh_token(user_id: str, refresh_token: str) -> None:
-    supabase.table("Users").update({"refresh_token": refresh_token}).eq(
+    supabase.table("user").update({"refresh_token": refresh_token}).eq(
         "user_id", user_id
     ).execute()
 
@@ -43,7 +43,7 @@ def update_user_refresh_token(user_id: str, refresh_token: str) -> None:
 def update_user_access_token(user_id: str, access_token: str, expires_in: int) -> None:
     expired_time = int(time()) + expires_in
 
-    supabase.table("Users").update(
+    supabase.table("user").update(
         {
             "access_token": access_token,
             "expired_time": expired_time,
@@ -66,6 +66,7 @@ def get_access_token(user_id: str) -> str | None:
     if current_time >= expired_time:
         refresh_token = user["refresh_token"]
         new_token = spotify.get_access_token(refresh_token)
+        print(new_token)
 
         update_user_access_token(
             user_id, new_token["access_token"], new_token["expires_in"]

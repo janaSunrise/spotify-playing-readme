@@ -19,6 +19,7 @@ def generate_bar(bar_count: int = 75) -> str:
         }}
         """
         )
+
         left += 4
 
     return css_bar
