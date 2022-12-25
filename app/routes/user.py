@@ -1,4 +1,3 @@
-import random
 from typing import cast
 
 from flask import Blueprint, jsonify
@@ -21,7 +20,7 @@ def song_to_json(song: Song) -> dict[str, str | bool]:
         "album": song.album,
         "is_explicit": song.is_explicit,
         "currently_playing_type": song.currently_playing_type,
-        "image_url": song.image_url
+        "image_url": song.image_url,
     }
 
 
