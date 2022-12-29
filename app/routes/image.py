@@ -31,7 +31,7 @@ PLAYING_CONFIG_MAPPING = {
 
 
 # Utility methods
-@cached(ttl=5, max_size=128)
+@cached(ttl=10, max_size=128)
 def make_spotify_playing_svg(song: Song, params: dict[str, Any]) -> str:
     theme = params["theme"]
     color_theme = params["color_theme"]

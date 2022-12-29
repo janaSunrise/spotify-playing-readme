@@ -18,9 +18,9 @@ class TopTracks:
     image: str = field(init=False, repr=False)
 
     def __post_init__(self):
-        self.image = base64.b64encode(requests.get(self.image_url).content).decode(
-            "ascii"
-        )
+        with requests.Session() as session:
+            content = session.get(self.image_url).content
+            self.image = base64.b64encode(content).decode("ascii")
 
     @classmethod
     def from_json(cls, data: dict[str, Any], count: int = 5) -> list[TopTracks]:

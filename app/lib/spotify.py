@@ -1,11 +1,11 @@
 from __future__ import annotations
 
 import base64
-import json
 import sys
 import time
 from typing import Any, Literal, cast
 
+import orjson
 import requests
 
 from ..config import Config
@@ -83,17 +83,18 @@ class Spotify:
 
         # Perform request with retries.
         for _ in range(self.RETRY_ATTEMPTS):
-            response = requests.get(f"{self.BASE_URL}{url}", headers=headers, json=data)
+            with requests.Session() as session:  # Enables HTTP Keep-Alive & uses connection pooling
+                response = session.get(self.BASE_URL + url, headers=headers, json=data)
 
             try:
-                data = json.loads(response.text)
-            except json.decoder.JSONDecodeError:
+                data = orjson.loads(response.text)
+            except orjson.JSONDecodeError:
                 data = None
 
             if 200 <= response.status_code < 300:
                 return data
 
-            # Handle ratelimited requests
+            # Retry the request if it was ratelimited
             if response.status_code == 429:
                 retry_after = int(response.headers["Retry-After"])
 
