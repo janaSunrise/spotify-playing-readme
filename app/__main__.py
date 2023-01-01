@@ -1,5 +1,5 @@
-from . import flask_app
-from .config import DEBUG
+from .app import app
+from .config import Config
 
 if __name__ == "__main__":
-    flask_app.run(debug=DEBUG)
+    app.run(debug=Config.DEBUG)

@@ -1,0 +1,13 @@
+{
+  "name": "spotify-playing-readme",
+  "version": "1.0.0",
+  "private": "true",
+  "scripts": {
+    "css:build": "tailwindcss -i ./app/static/style.css -o ./app/static/css/main.css",
+    "css:watch": "yarn run css:build --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tailwindcss": "^3.1.7"
+  }
+}

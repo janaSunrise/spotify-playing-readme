@@ -1,0 +1,26 @@
+<svg
+  width="300"
+  height="120"
+  viewBox="0 0 300 120"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-labelledby="card-title"
+  role="img"
+>
+  <title id="card-title">Spotify playing | Error</title>
+  <foreignObject width="300" height="120">
+    {% include 'partial/svg-font.html.j2' %}
+
+    <style></style>
+
+    <div xmlns="http://www.w3.org/1999/xhtml" class="container">
+        <!-- Error SVG Image -->
+
+        <!-- Main text -->
+        <div class="main">Shit's broken!</div>
+
+        <!-- Error text -->
+        <div class="error">{{ error }}</div>
+    </div>
+  </foreignObject>
+</svg>
