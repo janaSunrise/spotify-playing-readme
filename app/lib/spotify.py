@@ -46,7 +46,7 @@ class Spotify:
 
         return response.json()
 
-    def get_reresh_token(self, auth_code: str) -> dict[str, Any]:
+    def get_refresh_token(self, auth_code: str) -> dict[str, Any]:
         token = self.generate_base64_token()
 
         headers = {"Authorization": f"Basic {token}"}

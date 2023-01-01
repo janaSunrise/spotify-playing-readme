@@ -24,7 +24,7 @@ def dashboard() -> str:
 
     # Get the refresh & access token from the code
     try:
-        token = spotify.get_reresh_token(code)
+        token = spotify.get_refresh_token(code)
         access_token = token["access_token"]
 
         user_id = spotify.get_user_info(access_token)["id"]
