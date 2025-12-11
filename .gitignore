@@ -13,7 +13,6 @@ __pycache__/
 .python-version
 
 # Database files
-*.sql
 *.db
 
 # Personal log files

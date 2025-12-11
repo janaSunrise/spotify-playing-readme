@@ -1,4 +1,13 @@
-THEMES = {
+from typing import TypedDict
+
+
+class ThemeColors(TypedDict):
+    title_color: str
+    text_color: str
+    bg_color: str
+
+
+THEMES: dict[str, ThemeColors] = {
     "none": {
         "title_color": "",
         "text_color": "",
@@ -57,6 +66,6 @@ THEMES = {
     "city_lights": {
         "title_color": "#5D8CB3",
         "text_color": "#718CA1",
-        "bg_color": "#1D252C"
-    }
+        "bg_color": "#1D252C",
+    },
 }
