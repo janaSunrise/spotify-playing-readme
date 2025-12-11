@@ -4,7 +4,6 @@ from time import time
 
 import requests
 from flask import Response
-from memoization import cached
 
 from . import database
 from .config import (
@@ -42,7 +41,6 @@ def generate_token(authorization_code: str) -> dict:
     return response.json()
 
 
-@cached(ttl=60, max_size=128)
 def generate_base64_auth(client_id: str, client_secret: str) -> str:
     return base64.b64encode(f"{client_id}:{client_secret}".encode()).decode("utf-8")
 

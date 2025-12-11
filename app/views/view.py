@@ -4,7 +4,6 @@ from textwrap import dedent
 
 import requests
 from flask import Blueprint, Response, escape, render_template, request
-from memoization import cached
 
 from app.themes import THEMES
 from app.utils import get_access_token, get_now_playing, get_recently_played
@@ -12,7 +11,6 @@ from app.utils import get_access_token, get_now_playing, get_recently_played
 view = Blueprint("view", __name__, template_folder="templates")
 
 
-@cached(ttl=60, max_size=128)
 def generate_bar(bar_count=75):
     css_bar = ""
     left = 1
@@ -30,13 +28,11 @@ def generate_bar(bar_count=75):
     return css_bar
 
 
-@cached(ttl=5, max_size=128)
 def load_image_b64(url):
     response = requests.get(url)
     return base64.b64encode(response.content).decode("ascii")
 
 
-@cached(ttl=5, max_size=128)
 def make_svg(item, info):
     theme = info["theme"]
     is_now_playing = info["is_now_playing"]
