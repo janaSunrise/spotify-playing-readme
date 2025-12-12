@@ -20,7 +20,7 @@ class SpotifyItem(BaseModel):
     @classmethod
     def from_track(cls, track: SpotifyTrack, *, is_now_playing: bool = False) -> "SpotifyItem":
         images = track.album.images if track.album else track.images
-        image_url = images[1].url if len(images) > 1 else images[0].url if images else ""
+        image_url = images[0].url if images else ""
 
         artist_name = track.artists[0].name if track.artists else ""
         album_name = track.album.name if track.album else ""
@@ -38,7 +38,7 @@ class SpotifyItem(BaseModel):
     @classmethod
     def from_episode(cls, episode: SpotifyEpisode, *, is_now_playing: bool = False) -> "SpotifyItem":
         images = episode.images
-        image_url = images[1].url if len(images) > 1 else images[0].url if images else ""
+        image_url = images[0].url if images else ""
 
         return cls(
             name=episode.name,

@@ -25,13 +25,20 @@ class SpotifyClient:
         self.redirect_uri = redirect_uri
         self._client: AsyncClient | None = None
 
-    @property
-    def client(self) -> AsyncClient:
+    def initialize(self) -> None:
         if self._client is None or self._client.is_closed:
             self._client = AsyncClient(
                 timeout=DEFAULT_TIMEOUT,
                 limits=DEFAULT_LIMITS,
             )
+
+    @property
+    def client(self) -> AsyncClient:
+        if self._client is None or self._client.is_closed:
+            raise RuntimeError(
+                "httpx AsyncClient not initialized. Call initialize() to initialize.",
+            )
+
         return self._client
 
     async def close(self) -> None:
@@ -44,7 +51,7 @@ class SpotifyClient:
         return base64.b64encode(auth_str.encode()).decode("utf-8")
 
     def generate_auth_url(self, scopes: list[str]) -> str:
-        scope_str = ",".join(scopes)
+        scope_str = " ".join(scopes)
         return (
             f"{self.AUTH_BASE}/authorize?"
             f"client_id={self.client_id}&"

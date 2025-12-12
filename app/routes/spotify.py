@@ -39,22 +39,20 @@ async def get_song_info(user_id: str) -> tuple[SpotifyItem, bool]:
 
 @spotify_router.get("/spotify")
 async def get_spotify_widget(
-    id: str,  # noqa: A002
+    user_id: str,
     image: bool = True,
     theme: str = "default",
     color_theme: str = "light",
 ) -> Response:
     try:
-        item, is_now_playing = await get_song_info(id)
+        item, is_now_playing = await get_song_info(user_id)
     except UserNotFoundError as e:
         raise HTTPException(
             status_code=404,
             detail="User not found. Please authenticate first at /login",
         ) from e
-    except HTTPException:
-        raise
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to fetch song info: {e!s}") from e
+        raise HTTPException(status_code=500, detail="Failed to fetch song info.") from e
 
     svg: str = await render_spotify_svg(
         item=item,
