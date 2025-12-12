@@ -7,6 +7,7 @@ class Settings(BaseSettings):
 
     debug: bool = Field(default=True, alias="DEBUG")
     base_url: str = Field(..., alias="BASE_URL")
+    session_secret_key: str = Field(..., alias="SESSION_SECRET_KEY")
 
     # Spotify
     spotify_client_id: str = Field(..., alias="SPOTIFY_CLIENT_ID")

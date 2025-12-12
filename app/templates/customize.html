@@ -1,10 +1,16 @@
-{% extends "base.html" %} {% block title %}Spotify playing README{% endblock %}
+{% extends "base.html" %} {% block title %}Customize Your Widget - Spotify playing README{% endblock %}
 {% block content %}
 <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-  <div class="mb-6 text-center">
-    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">
+  <div class="mb-6 flex justify-between items-center">
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">
       Make your Spotify widget
     </h1>
+    <a
+      href="/logout"
+      class="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
+    >
+      Logout
+    </a>
   </div>
 
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-6">

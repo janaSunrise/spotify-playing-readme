@@ -13,7 +13,7 @@
       Display your currently playing music directly in your Github README
     </p>
     <button
-      id="login-redirect"
+      id="customize-redirect"
       class="inline-flex items-center gap-2 px-6 py-3 bg-violet-600 text-white text-base font-semibold rounded-lg hover:bg-violet-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 shadow-md hover:shadow-lg"
     >
       <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -27,8 +27,8 @@
 </div>
 {% endblock %} {% block script %}
 <script>
-  document.querySelector("#login-redirect").addEventListener("click", () => {
-    window.location.href = "/login";
+  document.querySelector("#customize-redirect").addEventListener("click", () => {
+    window.location.href = "/customize";
   });
 </script>
 {% endblock %}

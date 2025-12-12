@@ -49,12 +49,31 @@ async def callback(request: Request) -> Response:
 
     await supabase_client.upsert_user(user)
 
+    # Store user_id in session
+    request.session["user_id"] = user_id
+
+    return RedirectResponse(url="/customize", status_code=303)
+
+
+@auth_router.get("/customize")
+async def customize(request: Request) -> Response:
+    user_id = request.session.get("user_id")
+
+    if not user_id:
+        return RedirectResponse(url="/login", status_code=303)
+
     return templates.TemplateResponse(
         request,
-        "callback.html",
+        "customize.html",
         {
             "id": user_id,
             "base_url": settings.base_url,
             "github_url": settings.github_url,
         },
     )
+
+
+@auth_router.get("/logout")
+async def logout(request: Request) -> RedirectResponse:
+    request.session.clear()
+    return RedirectResponse(url="/", status_code=303)
