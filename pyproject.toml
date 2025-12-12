@@ -22,6 +22,7 @@ lint = [
 ]
 
 [tool.poe.tasks]
+dev = "fastapi dev app --reload"
 ruff = "ruff check --fix ."
 ruff-format = "ruff format ."
 prek-setup = "prek install -f"
@@ -57,5 +58,6 @@ ignore = [
   "E731",    # Don't assign a lambda expression, use a def
   "S105",    # Hard-coded passwords
   "TRY003",  # No f-strings in raise statements
+  "S311",    # Pseudo-random generator should not be used
   "EM",      # flake8-errmsg
 ]
