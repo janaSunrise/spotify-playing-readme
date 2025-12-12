@@ -21,7 +21,7 @@ async def login() -> RedirectResponse:
 
 @auth_router.get("/callback")
 async def callback(request: Request) -> Response:
-    code: str | None = request.query_params.get("code")
+    code = request.query_params.get("code")
 
     if not code:
         raise HTTPException(status_code=400, detail="No authorization code found in callback")

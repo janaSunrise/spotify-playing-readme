@@ -40,14 +40,9 @@ async def get_song_info(user_id: str) -> tuple[SpotifyItem, bool]:
 @spotify_router.get("/spotify")
 async def get_spotify_widget(
     id: str,  # noqa: A002
-    theme: str = "plain",
     image: bool = True,
-    bars_when_not_listening: bool = True,
-    hide_status: bool = False,
-    title_color: str = "",
-    text_color: str = "",
-    bg_color: str = "",
-    color_theme: str = "none",
+    theme: str = "default",
+    color_theme: str = "light",
 ) -> Response:
     try:
         item, is_now_playing = await get_song_info(id)
@@ -63,15 +58,10 @@ async def get_spotify_widget(
 
     svg: str = await render_spotify_svg(
         item=item,
-        theme=theme,
         is_now_playing=is_now_playing,
         needs_cover_image=image,
-        bars_when_not_listening=bars_when_not_listening,
-        hide_status=hide_status,
+        theme=theme,
         color_theme=color_theme,
-        title_color=title_color,
-        text_color=text_color,
-        bg_color=bg_color,
     )
 
     return Response(

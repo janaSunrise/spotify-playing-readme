@@ -32,10 +32,17 @@ class SupabaseClient:
         return User.model_validate(result.data[0])
 
     async def update_token(self, user_id: str, access_token: str, expired_time: int) -> None:
-        await self.client.table("users").update({
-            "access_token": access_token,
-            "expired_time": expired_time,
-        }).eq("id", user_id).execute()
+        await (
+            self.client.table("users")
+            .update(
+                {
+                    "access_token": access_token,
+                    "expired_time": expired_time,
+                },
+            )
+            .eq("id", user_id)
+            .execute()
+        )
 
 
 supabase_client = SupabaseClient(

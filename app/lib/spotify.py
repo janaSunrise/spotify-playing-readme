@@ -63,7 +63,9 @@ class SpotifyClient:
 
         try:
             response: Response = await self.client.post(
-                f"{self.AUTH_BASE}/api/token", data=payload, headers=headers,
+                f"{self.AUTH_BASE}/api/token",
+                data=payload,
+                headers=headers,
             )
             response.raise_for_status()
 
@@ -82,7 +84,9 @@ class SpotifyClient:
 
         try:
             response: Response = await self.client.post(
-                f"{self.AUTH_BASE}/api/token", data=payload, headers=headers,
+                f"{self.AUTH_BASE}/api/token",
+                data=payload,
+                headers=headers,
             )
             response.raise_for_status()
 
