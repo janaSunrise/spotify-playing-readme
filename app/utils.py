@@ -1,6 +1,4 @@
 import base64
-import random
-from textwrap import dedent
 from time import time
 
 from fastapi import HTTPException
@@ -12,90 +10,17 @@ from app.lib.supabase import supabase_client
 from app.models.spotify import SpotifyItem
 from app.models.spotify_api import SpotifyTokenResponse
 from app.templates import templates
-
-VALID_THEMES = {"default", "apple"}
-MAX_TEXT_LENGTH = 30
-COLOR_THEMES = {
-    "light": {
-        "bg": "#ffffff",
-        "text": "#1e293b",
-        "accent": "#3b82f6",
-        "status": "#64748b",
-    },
-    "dark": {
-        "bg": "#1c1c1e",
-        "text": "#f5f5f7",
-        "accent": "#0a84ff",
-        "status": "#98989d",
-    },
-    "purple": {
-        "bg": "#faf5ff",
-        "text": "#4c1d95",
-        "accent": "#a855f7",
-        "status": "#7c3aed",
-    },
-    "blue": {
-        "bg": "#eff6ff",
-        "text": "#1e40af",
-        "accent": "#3b82f6",
-        "status": "#3b82f6",
-    },
-    "green": {
-        "bg": "#f0fdf4",
-        "text": "#166534",
-        "accent": "#22c55e",
-        "status": "#16a34a",
-    },
-    "orange": {
-        "bg": "#fff7ed",
-        "text": "#9a3412",
-        "accent": "#f97316",
-        "status": "#ea580c",
-    },
-    "slate": {
-        "bg": "#f8fafc",
-        "text": "#0f172a",
-        "accent": "#475569",
-        "status": "#64748b",
-    },
-}
-
-VALID_COLOR_THEMES = set(COLOR_THEMES.keys())
-
-
-def validate_theme(theme: str | None) -> str:
-    if not theme:
-        return "default"
-    normalized = theme.lower().strip()
-    return normalized if normalized in VALID_THEMES else "default"
-
-
-def validate_color_theme(color_theme: str | None) -> str:
-    if not color_theme:
-        return "light"
-    normalized = color_theme.lower().strip()
-    return normalized if normalized in VALID_COLOR_THEMES else "light"
-
-
-def get_color_theme(color_theme: str | None) -> dict[str, str]:
-    validated = validate_color_theme(color_theme)
-    return COLOR_THEMES[validated]
-
-
-def generate_bar(bar_count: int = 40) -> str:
-    css_bar: str = ""
-
-    for i in range(1, bar_count + 1):
-        anim = random.randint(400, 800)
-        delay = random.randint(0, 400)
-        css_bar += dedent(f"""
-        .bar:nth-child({i}) {{
-            animation-duration: {anim}ms;
-            animation-delay: -{delay}ms;
-        }}
-        """)
-
-    return css_bar
+from app.theming import (
+    MAX_TEXT_LENGTH,
+    VISUALIZER_BAR_COUNT,
+    WIDGET_HEIGHT,
+    WIDGET_WIDTH,
+    generate_visualizer_bars,
+    generate_visualizer_css,
+    get_colors,
+    validate_card_style,
+    validate_color_theme,
+)
 
 
 async def load_image_b64(url: str) -> str:
@@ -128,32 +53,27 @@ async def render_spotify_svg(
     item: SpotifyItem,
     is_now_playing: bool,
     needs_cover_image: bool,
-    theme: str | None = None,
+    style: str | None = None,
     color_theme: str | None = None,
 ) -> str:
     img = await load_image_b64(item.image_url) if item.image_url and needs_cover_image else ""
     artist_name = str(escape(item.artist))
     song_name = str(escape(item.name))
 
-    validated_theme = validate_theme(theme)
-    colors = get_color_theme(color_theme)
+    card_style = validate_card_style(style)
+    colors = get_colors(color_theme)
     is_dark_mode = validate_color_theme(color_theme) == "dark"
 
-    # Need to change these values to std.
-    width = 350
-    height = 140
-    num_bar = 40
-
-    content_bar = "".join(["<div class='bar'></div>" for _ in range(num_bar)]) if is_now_playing else ""
-    css_bar = generate_bar(num_bar) if is_now_playing else ""
+    content_bar = generate_visualizer_bars(VISUALIZER_BAR_COUNT) if is_now_playing else ""
+    css_bar = generate_visualizer_css(VISUALIZER_BAR_COUNT) if is_now_playing else ""
 
     status = "Currently playing:" if is_now_playing else "Last listened to:"
 
-    template_name = f"spotify.{validated_theme}.html.j2"
+    template_name = f"spotify.{card_style}.html.j2"
     rendered_data = {
-        "width": width,
-        "height": height,
-        "num_bar": num_bar,
+        "width": WIDGET_WIDTH,
+        "height": WIDGET_HEIGHT,
+        "num_bar": VISUALIZER_BAR_COUNT,
         "content_bar": content_bar,
         "css_bar": css_bar,
         "status": status,

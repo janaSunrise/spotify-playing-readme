@@ -41,7 +41,7 @@ async def get_song_info(user_id: str) -> tuple[SpotifyItem, bool]:
 async def get_spotify_widget(
     user_id: str,
     image: bool = True,
-    theme: str = "default",
+    style: str = "default",
     color_theme: str = "light",
 ) -> Response:
     try:
@@ -58,7 +58,7 @@ async def get_spotify_widget(
         item=item,
         is_now_playing=is_now_playing,
         needs_cover_image=image,
-        theme=theme,
+        style=style,
         color_theme=color_theme,
     )
 

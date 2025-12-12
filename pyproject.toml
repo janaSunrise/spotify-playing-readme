@@ -60,5 +60,7 @@ ignore = [
   "S105",    # Hard-coded passwords
   "TRY003",  # No f-strings in raise statements
   "S311",    # Pseudo-random generator should not be used
+  "FBT001",
+  "FBT002",
   "EM",      # flake8-errmsg
 ]

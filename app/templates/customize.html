@@ -1,36 +1,39 @@
-{% extends "base.html" %} {% block title %}Customize Your Widget - Spotify playing README{% endblock %}
+{% extends "base.html" %} {% block title %}Customize Your Widget - Spotify Widget{% endblock %}
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
-  <div class="mb-6 flex justify-between items-center">
-    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">
-      Make your Spotify widget
-    </h1>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8 flex justify-between items-center">
+    <div>
+      <h1 class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight">
+        Craft your Widget
+      </h1>
+    </div>
     <a
       href="/logout"
-      class="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
+      class="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200"
     >
       Logout
     </a>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 mb-6">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
     <div
-      class="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow duration-200"
+      class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-6 shadow-sm hover:shadow-md transition-all duration-200"
     >
-      <div class="flex items-center gap-2 mb-4">
-        <h2 class="text-lg font-semibold text-slate-800">Configuration</h2>
-      </div>
-      <div class="space-y-3">
+      <h2 class="text-base font-semibold text-slate-800 mb-5 flex items-center gap-2">
+        Configuration
+      </h2>
+      <div class="space-y-4">
         <div>
           <label class="block text-sm font-medium text-slate-700 mb-2">
-            Card Theme
+            Card Style
           </label>
           <select
-            id="theme-select"
-            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer"
+            id="style-select"
+            class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer transition-all hover:border-gray-300"
           >
             <option value="default">Default</option>
             <option value="apple">Apple</option>
+            <option value="neon">Neon</option>
           </select>
         </div>
 
@@ -40,7 +43,7 @@
           </label>
           <select
             id="color-theme-select"
-            class="w-full px-3 py-2 text-sm border border-gray-300 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer"
+            class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer transition-all hover:border-gray-300"
           >
             <option value="light">Light</option>
             <option value="dark">Dark</option>
@@ -52,62 +55,64 @@
           </select>
         </div>
 
-        <label class="flex items-center cursor-pointer group">
-          <input
-            type="checkbox"
-            id="needs-image"
-            checked
-            class="w-5 h-5 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
-          />
-          <span
-            class="ml-2.5 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
-          >
-            Show cover image
-          </span>
-        </label>
+        <div class="pt-2 space-y-3">
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="needs-image"
+              checked
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              Show cover image
+            </span>
+          </label>
 
-        <label class="flex items-center cursor-pointer group">
-          <input
-            type="checkbox"
-            id="link-to-profile"
-            class="w-5 h-5 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
-          />
-          <span
-            class="ml-2.5 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
-          >
-            Link to Spotify profile
-          </span>
-        </label>
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="link-to-profile"
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              Link to Spotify profile
+            </span>
+          </label>
 
-        <label class="flex items-center cursor-pointer group">
-          <input
-            type="checkbox"
-            id="website-img"
-            class="w-5 h-5 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
-          />
-          <span
-            class="ml-2.5 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
-          >
-            HTML format (for websites)
-          </span>
-        </label>
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="website-img"
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              HTML (for websites)
+            </span>
+          </label>
+        </div>
       </div>
     </div>
 
     <div
-      class="bg-white rounded-xl border border-gray-200 p-4 sm:p-5 shadow-sm hover:shadow-md transition-shadow duration-200"
+      class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-6 shadow-sm hover:shadow-md transition-all duration-200"
     >
-      <div class="flex items-center gap-2 mb-4">
-        <h2 class="text-lg font-semibold text-slate-800">Generated Code</h2>
-      </div>
+      <h2 class="text-base font-semibold text-slate-800 mb-5 flex items-center gap-2">
+        Generated Embed
+      </h2>
       <textarea
         id="readme"
         readonly
-        class="w-full h-24 px-3 py-2 border border-gray-300 rounded-lg font-mono text-xs text-slate-700 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none transition-all duration-200"
+        class="w-full h-32 px-4 py-3 border border-gray-200 rounded-xl font-mono text-xs text-slate-700 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none transition-all duration-200"
       ></textarea>
       <button
         id="copy-to-clipboard"
-        class="mt-3 w-full px-4 py-2 bg-violet-600 text-white text-sm font-semibold rounded-lg hover:bg-violet-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 flex items-center justify-center gap-2 shadow-sm hover:shadow-md"
+        class="mt-4 w-full px-4 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
       >
         Copy to Clipboard
       </button>
@@ -115,18 +120,18 @@
   </div>
 
   <div
-    class="bg-white rounded-xl border border-gray-200 p-6 sm:p-8 shadow-sm hover:shadow-md transition-shadow duration-200"
+    class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-8 shadow-sm hover:shadow-md transition-all duration-200"
   >
-    <div class="flex items-center justify-center gap-2 mb-6">
-      <h2 class="text-lg font-semibold text-slate-800">Preview</h2>
-    </div>
+    <h2 class="text-base font-semibold text-slate-800 mb-6 flex items-center justify-center gap-2">
+      Preview
+    </h2>
     <div
-      class="flex justify-center items-center min-h-[200px] bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl p-6 sm:p-8"
+      class="flex justify-center items-center min-h-[200px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 border border-gray-200/50"
     >
       <img
         id="preview-img"
-        alt="Spotify embed preview"
-        class="max-w-full h-auto rounded-lg shadow-lg"
+        alt="Spotify widget preview"
+        class="max-w-full h-auto rounded-lg shadow-xl"
       />
     </div>
   </div>
@@ -147,7 +152,7 @@
   const parameters = {
     user_id: user_id,
     image: true,
-    theme: "default",
+    style: "default",
     color_theme: "light",
   };
 
@@ -171,9 +176,9 @@
     }
   };
 
-  // Card theme selector
-  document.getElementById("theme-select").addEventListener("change", (e) => {
-    parameters.theme = e.target.value;
+  // Card style selector
+  document.getElementById("style-select").addEventListener("change", (e) => {
+    parameters.style = e.target.value;
     updateUrl();
   });
 
