@@ -1,160 +1,85 @@
-# Spotify playing README
+# Spotify Playing for README
 
-A really easy way to display your spotify listening status on READMEs and websites!
+Display your Spotify listening status on GH README and websites with a beautiful, customizable widget.
 
-## Demo
+## Setup
 
-Here's the embed of the card from website.
+### Prerequisites
 
-[![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
+- Python 3.11+
+- `uv` package manager
+- Spotify Developer Account
+- Supabase Account
 
-#### Customized card, with theming
+### Local Development
 
-[![Spotify playing](http://spotify.aio-api.ml/spotify?id=qy9jhr85so9g8pr6zz7aizc6x&theme=wavy&image=true&bars_when_not_listening=true&bg_color=black&title_color=cyan&text_color=cyan)](https://open.spotify.com/user/qy9jhr85so9g8pr6zz7aizc6x)
+1. **Clone the repository**
+   ```sh
+   git clone https://github.com/janaSunrise/spotify-playing-readme
+   cd spotify-playing-readme
+   ```
 
-## Security notice
+2. **Install dependencies**
+   ```sh
+   uv sync --all-groups
+   ```
 
-As a security notice, We're not storing any of the sensitive tokens. We just store the
-refresh tokens securely used for generating access tokens, and to get the status data, with
-only read permissions and scopes. You can check it in the configuration file for the scopes.
+3. **Configure Spotify API**
+   - Go to [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+   - Create a new app
+   - Add `http://localhost:8000/callback` to Redirect URIs
+   - Note your Client ID and Client Secret
 
-## URL Parameters
+4. **Configure Supabase**
+   - Create a new project on [Supabase](https://supabase.com)
+   - Setup the database with the schema from `schema.sql`
+   - Get your project URL and API key
 
-- `id`: Your spotify ID
-- `theme`: The card theme
-- `image`: If cover image to be included
-- `color_theme`: The color theme for the Card
-- `bars_when_not_listening`: If bars should be shown when not listening
-- `bg_color`: The background color for the card
-- `title_color`: The title color for the card
-- `text_color`: The text color for the card
-- `hide_status`: If the status for song should be shown.
+5. **Configure environment variables**
 
-**NOTE**: You can generate the card easily by visiting the panel. Check the repo description link for it.
+   Create a `.env` file based on `.env.example` and fill in the required values. Don't include a trailing slash in `BASE_URL`.
 
-## Setting up the development environment
+6. **Generate a secure secret key**
 
-#### Install the dependencies
+   You need a secure secret key for session management. Generate one using Python:
+   ```sh
+   python -c "import secrets; print(secrets.token_hex(32))"
+   ```
+   Or using OpenSSL:
+   ```sh
+   openssl rand -hex 32
+   ```
+   Copy the generated key and use it as your `SESSION_SECRET_KEY` in the `.env` file.
 
-The project uses pipenv for dependencies. Here's how to install the dependencies.
+7. **Run the application**
+   ```sh
+   uv run poe dev
+   ```
 
-```sh
-pipenv sync -d
-```
+The app will be available at `http://localhost:8000`
 
-#### Setting up Spotify API for the project
+## Self-Hosting
 
-- Go to the developer panel at spotify. [Panel URL](https://developer.spotify.com)
-- Make an APP, Specify the name, and description.
-- Add `http://localhost:5000/callback` to the URLs for development. Add the respective IP / Domain / Host
-  if you're self hosting this App with the path of `/callback` to the end.
-- Take a note of the Client ID, and Client Secret for setting up `.env`
+### Configuration
 
-#### Setting up Firebase
+Update the `.env` file for production:
 
-- Go to the firebase panel.
-- Make a new project, and setup as a Web SDK and enable it.
-- Go to Settings, and the web apps section, and copy the config, and keep a note.
-- Then go to the `Services account` tab, then the `Database secrets`, select the Database we're
-  using and copy the API.
-- Copy the domain from Realtime Database section in left, after initializing it.
-- Finally, For service accounts, Go to the `Services account` tab. Then download the service
-  account credentials and save it. Once done, Open VSCode, Download Base64 Encode extension,
-  if you don't already have it. The Copy and Paste the JSON file contents in the `.env` and
-  Encode it using Base64 after that.
+- Set `BASE_URL` to your domain
+- Generate a secure `SESSION_SECRET_KEY` (see step 6 in Local Development)
+- Update Spotify redirect URI to `https://yourdomain.com/callback`
 
-#### Setting up .env
+## Contributing
 
-Configure the environmental variables by renaming the `.env.example` file to `.env` with the respective
-values for it.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Here's the info about the `.env` variables
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-- `BASE_URL`: This is the basic URL for getting the Callback URLs and more, set it
-  to `localhost:5000` in development mode.
-- `SPOTIFY_CLIENT_ID`: This is the spotify client ID.
-- `SPOTIFY_SECRET_ID`: This is the Spotify Secret.
-- `FB_API_KEY`: This is the API key for firebase, from Database secrets.
-- `FB_DOMAIN`: This is the domain from `Realtime Database` section.
-- `FB_PROJECT_ID`: This is the Project ID from normal firebase config.
-- `FB_STORAGE_BUCKET`: The storage bucket from the normal firebase config.
-- `FB_MESSAGING_ID`: The messaging ID from normal firebase config.
-- `FB_DATABASE_URL`: The database URL from firebase config.
-- `FB_SERVICE_ACCOUNT`: The service account credentials obtained from the settings and encoded using base64.
+## License
 
-**NOTE**: Use the VSCode Base64 encode extension to encode the contents of the Service Account JSON file.
-
-You can change the port when self hosting / running by adding a `port` parameter to `flask_app`'s `run`
-function. You can do so like this `flask_app.run(debug=DEBUG, port=<the-port-you-need>)`
-
-Once done, Run the server using **`pipenv run start`**. It should boot up at `localhost:5000` in development mode,
-or the settings you have provided.
-
-## Deploying your own instance
-
-To deploy your own instance, You need a proper hosting platform to run Python webapps.
-You can use Heroku, PythonAnywhere, Your own server or anywhere else.
-
-To self-host your instance, The steps are given above on how to do it. The instructions on
-option configuration is also given. It is recommended to run with Debug mode off, and Your
-specific host and port.
-
-You can do so, like this:
-
-- Turn debug off, by toggling the Debug option to `False` in `config.py`
-- Change host and port: `flask.run(debug=DEBUG, host="<your-host>", port=<your-port>)` by replacing
-  the values given inside the angle brackets.
-
-Here is the workflow on setting up:
-
-- Setup Spotify API and note it.
-- Setup Firebase for data store and note the API.
-- Fill the values as said in `.env`.
-- Configure the options as needed.
-- Install dependencies using `pipenv`.
-- Run using **`pipenv run start`**.
-- And, you should be good to go.
-
-**Note**: You can use the self hosted instance already running, or Self host your own instance like this.
-
-## TODOs Planned
-
-There are several things planned for this project. Here are the TODOs, Kept public for reference,
-and transparent-ness.
-
-- [ ] FAQ
-  - [ ] How to contribute
-  - [ ] How to add a theme
-  - [ ] How to work with options
-  - [ ] Adding more features
-  - [ ] Customization
-- [x] Improve the current themes
-- [ ] Add more themes
-- [x] Add more customization options
-  - [x] Previews when customizing the card
-  - [x] Allow customizing Background and font color (Will be redeveloped, with all security issues fixed)
-  - [x] Marquee show
-  - [x] Display bars when not listening.
-  - [x] Allow linking to your profile along with the link.
-  - [x] Color Theme
-  - [x] Abiltiy to Hide status
-  - [x] HTML Image tag generation
-  - [x] Add same color to either of the text / title, if either of them is left empty, so the color pallet is fine.
-
-## 🤝 Contributing
-
-Contributions, issues and feature requests are welcome. After cloning & setting up project locally, you can
-just submit a PR to this repo and it will be deployed once it's accepted.
-
-⚠️ It’s good to have descriptive commit messages, or PR titles so that other contributors can understand
-about your commit or the PR Created. Read
-[conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.3/) before making the commit message.
-
-## Show your support
-
-We love people's support to grow, improve and give the best. Be sure to drop a 🌟 if you like the project,
-and also contribute, if you're interested!
+This project is licensed under the Apache License - see the [LICENSE](LICENSE) file for details.
 
 **Inspired by [Novatorem](https://github.com/novatorem)**
-
-<div align="center">Made by Sunrit Jana with ❤️</div>

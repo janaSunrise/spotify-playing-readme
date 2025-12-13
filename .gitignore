@@ -1,29 +1,25 @@
-
 # Python cache
 __pycache__/
 
 # Editor generated files
 .idea/
 .vscode/
-.spyproject/
 
-# VirtualENV files
-env/
-venv/
-.venv/
+# Virtual env
+.venv
 
-# Environmental and personal files
-*.env
-TODO
+# Configuration files
+.env
+.python-version
 
 # Database files
-*.sqlite3
-*.sqlite
-*.sql
 *.db
 
-# Ignore personal log files
-logs/
+# Personal log files
+logs
 
 # MacOS generated file
 .DS_STORE
+
+# Caches
+.ruff_cache

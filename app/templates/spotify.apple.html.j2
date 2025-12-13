@@ -1,0 +1,275 @@
+<svg
+  width="{{ width }}"
+  height="{{ height }}"
+  viewBox="0 0 {{ width }} {{ height }}"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  aria-labelledby="cardTitle"
+  role="img"
+>
+  <title id="cardTitle">Now playing on Spotify</title>
+  <defs>
+    <linearGradient id="appleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:{{ bg_color }};stop-opacity:0.98" />
+      <stop offset="100%" style="stop-color:{{ bg_color }};stop-opacity:0.92" />
+    </linearGradient>
+    <filter id="cardShadow">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#appleGradient)" rx="18" filter="url(#cardShadow)" />
+  <foreignObject width="{{ width }}" height="{{ height }}">
+    <defs>
+      <style type="text/css">
+        <![CDATA[
+            @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+        ]]>
+      </style>
+    </defs>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      .container {
+        font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+        width: 100%;
+        height: 100%;
+        border-radius: 14px;
+        padding: 18px 24px 26px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .container.light {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.88) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.05),
+          0 4px 12px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      .container.dark {
+        background: linear-gradient(135deg, rgba(44, 44, 46, 0.85) 0%, rgba(28, 28, 30, 0.90) 100%);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        box-shadow:
+          0 1px 3px rgba(0, 0, 0, 0.3),
+          0 4px 12px rgba(0, 0, 0, 0.4),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+      }
+
+      .status-text {
+        color: {{ status_color }};
+        font-size: 9.5px;
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        text-transform: uppercase;
+        margin-bottom: 0;
+        opacity: 0.75;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      }
+
+      .content-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex: 1;
+      }
+
+      .cover-wrapper {
+        flex-shrink: 0;
+      }
+
+      .cover-image {
+        width: 84px;
+        height: 84px;
+        border-radius: 11px;
+        object-fit: cover;
+        display: block;
+        box-shadow:
+          0 8px 16px rgba(0, 0, 0, 0.12),
+          0 4px 8px rgba(0, 0, 0, 0.08),
+          0 1px 3px rgba(0, 0, 0, 0.06);
+      }
+
+      .light .cover-image {
+        border: 0.5px solid rgba(0, 0, 0, 0.08);
+      }
+
+      .dark .cover-image {
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+        box-shadow:
+          0 8px 16px rgba(0, 0, 0, 0.4),
+          0 4px 8px rgba(0, 0, 0, 0.3),
+          0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      .text-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        min-width: 0;
+        justify-content: center;
+      }
+
+      .song-title {
+        font-size: 16.5px;
+        font-weight: 600;
+        color: {{ text_color }};
+        line-height: 1.3;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-width: 0;
+        letter-spacing: -0.3px;
+        overflow: hidden;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+      }
+
+      .song-title-text {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        flex: 1;
+        min-width: 0;
+        position: relative;
+      }
+
+      .artist-name {
+        font-size: 13.5px;
+        font-weight: 450;
+        color: {{ status_color }};
+        line-height: 1.4;
+        opacity: 0.85;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        position: relative;
+        letter-spacing: -0.1px;
+      }
+
+      .explicit-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: {{ text_color }};
+        color: {{ bg_color }};
+        font-size: 8px;
+        font-weight: 700;
+        border-radius: 4.5px;
+        padding: 3.5px 6.5px;
+        line-height: 1;
+        letter-spacing: 0.4px;
+        box-shadow:
+          0 2px 5px rgba(0, 0, 0, 0.12),
+          0 1px 2px rgba(0, 0, 0, 0.08);
+      }
+
+      .audio-visualizer {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 24px;
+        margin-top: 4px;
+        padding-left: 1px;
+      }
+
+      .bar {
+        background: {{ accent_color }};
+        width: 3.5px;
+        border-radius: 2.5px;
+        height: 4px;
+        box-shadow:
+          0 2px 4px rgba(59, 130, 246, 0.25),
+          0 1px 2px rgba(59, 130, 246, 0.15);
+        animation: sound 0ms -800ms linear infinite alternate;
+      }
+
+      @keyframes sound {
+        0% {
+          opacity: 0.45;
+          height: 5px;
+        }
+        100% {
+          opacity: 1;
+          height: 20px;
+        }
+      }
+
+      {{css_bar|safe}}
+
+      .no-cover .text-content {
+        padding-left: 0;
+      }
+    </style>
+
+    <div xmlns="http://www.w3.org/1999/xhtml" class="container {% if is_dark_mode %}dark{% else %}light{% endif %}">
+      <div class="status-text">{{status}}</div>
+
+      {% if is_now_playing %}
+      <div class="content-wrapper {% if not needs_cover_image %}no-cover{% endif %}">
+        {% if needs_cover_image and img %}
+        <div class="cover-wrapper">
+          <img
+            src="data:image/png;base64, {{img}}"
+            alt="Album cover"
+            class="cover-image"
+          />
+        </div>
+        {% endif %}
+
+        <div class="text-content">
+          <div class="song-title">
+            {% if explicit %}
+            <span class="explicit-badge">E</span>
+            {% endif %}
+            <span class="song-title-text">{{song_name|safe}}</span>
+          </div>
+          <div class="artist-name">{{artist_name|safe}}</div>
+          {% if content_bar %}
+          <div class="audio-visualizer">{{content_bar|safe}}</div>
+          {% endif %}
+        </div>
+      </div>
+      {% else %}
+      <div class="content-wrapper {% if not needs_cover_image %}no-cover{% endif %}">
+        {% if needs_cover_image and img %}
+        <div class="cover-wrapper">
+          <img
+            src="data:image/png;base64, {{img}}"
+            alt="Album cover"
+            class="cover-image"
+          />
+        </div>
+        {% endif %}
+
+        <div class="text-content">
+          <div class="song-title">
+            {% if explicit %}
+            <span class="explicit-badge">E</span>
+            {% endif %}
+            <span class="song-title-text">{{song_name|safe}}</span>
+          </div>
+          <div class="artist-name">{{artist_name|safe}}</div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </foreignObject>
+</svg>

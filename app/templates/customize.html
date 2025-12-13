@@ -1,0 +1,246 @@
+{% extends "base.html" %} {% block title %}Customize Your Widget - Spotify
+Widget{% endblock %} {% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="mb-8 flex justify-between items-center">
+    <div>
+      <h1
+        class="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent tracking-tight"
+      >
+        Craft your Widget
+      </h1>
+    </div>
+    <a
+      href="/logout"
+      class="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-all duration-200"
+    >
+      Logout
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <div
+      class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-6 shadow-sm hover:shadow-md transition-all duration-200"
+    >
+      <h2
+        class="text-base font-semibold text-slate-800 mb-5 flex items-center gap-2"
+      >
+        Configuration
+      </h2>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">
+            Card Style
+          </label>
+          <select
+            id="style-select"
+            class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer transition-all hover:border-gray-300"
+          >
+            <option value="default">Default</option>
+            <option value="apple">Apple</option>
+            <option value="neon">Neon</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-2">
+            Color Theme
+          </label>
+          <select
+            id="color-theme-select"
+            class="w-full px-3.5 py-2.5 text-sm border border-gray-200 rounded-lg bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent cursor-pointer transition-all hover:border-gray-300"
+          >
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="purple">Purple</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="orange">Orange</option>
+            <option value="slate">Slate</option>
+          </select>
+        </div>
+
+        <div class="pt-2 space-y-3">
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="needs-image"
+              checked
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              Show cover image
+            </span>
+          </label>
+
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="link-to-profile"
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              Link to Spotify profile
+            </span>
+          </label>
+
+          <label class="flex items-center cursor-pointer group">
+            <input
+              type="checkbox"
+              id="website-img"
+              class="w-4 h-4 text-violet-600 border-gray-300 rounded focus:ring-violet-500 focus:ring-2 cursor-pointer"
+            />
+            <span
+              class="ml-3 text-sm text-slate-700 group-hover:text-slate-900 transition-colors select-none"
+            >
+              HTML (for websites)
+            </span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-6 shadow-sm hover:shadow-md transition-all duration-200"
+    >
+      <h2
+        class="text-base font-semibold text-slate-800 mb-5 flex items-center gap-2"
+      >
+        Generated Embed
+      </h2>
+      <textarea
+        id="readme"
+        readonly
+        class="w-full h-32 px-4 py-3 border border-gray-200 rounded-xl font-mono text-xs text-slate-700 bg-slate-50/50 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none transition-all duration-200"
+      ></textarea>
+      <button
+        id="copy-to-clipboard"
+        class="mt-4 w-full px-4 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white text-sm font-semibold rounded-xl hover:from-violet-700 hover:to-indigo-700 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+      >
+        Copy to Clipboard
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200/50 p-8 shadow-sm hover:shadow-md transition-all duration-200"
+  >
+    <h2
+      class="text-base font-semibold text-slate-800 mb-6 flex items-center justify-center gap-2"
+    >
+      Preview
+    </h2>
+    <div
+      class="flex justify-center items-center min-h-[200px] bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl p-8 border border-gray-200/50"
+    >
+      <img
+        id="preview-img"
+        alt="Spotify widget preview"
+        class="max-w-full h-auto rounded-lg shadow-xl"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %} {% block script %}
+<script>
+  const user_id = "{{ id }}";
+  const base_url = "{{ base_url }}";
+  const github_url = "{{ github_url }}";
+
+  const codeTextarea = document.getElementById("readme");
+  const previewImg = document.getElementById("preview-img");
+  const copyButton = document.getElementById("copy-to-clipboard");
+
+  let linkToProfile = false;
+  let imgForWebsite = false;
+
+  const parameters = {
+    user_id: user_id,
+    image: true,
+    style: "default",
+    color_theme: "light",
+  };
+
+  const updateUrl = () => {
+    const queryParams = new URLSearchParams(parameters);
+    const url = `${base_url}/spotify?${queryParams.toString()}`;
+    const spotifyUrl = `https://open.spotify.com/user/${user_id}`;
+
+    const mdImg = `![Spotify playing](${url})`;
+    const mdImgUrl = `[![Spotify playing](${url})](${spotifyUrl})`;
+
+    const websiteImg = `<img src="${url}" alt="spotify-readme-card"/>`;
+    const websiteImgUrl = `<a href="${spotifyUrl}"><img src="${url}" alt="spotify-readme-card"/></a>`;
+
+    previewImg.src = url;
+
+    if (imgForWebsite) {
+      codeTextarea.value = linkToProfile ? websiteImgUrl : websiteImg;
+    } else {
+      codeTextarea.value = linkToProfile ? mdImgUrl : mdImg;
+    }
+  };
+
+  // Card style selector
+  document.getElementById("style-select").addEventListener("change", (e) => {
+    parameters.style = e.target.value;
+    updateUrl();
+  });
+
+  // Color theme selector
+  document
+    .getElementById("color-theme-select")
+    .addEventListener("change", (e) => {
+      parameters.color_theme = e.target.value;
+      updateUrl();
+    });
+
+  // Show cover image checkbox
+  document.getElementById("needs-image").addEventListener("change", (e) => {
+    parameters.image = e.target.checked;
+    updateUrl();
+  });
+
+  // Link to profile checkbox
+  document.getElementById("link-to-profile").addEventListener("change", (e) => {
+    linkToProfile = e.target.checked;
+    updateUrl();
+  });
+
+  // HTML format checkbox
+  document.getElementById("website-img").addEventListener("change", (e) => {
+    imgForWebsite = e.target.checked;
+    updateUrl();
+  });
+
+  // Copy to clipboard
+  copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(codeTextarea.value);
+      const originalText = copyButton.innerHTML;
+      copyButton.innerHTML = `
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        Copied!
+      `;
+      copyButton.classList.add("bg-green-600", "hover:bg-green-700");
+      copyButton.classList.remove("bg-violet-600", "hover:bg-violet-700");
+
+      setTimeout(() => {
+        copyButton.innerHTML = originalText;
+        copyButton.classList.remove("bg-green-600", "hover:bg-green-700");
+        copyButton.classList.add("bg-violet-600", "hover:bg-violet-700");
+      }, 2000);
+    } catch (err) {
+      codeTextarea.select();
+      document.execCommand("copy");
+    }
+  });
+
+  updateUrl();
+</script>
+{% endblock %}

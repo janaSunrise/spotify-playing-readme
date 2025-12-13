@@ -1,101 +1,97 @@
 import base64
-import typing as t
 from time import time
 
-import requests
-from flask import Response
-from memoization import cached
+from fastapi import HTTPException
+from markupsafe import escape
 
-from . import database
-from .config import (
-    REDIRECT_URI,
-    SPOTIFY_CLIENT_ID,
-    SPOTIFY_SECRET_ID,
-    SPOTIFY__GENERATE_TOKEN,
-    SPOTIFY__NOW_PLAYING,
-    SPOTIFY__RECENTLY_PLAYED,
-    SPOTIFY__REFRESH_TOKEN,
-    SPOTIFY__USER_INFO
+from app.exceptions import TokenRefreshError
+from app.lib.spotify import spotify_client
+from app.lib.supabase import supabase_client
+from app.models.spotify import SpotifyItem
+from app.models.spotify_api import SpotifyTokenResponse
+from app.templates import templates
+from app.theming import (
+    MAX_TEXT_LENGTH,
+    VISUALIZER_BAR_COUNT,
+    WIDGET_HEIGHT,
+    WIDGET_WIDTH,
+    generate_visualizer_bars,
+    generate_visualizer_css,
+    get_colors,
+    validate_card_style,
+    validate_color_theme,
 )
 
 
-def get_refresh_token(refresh_token: str) -> dict:
-    headers = {"Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"}
-    payload = {
-        "grant_type": "refresh_token",
-        "refresh_token": refresh_token
+async def load_image_b64(url: str) -> str:
+    if not url:
+        return ""
+    if image_content := await spotify_client.fetch_image(url):
+        return base64.b64encode(image_content).decode("ascii")
+    return ""
+
+
+async def get_access_token(user_id: str) -> str:
+    user = await supabase_client.get_user(user_id)
+
+    if user.is_token_expired():
+        try:
+            new_token: SpotifyTokenResponse = await spotify_client.refresh_token(user.refresh_token)
+            expired_time: int = int(time()) + new_token.expires_in
+
+            await supabase_client.update_token(user_id, new_token.access_token, expired_time)
+        except TokenRefreshError as exc:
+            raise HTTPException(status_code=401, detail="Token refresh failed. Please login again.") from exc
+        else:
+            return new_token.access_token
+
+    return user.access_token
+
+
+async def render_spotify_svg(
+    item: SpotifyItem,
+    is_now_playing: bool,
+    needs_cover_image: bool,
+    style: str | None = None,
+    color_theme: str | None = None,
+) -> str:
+    img = await load_image_b64(item.image_url) if item.image_url and needs_cover_image else ""
+    artist_name = str(escape(item.artist))
+    song_name = str(escape(item.name))
+
+    card_style = validate_card_style(style)
+    colors = get_colors(color_theme)
+    is_dark_mode = validate_color_theme(color_theme) == "dark"
+
+    content_bar = generate_visualizer_bars(VISUALIZER_BAR_COUNT) if is_now_playing else ""
+    css_bar = generate_visualizer_css(VISUALIZER_BAR_COUNT) if is_now_playing else ""
+
+    status = "Currently playing:" if is_now_playing else "Last listened to:"
+
+    template_name = f"spotify.{card_style}.html.j2"
+    rendered_data = {
+        "width": WIDGET_WIDTH,
+        "height": WIDGET_HEIGHT,
+        "num_bar": VISUALIZER_BAR_COUNT,
+        "content_bar": content_bar,
+        "css_bar": css_bar,
+        "status": status,
+        "artist_name": artist_name,
+        "song_name": song_name,
+        "img": img,
+        "is_now_playing": is_now_playing,
+        "explicit": item.is_explicit,
+        "show_animation": len(song_name) > MAX_TEXT_LENGTH or len(artist_name) > MAX_TEXT_LENGTH,
+        "needs_cover_image": needs_cover_image,
+        "bg_color": colors["bg"],
+        "text_color": colors["text"],
+        "accent_color": colors["accent"],
+        "status_color": colors["status"],
+        "is_dark_mode": is_dark_mode,
     }
 
-    response = requests.post(SPOTIFY__REFRESH_TOKEN, data=payload, headers=headers)
-    return response.json()
-
-
-def generate_token(authorization_code: str) -> dict:
-    headers = {"Authorization": f"Basic {generate_base64_auth(SPOTIFY_CLIENT_ID, SPOTIFY_SECRET_ID)}"}
-    payload = {
-        "grant_type": "authorization_code",
-        "code": authorization_code,
-        "redirect_uri": REDIRECT_URI,
-    }
-
-    response = requests.post(SPOTIFY__GENERATE_TOKEN, data=payload, headers=headers)
-    return response.json()
-
-
-@cached(ttl=60, max_size=128)
-def generate_base64_auth(client_id: str, client_secret: str) -> str:
-    return base64.b64encode(f"{client_id}:{client_secret}".encode()).decode("utf-8")
-
-
-def get_now_playing(access_token: str) -> dict:
-    headers = {"Authorization": f"Bearer {access_token}"}
-    response = requests.get(SPOTIFY__NOW_PLAYING, headers=headers)
-
-    if response.status_code == 204:
-        return {}
-
-    return response.json()
-
-
-def get_recently_played(access_token: str) -> dict:
-    headers = {"Authorization": f"Bearer {access_token}"}
-    response = requests.get(SPOTIFY__RECENTLY_PLAYED, headers=headers)
-
-    if response.status_code == 204:
-        return {}
-
-    return response.json()
-
-
-@cached(ttl=5, max_size=128)
-def get_user_info(access_token: str) -> dict:
-    headers = {"Authorization": f"Bearer {access_token}"}
-    response = requests.get(SPOTIFY__USER_INFO, headers=headers)
-    return response.json()
-
-
-@cached(ttl=5, max_size=128)
-def get_access_token(uid: str) -> t.Union[str, Response]:
-    user = database.child("users").child(uid).get()
-
-    if not user:
-        return Response("User doesn't exist. Please login first.")
-
-    token_info = user.val()
-
-    current_time = int(time())
-    access_token = token_info["access_token"]
-    expired_time = token_info.get("expired_time")
-
-    if expired_time is None or current_time >= expired_time:
-        refresh_token = token_info["refresh_token"]
-        new_token = get_refresh_token(refresh_token)
-        expired_time = int(time()) + new_token["expires_in"]
-
-        update_data = {"access_token": new_token["access_token"], "expired_time": expired_time}
-
-        database.child("users").child(uid).update(update_data)
-
-        access_token = new_token["access_token"]
-
-    return access_token
+    try:
+        return templates.env.get_template(template_name).render(**rendered_data)
+    except (KeyError, ValueError, TypeError):
+        fallback_template = "spotify.default.html.j2"
+        return templates.env.get_template(fallback_template).render(**rendered_data)
