@@ -28,8 +28,7 @@ async def callback(request: Request) -> Response:
 
     try:
         token = await spotify_client.generate_token(code)
-        access_token = token.access_token
-        user_info = await spotify_client.get_user_info(access_token)
+        user_info = await spotify_client.get_user_info(token.access_token)
         user_id = user_info.id
     except SpotifyAPIError as e:
         raise HTTPException(status_code=401, detail="Failed to authenticate with Spotify") from e

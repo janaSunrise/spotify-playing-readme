@@ -8,7 +8,6 @@ from app.lib.spotify import spotify_client
 from app.models.spotify import SpotifyItem
 from app.models.spotify_api import (
     SpotifyEpisode,
-    SpotifyRecentlyPlayedResponse,
     SpotifyTrack,
 )
 from app.utils import get_access_token, render_spotify_svg
@@ -29,7 +28,7 @@ async def get_song_info(user_id: str) -> tuple[SpotifyItem, bool]:
         if isinstance(data.item, SpotifyTrack):
             return SpotifyItem.from_track(data.item, is_now_playing=is_now_playing), is_now_playing
 
-    recent_plays: SpotifyRecentlyPlayedResponse = await spotify_client.get_recently_played(access_token)
+    recent_plays = await spotify_client.get_recently_played(access_token)
     if not recent_plays.items:
         raise HTTPException(status_code=404, detail="No recent plays found for user")
 

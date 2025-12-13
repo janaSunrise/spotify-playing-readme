@@ -11,6 +11,8 @@ from app.routes.auth import auth_router
 from app.routes.spotify import spotify_router
 from app.templates import templates
 
+MAX_AGE = 604_800  # 7 days in seconds
+
 
 @asynccontextmanager
 async def lifespan(_: FastAPI) -> AsyncIterator[None]:
@@ -18,9 +20,6 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await supabase.supabase_client.initialize()
     yield
     await spotify.spotify_client.close()
-
-
-MAX_AGE = 604_800  # 7 days in seconds
 
 
 app: FastAPI = FastAPI(title="Spotify playing for README", redoc_url=None, lifespan=lifespan)

@@ -1,5 +1,5 @@
-{% extends "base.html" %} {% block title %}Spotify Widget for README{% endblock %}
-{% block content %}
+{% extends "base.html" %} {% block title %}Spotify Widget for README{% endblock
+%} {% block content %}
 <div
   class="min-h-[calc(100vh-4rem)] flex flex-col items-center px-4 pt-12 sm:pt-16 pb-8"
 >
@@ -10,8 +10,11 @@
       >
         Your Spotify, on your Github.
       </h1>
-      <p class="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto">
-        Showcase what you're listening to with a beautiful, dynamic widget in your GitHub profile
+      <p
+        class="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-xl mx-auto"
+      >
+        Showcase what you're listening to with a beautiful, dynamic widget in
+        your GitHub profile
       </p>
     </div>
 
@@ -26,8 +29,18 @@
           />
         </svg>
         Connect with Spotify
-        <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+        <svg
+          class="w-4 h-4 group-hover:translate-x-1 transition-transform"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 7l5 5m0 0l-5 5m5-5H6"
+          ></path>
         </svg>
       </button>
     </div>
@@ -35,8 +48,10 @@
 </div>
 {% endblock %} {% block script %}
 <script>
-  document.querySelector("#customize-redirect").addEventListener("click", () => {
-    window.location.href = "/customize";
-  });
+  document
+    .querySelector("#customize-redirect")
+    .addEventListener("click", () => {
+      window.location.href = "/customize";
+    });
 </script>
 {% endblock %}

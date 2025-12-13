@@ -26,10 +26,9 @@ from app.theming import (
 async def load_image_b64(url: str) -> str:
     if not url:
         return ""
-    image_content = await spotify_client.fetch_image(url)
-    if not image_content:
-        return ""
-    return base64.b64encode(image_content).decode("ascii")
+    if image_content := await spotify_client.fetch_image(url):
+        return base64.b64encode(image_content).decode("ascii")
+    return ""
 
 
 async def get_access_token(user_id: str) -> str:

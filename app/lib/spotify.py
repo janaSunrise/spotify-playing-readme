@@ -1,6 +1,6 @@
 import base64
 
-from httpx import AsyncClient, HTTPError, HTTPStatusError, Limits, RequestError, Response, Timeout
+from httpx import AsyncClient, HTTPError, HTTPStatusError, RequestError, Timeout
 
 from app.config import settings
 from app.exceptions import SpotifyAPIError, TokenRefreshError
@@ -12,7 +12,6 @@ from app.models.spotify_api import (
 )
 
 DEFAULT_TIMEOUT = Timeout(10.0, connect=5.0)
-DEFAULT_LIMITS = Limits(max_connections=100, max_keepalive_connections=20)
 
 
 class SpotifyClient:
@@ -27,16 +26,13 @@ class SpotifyClient:
 
     def initialize(self) -> None:
         if self._client is None or self._client.is_closed:
-            self._client = AsyncClient(
-                timeout=DEFAULT_TIMEOUT,
-                limits=DEFAULT_LIMITS,
-            )
+            self._client = AsyncClient(timeout=DEFAULT_TIMEOUT)
 
     @property
     def client(self) -> AsyncClient:
         if self._client is None or self._client.is_closed:
             raise RuntimeError(
-                "httpx AsyncClient not initialized. Call initialize() to initialize.",
+                "AsyncClient not initialized. Call initialize() to initialize.",
             )
 
         return self._client
@@ -69,7 +65,7 @@ class SpotifyClient:
         }
 
         try:
-            response: Response = await self.client.post(
+            response = await self.client.post(
                 f"{self.AUTH_BASE}/api/token",
                 data=payload,
                 headers=headers,
@@ -90,7 +86,7 @@ class SpotifyClient:
         }
 
         try:
-            response: Response = await self.client.post(
+            response = await self.client.post(
                 f"{self.AUTH_BASE}/api/token",
                 data=payload,
                 headers=headers,
@@ -105,7 +101,7 @@ class SpotifyClient:
 
     async def get_now_playing(self, access_token: str) -> SpotifyCurrentlyPlayingResponse | None:
         try:
-            response: Response = await self.client.get(
+            response = await self.client.get(
                 f"{self.BASE_URL}/player/currently-playing?additional_types=track,episode",
                 headers={"Authorization": f"Bearer {access_token}"},
             )
@@ -123,7 +119,7 @@ class SpotifyClient:
 
     async def get_recently_played(self, access_token: str, limit: int = 20) -> SpotifyRecentlyPlayedResponse:
         try:
-            response: Response = await self.client.get(
+            response = await self.client.get(
                 f"{self.BASE_URL}/player/recently-played?limit={limit}",
                 headers={"Authorization": f"Bearer {access_token}"},
             )
@@ -141,7 +137,7 @@ class SpotifyClient:
 
     async def get_user_info(self, access_token: str) -> SpotifyUserInfoResponse:
         try:
-            response: Response = await self.client.get(
+            response = await self.client.get(
                 self.BASE_URL,
                 headers={"Authorization": f"Bearer {access_token}"},
             )
@@ -158,7 +154,7 @@ class SpotifyClient:
             return b""
 
         try:
-            response: Response = await self.client.get(url)
+            response = await self.client.get(url)
             response.raise_for_status()
         except HTTPError:
             return b""
