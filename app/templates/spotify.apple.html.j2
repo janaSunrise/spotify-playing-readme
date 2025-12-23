@@ -15,12 +15,6 @@
       <stop offset="100%" style="stop-color:{{ bg_color }};stop-opacity:0.30" />
     </linearGradient>
 
-    <linearGradient id="glassShine" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
-      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0" />
-      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.1" />
-    </linearGradient>
-
     <filter id="glassBlur" x="-50%" y="-50%" width="200%" height="200%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blur"/>
       <feColorMatrix in="blur" type="saturate" values="1.4" result="saturate"/>
@@ -28,36 +22,12 @@
         <feFuncA type="linear" slope="0.5"/>
       </feComponentTransfer>
     </filter>
-
-    <filter id="cardShadow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
-      <feOffset dx="0" dy="4" result="offsetblur"/>
-      <feComponentTransfer>
-        <feFuncA type="linear" slope="0.2"/>
-      </feComponentTransfer>
-      <feMerge>
-        <feMergeNode/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-
-    <filter id="innerGlow">
-      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-      <feMerge>
-        <feMergeNode in="coloredBlur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
   </defs>
 
-  <!-- Backdrop blur layer -->
   <rect width="100%" height="100%" fill="{{ bg_color }}" rx="20" opacity="0.6" filter="url(#glassBlur)"/>
-
-  <!-- Glass effect -->
   <rect width="100%" height="100%" fill="url(#glassGradient)" rx="20" filter="url(#cardShadow)"/>
-
-  <!-- Top shine/reflection -->
   <rect width="100%" height="35%" fill="url(#glassShine)" rx="20" opacity="0.15"/>
+
   <foreignObject width="{{ width }}" height="{{ height }}">
     <defs>
       <style type="text/css">
@@ -78,8 +48,8 @@
         font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
         width: 100%;
         height: 100%;
-        border-radius: 16px;
-        padding: 20px 26px 28px 26px;
+        border-radius: 15px;
+        padding: 20px 26px 20px 26px;
         display: flex;
         flex-direction: column;
         gap: 14px;
@@ -91,8 +61,8 @@
         content: '';
         position: absolute;
         inset: 0;
-        border-radius: 16px;
-        padding: 1.5px;
+        border-radius: 15px;
+        padding: 2px;
         background: linear-gradient(135deg,
           rgba(255, 255, 255, 0.4) 0%,
           rgba(255, 255, 255, 0.1) 50%,
@@ -151,9 +121,9 @@
 
       .status-text {
         color: {{ status_color }};
-        font-size: 9.5px;
+        font-size: 10px;
         font-weight: 600;
-        letter-spacing: 0.9px;
+        letter-spacing: 1px;
         text-transform: uppercase;
         margin-bottom: 0;
         opacity: 0.8;
@@ -165,7 +135,7 @@
       .content-wrapper {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 15px;
         flex: 1;
       }
 
@@ -174,9 +144,9 @@
       }
 
       .cover-image {
-        width: 86px;
-        height: 86px;
-        border-radius: 12px;
+        width: 80px;
+        height: 80px;
+        border-radius: 10px;
         object-fit: cover;
         display: block;
         position: relative;
@@ -205,7 +175,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 7px;
+        gap: 5px;
         min-width: 0;
         justify-content: center;
         position: relative;
@@ -213,13 +183,13 @@
       }
 
       .song-title {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 600;
         color: {{ text_color }};
-        line-height: 1.3;
+        line-height: 1.5;
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         min-width: 0;
         letter-spacing: -0.35px;
         overflow: hidden;
