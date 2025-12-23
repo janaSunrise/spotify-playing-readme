@@ -11,6 +11,7 @@ dependencies = [
     "jinja2>=3.1.0",
     "pydantic-settings>=2.6.1",
     "supabase>=2.25.1",
+    "uvicorn[standard]>=0.38.0",
 ]
 
 [dependency-groups]
@@ -23,7 +24,7 @@ lint = [
 ]
 
 [tool.poe.tasks]
-dev = "fastapi dev app --reload"
+dev = "uvicorn app.app:app --reload"
 ruff = "ruff check --fix ."
 ruff-format = "ruff format ."
 prek-setup = "prek install -f"

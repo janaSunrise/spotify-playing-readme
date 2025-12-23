@@ -1341,6 +1341,7 @@ dependencies = [
     { name = "jinja2" },
     { name = "pydantic-settings" },
     { name = "supabase" },
+    { name = "uvicorn", extra = ["standard"] },
 ]
 
 [package.dev-dependencies]
@@ -1360,6 +1361,7 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1.0" },
     { name = "pydantic-settings", specifier = ">=2.6.1" },
     { name = "supabase", specifier = ">=2.25.1" },
+    { name = "uvicorn", extras = ["standard"], specifier = ">=0.38.0" },
 ]
 
 [package.metadata.requires-dev]

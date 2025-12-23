@@ -22,7 +22,7 @@ async def lifespan(_: FastAPI) -> AsyncIterator[None]:
     await spotify.spotify_client.close()
 
 
-app: FastAPI = FastAPI(title="Spotify playing for README", redoc_url=None, lifespan=lifespan)
+app = FastAPI(title="Spotify playing for README", redoc_url=None, lifespan=lifespan)
 
 app.add_middleware(
     SessionMiddleware,
