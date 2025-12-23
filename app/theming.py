@@ -40,11 +40,23 @@ COLOR_THEMES = {
         "accent": "#f97316",
         "status": "#ea580c",
     },
-    "slate": {
-        "bg": "#f8fafc",
-        "text": "#0f172a",
-        "accent": "#475569",
-        "status": "#64748b",
+    "tokyonight": {
+        "bg": "#1a1b26",
+        "text": "#c0caf5",
+        "accent": "#7aa2f7",
+        "status": "#9d7cd8",
+    },
+    "nord": {
+        "bg": "#2e3440",
+        "text": "#eceff4",
+        "accent": "#88c0d0",
+        "status": "#81a1c1",
+    },
+    "catppuccin": {
+        "bg": "#1e1e2e",
+        "text": "#cdd6f4",
+        "accent": "#89b4fa",
+        "status": "#cba6f7",
     },
 }
 
@@ -52,6 +64,7 @@ WIDGET_WIDTH = 350
 WIDGET_HEIGHT = 150
 VISUALIZER_BAR_COUNT = 40
 MAX_TEXT_LENGTH = 30
+DARK_THEME_LUMINANCE_THRESHOLD = 0.5
 
 
 def validate_card_style(style: str | None) -> str:
@@ -85,6 +98,20 @@ def generate_visualizer_css(bar_count: int = VISUALIZER_BAR_COUNT) -> str:
         }}
         """)
     return css_bar
+
+
+def is_dark_theme(color_theme: str | None) -> bool:
+    validated = validate_color_theme(color_theme)
+    bg_color = COLOR_THEMES[validated]["bg"]
+
+    hex_color = bg_color.lstrip("#")
+    r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
+
+    # Calculate relative luminance
+    luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+
+    # Return True if dark (luminance < threshold)
+    return luminance < DARK_THEME_LUMINANCE_THRESHOLD
 
 
 def generate_visualizer_bars(bar_count: int = VISUALIZER_BAR_COUNT) -> str:

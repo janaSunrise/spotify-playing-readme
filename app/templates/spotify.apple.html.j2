@@ -9,23 +9,55 @@
 >
   <title id="cardTitle">Now playing on Spotify</title>
   <defs>
-    <linearGradient id="appleGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:{{ bg_color }};stop-opacity:0.98" />
-      <stop offset="100%" style="stop-color:{{ bg_color }};stop-opacity:0.92" />
+    <linearGradient id="glassGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:{{ bg_color }};stop-opacity:0.35" />
+      <stop offset="50%" style="stop-color:{{ bg_color }};stop-opacity:0.25" />
+      <stop offset="100%" style="stop-color:{{ bg_color }};stop-opacity:0.30" />
     </linearGradient>
+
+    <linearGradient id="glassShine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="50%" style="stop-color:#ffffff;stop-opacity:0" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.1" />
+    </linearGradient>
+
+    <filter id="glassBlur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="40" result="blur"/>
+      <feColorMatrix in="blur" type="saturate" values="1.4" result="saturate"/>
+      <feComponentTransfer in="saturate">
+        <feFuncA type="linear" slope="0.5"/>
+      </feComponentTransfer>
+    </filter>
+
     <filter id="cardShadow">
-      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
-      <feOffset dx="0" dy="2" result="offsetblur"/>
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
       <feComponentTransfer>
-        <feFuncA type="linear" slope="0.3"/>
+        <feFuncA type="linear" slope="0.2"/>
       </feComponentTransfer>
       <feMerge>
         <feMergeNode/>
         <feMergeNode in="SourceGraphic"/>
       </feMerge>
     </filter>
+
+    <filter id="innerGlow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
   </defs>
-  <rect width="100%" height="100%" fill="url(#appleGradient)" rx="18" filter="url(#cardShadow)" />
+
+  <!-- Backdrop blur layer -->
+  <rect width="100%" height="100%" fill="{{ bg_color }}" rx="20" opacity="0.6" filter="url(#glassBlur)"/>
+
+  <!-- Glass effect -->
+  <rect width="100%" height="100%" fill="url(#glassGradient)" rx="20" filter="url(#cardShadow)"/>
+
+  <!-- Top shine/reflection -->
+  <rect width="100%" height="35%" fill="url(#glassShine)" rx="20" opacity="0.15"/>
   <foreignObject width="{{ width }}" height="{{ height }}">
     <defs>
       <style type="text/css">
@@ -46,42 +78,88 @@
         font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
         width: 100%;
         height: 100%;
-        border-radius: 14px;
-        padding: 18px 24px 26px 24px;
+        border-radius: 16px;
+        padding: 20px 26px 28px 26px;
         display: flex;
         flex-direction: column;
-        gap: 12px;
+        gap: 14px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .container::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 16px;
+        padding: 1.5px;
+        background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.4) 0%,
+          rgba(255, 255, 255, 0.1) 50%,
+          rgba(255, 255, 255, 0.3) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
       }
 
       .container.light {
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.88) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.6);
+        background:
+          linear-gradient(135deg,
+            {{ bg_color }}e6 0%,
+            {{ bg_color }}d9 50%,
+            {{ bg_color }}e6 100%);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
         box-shadow:
-          0 1px 3px rgba(0, 0, 0, 0.05),
-          0 4px 12px rgba(0, 0, 0, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.8),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+          0 8px 32px rgba(0, 0, 0, 0.08),
+          0 4px 16px rgba(0, 0, 0, 0.04),
+          0 2px 8px rgba(0, 0, 0, 0.02),
+          inset 0 1px 2px rgba(255, 255, 255, 0.9),
+          inset 0 -1px 1px rgba(0, 0, 0, 0.03);
+      }
+
+      .container.light::before {
+        background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.7) 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          rgba(255, 255, 255, 0.5) 100%);
       }
 
       .container.dark {
-        background: linear-gradient(135deg, rgba(44, 44, 46, 0.85) 0%, rgba(28, 28, 30, 0.90) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background:
+          linear-gradient(135deg,
+            {{ bg_color }}cc 0%,
+            {{ bg_color }}b3 50%,
+            {{ bg_color }}cc 100%);
+        backdrop-filter: blur(24px) saturate(200%);
+        -webkit-backdrop-filter: blur(24px) saturate(200%);
         box-shadow:
-          0 1px 3px rgba(0, 0, 0, 0.3),
-          0 4px 12px rgba(0, 0, 0, 0.4),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+          0 12px 40px rgba(0, 0, 0, 0.5),
+          0 6px 20px rgba(0, 0, 0, 0.35),
+          0 3px 10px rgba(0, 0, 0, 0.25),
+          inset 0 1px 2px rgba(255, 255, 255, 0.15),
+          inset 0 -1px 1px rgba(0, 0, 0, 0.4);
+      }
+
+      .container.dark::before {
+        background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.25) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          rgba(255, 255, 255, 0.15) 100%);
       }
 
       .status-text {
         color: {{ status_color }};
         font-size: 9.5px;
         font-weight: 600;
-        letter-spacing: 0.8px;
+        letter-spacing: 0.9px;
         text-transform: uppercase;
         margin-bottom: 0;
-        opacity: 0.75;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        opacity: 0.8;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        position: relative;
+        z-index: 1;
       }
 
       .content-wrapper {
@@ -96,40 +174,46 @@
       }
 
       .cover-image {
-        width: 84px;
-        height: 84px;
-        border-radius: 11px;
+        width: 86px;
+        height: 86px;
+        border-radius: 12px;
         object-fit: cover;
         display: block;
-        box-shadow:
-          0 8px 16px rgba(0, 0, 0, 0.12),
-          0 4px 8px rgba(0, 0, 0, 0.08),
-          0 1px 3px rgba(0, 0, 0, 0.06);
+        position: relative;
+        z-index: 1;
       }
 
       .light .cover-image {
-        border: 0.5px solid rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow:
+          0 10px 30px rgba(0, 0, 0, 0.12),
+          0 6px 16px rgba(0, 0, 0, 0.08),
+          0 3px 8px rgba(0, 0, 0, 0.05),
+          inset 0 1px 2px rgba(255, 255, 255, 0.5);
       }
 
       .dark .cover-image {
-        border: 0.5px solid rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.15);
         box-shadow:
-          0 8px 16px rgba(0, 0, 0, 0.4),
-          0 4px 8px rgba(0, 0, 0, 0.3),
-          0 1px 3px rgba(0, 0, 0, 0.2);
+          0 12px 36px rgba(0, 0, 0, 0.5),
+          0 8px 20px rgba(0, 0, 0, 0.4),
+          0 4px 10px rgba(0, 0, 0, 0.3),
+          inset 0 1px 2px rgba(255, 255, 255, 0.2);
       }
 
       .text-content {
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 6px;
+        gap: 7px;
         min-width: 0;
         justify-content: center;
+        position: relative;
+        z-index: 1;
       }
 
       .song-title {
-        font-size: 16.5px;
+        font-size: 17px;
         font-weight: 600;
         color: {{ text_color }};
         line-height: 1.3;
@@ -137,9 +221,13 @@
         align-items: center;
         gap: 8px;
         min-width: 0;
-        letter-spacing: -0.3px;
+        letter-spacing: -0.35px;
         overflow: hidden;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+      }
+
+      .dark .song-title {
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
 
       .song-title-text {
@@ -152,7 +240,7 @@
       }
 
       .artist-name {
-        font-size: 13.5px;
+        font-size: 14px;
         font-weight: 450;
         color: {{ status_color }};
         line-height: 1.4;
@@ -161,24 +249,30 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         position: relative;
-        letter-spacing: -0.1px;
+        letter-spacing: -0.15px;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+      }
+
+      .dark .artist-name {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       }
 
       .explicit-badge {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background-color: {{ text_color }};
+        background: {{ text_color }};
         color: {{ bg_color }};
         font-size: 8px;
         font-weight: 700;
-        border-radius: 4.5px;
-        padding: 3.5px 6.5px;
+        border-radius: 5px;
+        padding: 4px 7px;
         line-height: 1;
-        letter-spacing: 0.4px;
+        letter-spacing: 0.5px;
         box-shadow:
-          0 2px 5px rgba(0, 0, 0, 0.12),
-          0 1px 2px rgba(0, 0, 0, 0.08);
+          0 4px 8px rgba(0, 0, 0, 0.15),
+          0 2px 4px rgba(0, 0, 0, 0.1),
+          inset 0 1px 1px rgba(255, 255, 255, 0.2);
       }
 
       .audio-visualizer {
@@ -191,14 +285,22 @@
       }
 
       .bar {
-        background: {{ accent_color }};
+        background: linear-gradient(180deg, {{ accent_color }} 0%, {{ accent_color }}dd 100%);
         width: 3.5px;
         border-radius: 2.5px;
         height: 4px;
         box-shadow:
-          0 2px 4px rgba(59, 130, 246, 0.25),
-          0 1px 2px rgba(59, 130, 246, 0.15);
+          0 0 8px {{ accent_color }}66,
+          0 2px 6px {{ accent_color }}44,
+          0 1px 3px {{ accent_color }}33;
         animation: sound 0ms -800ms linear infinite alternate;
+      }
+
+      .light .bar {
+        box-shadow:
+          0 0 6px {{ accent_color }}55,
+          0 2px 5px {{ accent_color }}33,
+          0 1px 2px rgba(0, 0, 0, 0.1);
       }
 
       @keyframes sound {

@@ -55,7 +55,9 @@ Widget{% endblock %} {% block content %}
             <option value="blue">Blue</option>
             <option value="green">Green</option>
             <option value="orange">Orange</option>
-            <option value="slate">Slate</option>
+            <option value="tokyonight">Tokyonight</option>
+            <option value="nord">Nord</option>
+            <option value="catppuccin">Catppuccin</option>
           </select>
         </div>
 
@@ -146,101 +148,170 @@ Widget{% endblock %} {% block content %}
 </div>
 {% endblock %} {% block script %}
 <script>
-  const user_id = "{{ id }}";
-  const base_url = "{{ base_url }}";
-  const github_url = "{{ github_url }}";
+  const CONFIG = {
+    userId: "{{ id }}",
+    baseUrl: "{{ base_url }}",
+    storageKey: "spotify-playing-readme-prefs",
+    copiedTimeout: 2000,
+  };
 
-  const codeTextarea = document.getElementById("readme");
-  const previewImg = document.getElementById("preview-img");
-  const copyButton = document.getElementById("copy-to-clipboard");
-
-  let linkToProfile = false;
-  let imgForWebsite = false;
-
-  const parameters = {
-    user_id: user_id,
-    image: true,
+  const DEFAULTS = {
     style: "default",
-    color_theme: "light",
+    colorTheme: "light",
+    showImage: true,
+    linkToProfile: false,
+    useHtml: false,
   };
 
-  const updateUrl = () => {
-    const queryParams = new URLSearchParams(parameters);
-    const url = `${base_url}/spotify?${queryParams.toString()}`;
-    const spotifyUrl = `https://open.spotify.com/user/${user_id}`;
-
-    const mdImg = `![Spotify playing](${url})`;
-    const mdImgUrl = `[![Spotify playing](${url})](${spotifyUrl})`;
-
-    const websiteImg = `<img src="${url}" alt="spotify-readme-card"/>`;
-    const websiteImgUrl = `<a href="${spotifyUrl}"><img src="${url}" alt="spotify-readme-card"/></a>`;
-
-    previewImg.src = url;
-
-    if (imgForWebsite) {
-      codeTextarea.value = linkToProfile ? websiteImgUrl : websiteImg;
-    } else {
-      codeTextarea.value = linkToProfile ? mdImgUrl : mdImg;
-    }
+  const elements = {
+    codeTextarea: document.getElementById("readme"),
+    previewImg: document.getElementById("preview-img"),
+    copyButton: document.getElementById("copy-to-clipboard"),
+    styleSelect: document.getElementById("style-select"),
+    colorThemeSelect: document.getElementById("color-theme-select"),
+    showImageCheckbox: document.getElementById("needs-image"),
+    linkToProfileCheckbox: document.getElementById("link-to-profile"),
+    useHtmlCheckbox: document.getElementById("website-img"),
   };
 
-  // Card style selector
-  document.getElementById("style-select").addEventListener("change", (e) => {
-    parameters.style = e.target.value;
-    updateUrl();
-  });
+  const state = {
+    load() {
+      const saved = JSON.parse(localStorage.getItem(CONFIG.storageKey) || "{}");
+      return {
+        style: saved.style || DEFAULTS.style,
+        colorTheme: saved.color_theme || DEFAULTS.colorTheme,
+        showImage: saved.image ?? DEFAULTS.showImage,
+        linkToProfile: saved.linkToProfile || DEFAULTS.linkToProfile,
+        useHtml: saved.imgForWebsite || DEFAULTS.useHtml,
+      };
+    },
 
-  // Color theme selector
-  document
-    .getElementById("color-theme-select")
-    .addEventListener("change", (e) => {
-      parameters.color_theme = e.target.value;
-      updateUrl();
-    });
+    save(data) {
+      localStorage.setItem(CONFIG.storageKey, JSON.stringify({
+        style: data.style,
+        color_theme: data.colorTheme,
+        image: data.showImage,
+        linkToProfile: data.linkToProfile,
+        imgForWebsite: data.useHtml,
+      }));
+    },
+  };
 
-  // Show cover image checkbox
-  document.getElementById("needs-image").addEventListener("change", (e) => {
-    parameters.image = e.target.checked;
-    updateUrl();
-  });
+  const ui = {
+    generateCode(widgetUrl, spotifyUrl, { linkToProfile, useHtml }) {
+      const formats = {
+        markdown: {
+          simple: `![Spotify playing](${widgetUrl})`,
+          linked: `[![Spotify playing](${widgetUrl})](${spotifyUrl})`,
+        },
+        html: {
+          simple: `<img src="${widgetUrl}" alt="spotify-readme-card"/>`,
+          linked: `<a href="${spotifyUrl}"><img src="${widgetUrl}" alt="spotify-readme-card"/></a>`,
+        },
+      };
 
-  // Link to profile checkbox
-  document.getElementById("link-to-profile").addEventListener("change", (e) => {
-    linkToProfile = e.target.checked;
-    updateUrl();
-  });
+      const format = useHtml ? formats.html : formats.markdown;
+      return linkToProfile ? format.linked : format.simple;
+    },
 
-  // HTML format checkbox
-  document.getElementById("website-img").addEventListener("change", (e) => {
-    imgForWebsite = e.target.checked;
-    updateUrl();
-  });
+    updatePreview(widgetUrl, code) {
+      elements.previewImg.src = widgetUrl;
+      elements.codeTextarea.value = code;
+    },
 
-  // Copy to clipboard
-  copyButton.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(codeTextarea.value);
-      const originalText = copyButton.innerHTML;
-      copyButton.innerHTML = `
+    showCopiedFeedback() {
+      const originalHtml = elements.copyButton.innerHTML;
+
+      elements.copyButton.innerHTML = `
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
         </svg>
         Copied!
       `;
-      copyButton.classList.add("bg-green-600", "hover:bg-green-700");
-      copyButton.classList.remove("bg-violet-600", "hover:bg-violet-700");
+      elements.copyButton.classList.replace("from-violet-600", "from-green-600");
+      elements.copyButton.classList.replace("to-indigo-600", "to-green-700");
+      elements.copyButton.classList.replace("hover:from-violet-700", "hover:from-green-700");
+      elements.copyButton.classList.replace("hover:to-indigo-700", "hover:to-green-800");
 
       setTimeout(() => {
-        copyButton.innerHTML = originalText;
-        copyButton.classList.remove("bg-green-600", "hover:bg-green-700");
-        copyButton.classList.add("bg-violet-600", "hover:bg-violet-700");
-      }, 2000);
-    } catch (err) {
-      codeTextarea.select();
+        elements.copyButton.innerHTML = originalHtml;
+        elements.copyButton.classList.replace("from-green-600", "from-violet-600");
+        elements.copyButton.classList.replace("to-green-700", "to-indigo-600");
+        elements.copyButton.classList.replace("hover:from-green-700", "hover:from-violet-700");
+        elements.copyButton.classList.replace("hover:to-green-800", "hover:to-indigo-700");
+      }, CONFIG.copiedTimeout);
+    },
+  };
+
+  const widget = {
+    currentState: state.load(),
+
+    buildUrl() {
+      const params = new URLSearchParams({
+        user_id: CONFIG.userId,
+        image: this.currentState.showImage,
+        style: this.currentState.style,
+        color_theme: this.currentState.colorTheme,
+      });
+      return `${CONFIG.baseUrl}/spotify?${params}`;
+    },
+
+    update() {
+      const widgetUrl = this.buildUrl();
+      const spotifyUrl = `https://open.spotify.com/user/${CONFIG.userId}`;
+      const code = ui.generateCode(widgetUrl, spotifyUrl, this.currentState);
+
+      ui.updatePreview(widgetUrl, code);
+      state.save(this.currentState);
+    },
+
+    updateProperty(key, value) {
+      this.currentState[key] = value;
+      this.update();
+    },
+  };
+
+  // Restore state
+  const currentState = widget.currentState;
+  elements.styleSelect.value = currentState.style;
+  elements.colorThemeSelect.value = currentState.colorTheme;
+  elements.showImageCheckbox.checked = currentState.showImage;
+  elements.linkToProfileCheckbox.checked = currentState.linkToProfile;
+  elements.useHtmlCheckbox.checked = currentState.useHtml;
+
+  // Update the widget
+  widget.update();
+
+  // Event listeners
+  elements.styleSelect.addEventListener("change", (e) =>
+    widget.updateProperty("style", e.target.value)
+  );
+
+  elements.colorThemeSelect.addEventListener("change", (e) =>
+    widget.updateProperty("colorTheme", e.target.value)
+  );
+
+  elements.showImageCheckbox.addEventListener("change", (e) =>
+    widget.updateProperty("showImage", e.target.checked)
+  );
+
+  elements.linkToProfileCheckbox.addEventListener("change", (e) =>
+    widget.updateProperty("linkToProfile", e.target.checked)
+  );
+
+  elements.useHtmlCheckbox.addEventListener("change", (e) =>
+    widget.updateProperty("useHtml", e.target.checked)
+  );
+
+  elements.copyButton.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(elements.codeTextarea.value);
+      ui.showCopiedFeedback();
+    } catch {
+      elements.codeTextarea.select();
       document.execCommand("copy");
+      ui.showCopiedFeedback();
     }
   });
-
-  updateUrl();
 </script>
 {% endblock %}

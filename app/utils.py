@@ -18,8 +18,8 @@ from app.theming import (
     generate_visualizer_bars,
     generate_visualizer_css,
     get_colors,
+    is_dark_theme,
     validate_card_style,
-    validate_color_theme,
 )
 
 
@@ -61,7 +61,7 @@ async def render_spotify_svg(
 
     card_style = validate_card_style(style)
     colors = get_colors(color_theme)
-    is_dark_mode = validate_color_theme(color_theme) == "dark"
+    is_dark_mode = is_dark_theme(color_theme)
 
     content_bar = generate_visualizer_bars(VISUALIZER_BAR_COUNT) if is_now_playing else ""
     css_bar = generate_visualizer_css(VISUALIZER_BAR_COUNT) if is_now_playing else ""
